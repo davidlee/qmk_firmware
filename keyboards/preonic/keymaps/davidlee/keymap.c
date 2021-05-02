@@ -52,29 +52,6 @@ enum preonic_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-/* Qwerty
- * ,-----------------------------------------------------------------------------------.
- * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Del  |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  "   |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
- * `-----------------------------------------------------------------------------------'
- 
-[_QWERTY] = LAYOUT_preonic_grid(
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
-  KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
-  KC_GESC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-  BACKLIT, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
-),
-*/
-
-
 /* Colemak
  * ,-----------------------------------------------------------------------------------.
  * | Leadr|   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |      |
@@ -89,7 +66,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_COLEMAK] = LAYOUT_preonic_grid(
-  KC_LEAD,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
+  KC_LEAD, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
   KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_DEL,
   KC_GESC, HOME_A,  HOME_R,  HOME_S,  HOME_T,  KC_G,    KC_M,    HOME_N,  HOME_E,  HOME_I,  HOME_O,  KC_QUOT,
   KC_LSFT, KC_Z,    RALT_X,  KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, RALT_DOT,KC_SLSH, KC_ENT,
@@ -270,46 +247,61 @@ void dip_switch_update_user(uint8_t index, bool active) {
 
 bool did_leader_succeed;
 #ifdef AUDIO_ENABLE
-// float leader_start[][2] = SONG(ONE_UP_SOUND );
-// float leader_succeed[][2] = SONG(ALL_STAR);
-// float leader_fail[][2] = SONG(RICK_ROLL);
+float leader_start_song[][2]   = SONG(ONE_UP_SOUND );
+float leader_succeed_song[][2] = SONG(ALL_STAR);
+float leader_fail_song[][2]    = SONG(MARIO_GAMEOVER);
 #endif
+
 LEADER_EXTERNS();
 
 void matrix_scan_user(void) {
-#ifdef AUDIO_ENABLE
-    if (muse_mode) {
-        if (muse_counter == 0) {
-            uint8_t muse_note = muse_offset + SCALE[muse_clock_pulse()];
-            if (muse_note != last_muse_note) {
-                stop_note(compute_freq_for_midi_note(last_muse_note));
-                play_note(compute_freq_for_midi_note(muse_note), 0xF);
-                last_muse_note = muse_note;
-            }
-        }
-        muse_counter = (muse_counter + 1) % muse_tempo;
-    } else {
-        if (muse_counter) {
-            stop_all_notes();
-            muse_counter = 0;
-        }
-    }
-#endif
+// #ifdef AUDIO_ENABLE
+//     if (muse_mode) {
+//         if (muse_counter == 0) {
+//             uint8_t muse_note = muse_offset + SCALE[muse_clock_pulse()];
+//             if (muse_note != last_muse_note) {
+//                 stop_note(compute_freq_for_midi_note(last_muse_note));
+//                 play_note(compute_freq_for_midi_note(muse_note), 0xF);
+//                 last_muse_note = muse_note;
+//             }
+//         }
+//         muse_counter = (muse_counter + 1) % muse_tempo;
+//     } else {
+//         if (muse_counter) {
+//             stop_all_notes();
+//             muse_counter = 0;
+//         }
+//     }
+// #endif
 
   LEADER_DICTIONARY() {
     did_leader_succeed = leading = false;
 
     SEQ_ONE_KEY(KC_E) {
       // Anything you can do in a macro.
-      SEND_STRING(SS_LCTL(SS_LSFT("t")));
+      SEND_STRING("well well well ...");
       did_leader_succeed = true;
-    } else 
-    SEQ_TWO_KEYS(KC_E, KC_D) {
-      SEND_STRING(SS_LGUI("r") "cmd\n" SS_LCTL("c"));
-      did_leader_succeed = true;
-    }
+    } 
     leader_end();
   }    
+}
+
+void leader_start(void) {
+#ifdef AUDIO_ENABLE
+    PLAY_SONG(leader_start_song);
+#endif
+}
+
+void leader_end(void) {
+  if (did_leader_succeed) {
+#ifdef AUDIO_ENABLE
+    PLAY_SONG(leader_succeed_song);
+#endif
+  } else {
+#ifdef AUDIO_ENABLE
+    PLAY_SONG(leader_fail_song);
+#endif  
+  }
 }
 
 bool music_mask_user(uint16_t keycode) {

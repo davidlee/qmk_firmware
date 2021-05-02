@@ -28,7 +28,7 @@
 #define GRAVE_ESC_ALT_OVERRIDE    
 
 // allow leader
-#define LEADER_TIMEOUT 300
+#define LEADER_TIMEOUT 220
 #define LEADER_PER_KEY_TIMING
                             
 /*
