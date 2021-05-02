@@ -77,7 +77,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Colemak
  * ,-----------------------------------------------------------------------------------.
- * |      |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |      |
+ * | Leadr|   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Tab  |   Q  |   W  |   F  |   P  |   B  |   J  |   L  |   U  |   Y  |   ;  |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
@@ -85,11 +85,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Ctrl | Alt  | GUI  |Lower |  Spc | Bksp |Raise |      |      |      |      |
+ * |      |      |      |      |Lower |  Spc | Bksp |Raise |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_COLEMAK] = LAYOUT_preonic_grid(
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
+  KC_LEAD,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
   KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_DEL,
   KC_GESC, HOME_A,  HOME_R,  HOME_S,  HOME_T,  KC_G,    KC_M,    HOME_N,  HOME_E,  HOME_I,  HOME_O,  KC_QUOT,
   KC_LSFT, KC_Z,    RALT_X,  KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, RALT_DOT,KC_SLSH, KC_ENT,
@@ -268,6 +268,14 @@ void dip_switch_update_user(uint8_t index, bool active) {
 }
 
 
+bool did_leader_succeed;
+#ifdef AUDIO_ENABLE
+// float leader_start[][2] = SONG(ONE_UP_SOUND );
+// float leader_succeed[][2] = SONG(ALL_STAR);
+// float leader_fail[][2] = SONG(RICK_ROLL);
+#endif
+LEADER_EXTERNS();
+
 void matrix_scan_user(void) {
 #ifdef AUDIO_ENABLE
     if (muse_mode) {
@@ -287,6 +295,21 @@ void matrix_scan_user(void) {
         }
     }
 #endif
+
+  LEADER_DICTIONARY() {
+    did_leader_succeed = leading = false;
+
+    SEQ_ONE_KEY(KC_E) {
+      // Anything you can do in a macro.
+      SEND_STRING(SS_LCTL(SS_LSFT("t")));
+      did_leader_succeed = true;
+    } else 
+    SEQ_TWO_KEYS(KC_E, KC_D) {
+      SEND_STRING(SS_LGUI("r") "cmd\n" SS_LCTL("c"));
+      did_leader_succeed = true;
+    }
+    leader_end();
+  }    
 }
 
 bool music_mask_user(uint16_t keycode) {
