@@ -1,4 +1,4 @@
-SRC += muse.c
+# SRC += muse.c
 AUDIO_ENABLE = yes
 LEADER_ENABLE = yes
 COMBO_ENABLE = yes

@@ -166,7 +166,7 @@ void matrix_scan_user(void) {
         leader_found = false;
         SEQ_ONE_KEY(L_RESET) {
             leader_found = true;
-            reset_keyboard();
+            ();
         }
         else
             SEQ_ONE_KEY(KC_DEL) {
