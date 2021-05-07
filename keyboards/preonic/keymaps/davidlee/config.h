@@ -1,6 +1,6 @@
 #pragma once
 
-#define COMBO_COUNT 1
+// #define COMBO_COUNT 1
 
 #ifdef AUDIO_ENABLE
     #define STARTUP_SONG SONG(PREONIC_SOUND)
@@ -15,7 +15,7 @@
 #define MUSIC_MASK (keycode != KC_NO)
 
 // Configure the global tapping term (default: 200ms)
-#define TAPPING_TERM 150
+#define TAPPING_TERM 180
 
 // Prevent normal rollover on alphas from accidentally triggering mods.
 #define IGNORE_MOD_TAP_INTERRUPT

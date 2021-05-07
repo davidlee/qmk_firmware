@@ -44,6 +44,10 @@ enum preonic_keycodes {
 #define RCTL_O RCTL_T(KC_O)
 #define RALT_DOT RALT_T(KC_DOT)
 
+
+// side esc — hold for NAV
+#define ESC_NAV LT(_NAV, KC_ESC)
+
 // tap for esc, hold for cmd
 #define ESC_CMD LCMD_T(KC_ESC)
 // tap for return, hold for raise
@@ -59,13 +63,16 @@ enum preonic_keycodes {
 // tap for —, hold for hyper
 #define HYPE HYPR_T(KC_UNDS)
 
+#define RALT_EQL RALT_T(KC_EQL)
+
+#define KC_MDASH LALT(KC_MINS  )
+// #define NAV_LOCK TO(_NAV)
+
 // spc + bksp -> DEL
 // todo - allow multi tap. via layersc
-const uint16_t PROGMEM spc_combo[] = { SPC_NUM, KC_BSPC, COMBO_END };
-combo_t key_combos[COMBO_COUNT]    = { COMBO(spc_combo, KC_DEL) };
+// const uint16_t PROGMEM spc_combo[] = { SPC_NUM, KC_BSPC, COMBO_END };
+// combo_t key_combos[COMBO_COUNT]    = { COMBO(spc_combo, KC_DEL) };
 
-// todo add ralt mods on bottom row under alt
-// todo strip back layout
 
 
 //
@@ -84,64 +91,64 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |Shift |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  |Shift |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |Leader|  Ctrl|  Alt |  Cmd | Spc  | Tab  | Entr | Bksp |      |Hyper | Alt  |      |
+ * |Leader|  Ctrl|  Alt |  Cmd | Spc  | Tab  | Entr | Bksp |  Del |Hyper | Alt  |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_COLEMAK] = LAYOUT_preonic_grid(
   KC_GRAVE,KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
   KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, _______,
-  KC_ESC,  LCTL_A,  LALT_R,  LCMD_S,  HOME_T,   KC_G,    KC_M,   RSFT_N,  RCMD_E,  LALT_I,  RCTL_O,  KC_QUOT,
+  ESC_NAV, LCTL_A,  LALT_R,  LCMD_S,  HOME_T,  KC_G,    KC_M,    RSFT_N,  RCMD_E,  LALT_I,  RCTL_O,  KC_QUOT,
   KC_LSFT, KC_Z,    RALT_X,  KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, RALT_DOT,KC_SLSH, RSFT_SLSH,
-  KC_LEAD, KC_LCTRL,KC_LALT, ESC_CMD, SPC_NUM, TAB_LWR, ENT_RSE, KC_BSPC, _______, HYPE, KC_RALT, _______ // KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+  KC_LEAD, KC_LCTRL,KC_LALT, ESC_CMD, SPC_NUM, TAB_LWR, ENT_RSE, KC_BSPC, KC_DEL,  HYPE,    RALT_EQL, _______ // KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
 /* Lower
  * ,-----------------------------------------------------------------------------------.
- * |      |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  | Bksp |
+ * |   ~  |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |   ~  |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  | Del  |
+ * |   ~  |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Del  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   _  |   +  |   {  |   }  |  |   |
+ * |      |      |      |      |      |      |   –  |   _  |   +  |   {  |   }  |  |   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |      |      | Home | End  |      |
+ * |      |      |      |      |      |      |      |      |      |      |      |      |   
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      | Next | Vol- | Vol+ | Play |
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_preonic_grid(
-  _______, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,
-  KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_DEL,
-  KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE,
-  _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______, _______, KC_HOME, KC_END, _______,
+  KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______,
+  KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______,
+  _______, _______, _______, _______, _______, _______, KC_MDASH,KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
 ),
 
 /* Raise
  * ,-----------------------------------------------------------------------------------.
- * |      |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Del  |
+ * |      |  F10 |  F7  |  F8  |  F9  |      |      |      |      |   (  |   )  |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Del  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   -  |   =  |   [  |   ]  |  \   |
+ * |      |  F11 |  F4  |  F5  |  F6  |      |      |   -  |   =  |   [  |   ]  |  |   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |      |      | Pg Up| Pg Dn|      |
+ * |      |  F12 |  F1  |  F2  |  F3  |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      | Next | Vol- | Vol+ | Play |
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT_preonic_grid(
-  _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL,
-  KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS,
-  _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______, _______, KC_PGUP, KC_PGDN, _______,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
+  _______, KC_F10,  KC_F7,   KC_F8,   KC_F9,   _______, _______, _______, _______, KC_LPRN, KC_RPRN, _______,
+  _______, KC_F11,  KC_F5,   KC_F5,   KC_F7,   _______, _______, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS,
+  _______, KC_F12,  KC_F1,   KC_F2,   KC_F4,   _______, _______, _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
 ),
 
 /* NUMBER
  * ,-----------------------------------------------------------------------------------.
- * |      |  1   |  2   |  3   |  4   |  5   |  6   |  7   |   8  |  9   |  0   |      |
+ * |  `   |  1   |  2   |  3   |  4   |  5   |  6   |  7   |   8  |  9   |  0   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |  1   |  2   |  3   |  4   |  5   |  6   |  7   |   8  |  9   |  0   |      |
+ * |  `   |  1   |  2   |  3   |  4   |  5   |  6   |  7   |   8  |  9   |  0   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |  4   |   5  |  6   |  +   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -151,8 +158,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_NUMBER] = LAYOUT_preonic_grid(
-  _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______, 
-  _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_P7,   KC_P8,   KC_P9,   KC_P0,   _______,
+  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______, 
+  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_P7,   KC_P8,   KC_P9,   KC_P0,   _______,
   _______, _______, _______, _______, _______, _______, _______, KC_P4,   KC_P5,   KC_P6,   KC_PPLS, _______,
   _______, _______, _______, _______, _______, _______, _______, KC_P1,   KC_P2,   KC_P3,   KC_PENT, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, KC_P0,   KC_PDOT, _______, _______
@@ -162,20 +169,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |   Up |      |      |      |      |      |      |      |      |
+ * |      |      | HOME |   Up | PGUP |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      | Left |  Down| Right|      | CAPS |  Left| Down | Up   | Right|      |
+ * |      |      | Left |  Down| Right| LOCK | LOCK |  Left| Down | Up   | Right|      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      | INS  |  HOME| PGDN | PGUP | END  |      |
+ * |      |      | END  |      | PGDN |      | INS  |  HOME| PGDN | PGUP | END  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_NAV] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, KC_UP,   _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,
-  _______, _______, _______, _______, _______, _______, _______, KC_INS,  KC_PGDN, KC_PGUP, KC_END,  _______,
+  _______, _______, KC_HOME, KC_UP,   KC_PGUP, _______, _______, _______, _______, _______, _______, _______,
+  _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, KC_LOCK, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,
+  _______, _______, KC_END,  _______,KC_PGDN, _______, KC_INS,  KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
@@ -271,13 +278,29 @@ void matrix_scan_user(void) {
     leading      = false;
     leader_found = false;
 
-    SEQ_ONE_KEY(KC_W) {
+    SEQ_ONE_KEY(KC_C) {
+      layer_clear();
       set_single_persistent_default_layer(_COLEMAK);
       leader_found = true;
     } 
 
+    SEQ_ONE_KEY(KC_TAB) { 
+      layer_invert(_NUMBER);
+      leader_found = true;
+    }     
+
+    SEQ_ONE_KEY(KC_ESC) {
+      layer_invert(_NAV);
+      leader_found = true;
+    }     
+
     SEQ_ONE_KEY(KC_Q) {
       reset_keyboard();
+      leader_found = true;
+    }
+
+    SEQ_ONE_KEY(KC_B) {
+      rgblight_toggle();
       leader_found = true;
     }
 
