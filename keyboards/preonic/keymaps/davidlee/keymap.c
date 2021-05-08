@@ -179,7 +179,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |Colemk|  b3  |      |  mU  |  whU |      |      |      |      |      |      |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |  b1  |  mL  |  mD  |  mR  |      |      |  mL  |  mD  |  mU  |  mR  |      | 
+ * |      |  b1  |  mL  |  mD  |  mR  |      |MOUSE |  mL  |  mD  |  mU  |  mR  |      | 
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |      |  b2  |  whL |  whR |  whD |      |      |  whL | whD  |  whU | whR  |      |                                               
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -189,7 +189,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_ADJUST] = LAYOUT_preonic_grid(
   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,
   COLEMAK, KC_BTN3 , _______,KC_MS_U, KC_WH_U, _______, _______, _______, _______, _______, _______, _______,
-  _______, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______,
+  _______, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_R, _______, MOUSE,   KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______,
   _______, KC_BTN2, KC_WH_L, KC_WH_R, KC_WH_D, _______, _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______,
   _______, _______, _______, _______, _______, _______, KC_BTN1, KC_BTN2, KC_BTN3, KC_BTN4, KC_BTN5, KC_BTN6
 ),
@@ -200,7 +200,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |  b3  |      |  mU  |  whU |      |      |      |      |      |      |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |  b1  |  mL  |  mD  |  mR  |      |      |  mL  |  mD  |  mU  |  mR  |      | 
+ * | BASE |  b1  |  mL  |  mD  |  mR  |      |      |  mL  |  mD  |  mU  |  mR  |      | 
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |      |  b2  |  whL |  whR |  whD |      |      |  whL | whD  |  whU | whR  |      |                                               
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -210,7 +210,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_MOUSE] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   _______, KC_BTN3 , _______,KC_MS_U, KC_WH_U, _______, _______, _______, _______, _______, _______, _______,
-  _______, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______,
+  BASE,    KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______,
   _______, KC_BTN2, KC_WH_L, KC_WH_R, KC_WH_D, _______, _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______,
   _______, _______, _______, _______, _______, _______, KC_BTN1, KC_BTN2, KC_BTN3, KC_BTN4, KC_BTN5, KC_BTN6
 )
@@ -244,18 +244,20 @@ layer_state_t layer_state_set_user(layer_state_t state) {
       rgblight_setrgb (0x00,  0xFF, 0x7A);
       break;                  
     case _ADJUST:
+      // TODO seems we get wrong colour for ADJUST, may need to handle this elsewhere
       rgblight_enable();
       rgblight_setrgb (0x7A,  0x00, 0xFF);
       break;
     default: //  for any other layers, or the default layer
       rgblight_disable();
-      // rgblight_setrgb (0x00,  0xFF, 0xFF);
       break;      
     }
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
 // Colemak key
+//
+//
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case COLEMAK:
@@ -263,7 +265,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         set_single_persistent_default_layer(_COLEMAK);
       }
       return false;
-      break;     
+      break; 
+    case BASE:
+      if (record->event.pressed) {
+        layer_clear();
+      }   
+    case MOUSE:
+      if (record->event.pressed) {
+        layer_on(_MOUSE);
+      }               
   }
   return true;
 };
@@ -294,9 +304,21 @@ void matrix_scan_user(void) {
       leader_found = true;
     } 
 
-    // TAB - TOGGLE NUMBER LAYER
-    SEQ_ONE_KEY(KC_TAB) { 
+    // SPC - TOGGLE NUMBER LAYER
+    SEQ_ONE_KEY(KC_SPC) { 
       layer_invert(_NUMBER);
+      leader_found = true;
+    }     
+
+    // TAB - TOGGLE LOWER LAYER
+    SEQ_ONE_KEY(KC_TAB) { 
+      layer_invert(_LOWER);
+      leader_found = true;
+    }     
+
+    // RET - TOGGLE RAISE LAYER
+    SEQ_ONE_KEY(KC_RET) { 
+      layer_invert(_RAISE);
       leader_found = true;
     }     
 
@@ -312,11 +334,6 @@ void matrix_scan_user(void) {
       leader_found = true;
     }
 
-    // B — toggle RGB light
-    SEQ_ONE_KEY(KC_B) {
-      rgblight_toggle();
-      leader_found = true;
-    }
 
     leader_end();
   }    
@@ -334,6 +351,8 @@ void leader_end(void) {
     PLAY_SONG(leader_succeed_song);
 #endif
   } else {
+    layer_clear();
+    set_single_persistent_default_layer(_COLEMAK);    
 #ifdef AUDIO_ENABLE
     PLAY_SONG(leader_fail_song);
 #endif  
