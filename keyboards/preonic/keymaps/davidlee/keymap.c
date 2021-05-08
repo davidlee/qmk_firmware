@@ -270,10 +270,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         layer_clear();
       }   
+      return false;
+      break;
     case MOUSE:
       if (record->event.pressed) {
         layer_on(_MOUSE);
-      }               
+      }     
+      return false;
+      break;          
   }
   return true;
 };
@@ -303,6 +307,12 @@ void matrix_scan_user(void) {
       set_single_persistent_default_layer(_COLEMAK);
       leader_found = true;
     } 
+
+    // M - TOGGLE MOUSE LAYER
+    SEQ_ONE_KEY(KC_M) { 
+      layer_invert(_MOUSE);
+      leader_found = true;
+    }     
 
     // SPC - TOGGLE NUMBER LAYER
     SEQ_ONE_KEY(KC_SPC) { 
