@@ -17,9 +17,9 @@ enum preonic_keycodes {
   NUMBER
 };
 
-
 enum tapdance_keycodes {
-    TD_SCLN
+    TD_SCLN,
+    TD_QUOT
 };
 
 
@@ -41,7 +41,6 @@ enum tapdance_keycodes {
 
 // side esc — hold for NAV
 #define ESC_NAV LT(_NAV, KC_ESC)
-
 // tap for esc, hold for cmd
 #define ESC_CMD LCMD_T(KC_ESC)
 // tap for return, hold for raise
@@ -51,18 +50,13 @@ enum tapdance_keycodes {
 // hold spc for number pad
 #define SPC_NUM LT(_NUMBER, KC_SPC)
 
-// tap for \, hold for right shift
-#define RSFT_SLSH RSFT_T(KC_BSLS)
 
-// tap for —, hold for hyper
-#define HYPE HYPR_T(KC_UNDS)
-// tap for =, hold for RALT
-#define RALT_EQL RALT_T(KC_EQL)
-
+// a key for mdash
 #define KC_MDASH LALT(KC_MINS)
 
 // semicolon w/ tapdance for colon
 #define SCLN TD(TD_SCLN)
+#define QUOT TD(TD_QUOT)
 
 //
 // Keymap
@@ -74,20 +68,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |  `   |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Tab  |   Q  |   W  |   F  |   P  |   B  |   J  |   L  |   U  |   Y  |   ;  |      |
+ * | Tab? |   Q  |   W  |   F  |   P  |   B  |   J  |   L  |   U  |   Y  |   ;  |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * | Esc  |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  |  '   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |Shift |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  |Shift |
+ * |Shift |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  |Shift?|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |  FN  |  Ctrl|  Alt |  Cmd | Spc  | Tab  | Entr | Bksp | Left | Down |  Up  | Right|
  * `-----------------------------------------------------------------------------------'
  */
 [_COLEMAK] = LAYOUT_preonic_grid(
   KC_GRAVE,KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
-  KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCLN, _______,
-  ESC_NAV, LCTL_A,  LALT_R,  LCMD_S,  HOME_T,  KC_G,    KC_M,    RSFT_N,  RCMD_E,  LALT_I,  RCTL_O,  KC_QUOT,
-  KC_LSPO, KC_Z,    RALT_X,  KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, RALT_DOT,KC_SLSH, KC_LSPO,
+  KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCLN,    _______,
+  ESC_NAV, LCTL_A,  LALT_R,  LCMD_S,  HOME_T,  KC_G,    KC_M,    RSFT_N,  RCMD_E,  LALT_I,  RCTL_O,  QUOT,
+  KC_LSPO, KC_Z,    RALT_X,  KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, RALT_DOT,KC_SLSH, KC_RSPC,
   KC_LEAD, KC_LCTRL,KC_LALT, ESC_CMD, SPC_NUM, TAB_LWR, ENT_RSE, KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
@@ -190,7 +184,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_ADJUST] = LAYOUT_preonic_grid(
   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,
-  COLEMAK, KC_BTN3 , _______, KC_MS_U, KC_WH_U, _______, _______, _______, _______, _______, _______, _______,
+  COLEMAK, KC_BTN3 , _______,KC_MS_U, KC_WH_U, _______, _______, _______, _______, _______, _______, _______,
   _______, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, KC_ACL2, KC_ACL1, KC_ACL0, _______, KC_DEL,
   _______, KC_BTN2, KC_WH_L, KC_WH_R, KC_WH_D, _______, _______, _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
@@ -199,13 +193,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 //
-// Adjust layer and friends
+// ADJUST layer
 // 
 
 layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
+// Colemak key
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case COLEMAK:
@@ -213,37 +208,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         set_single_persistent_default_layer(_COLEMAK);
       }
       return false;
-      break;
-    case LOWER:
-      if (record->event.pressed) {
-        layer_on(_LOWER);
-      } else {
-        layer_off(_LOWER);
-      }
-      return false;
-      break;
-    case RAISE:
-      if (record->event.pressed) {
-        layer_on(_RAISE);
-      } else {
-        layer_off(_RAISE);
-      }
-      return false;
-      break;
-    case NUMBER:
-      if (record->event.pressed) {
-        layer_on(_NUMBER);
-      } else {
-        layer_off(_NUMBER);
-      }
-      return false;      
-    case NAV:
-      if (record->event.pressed) { 
-        layer_on(_NAV);
-      } else { 
-        layer_off(_NAV);
-      }
-      return false;      
+      break;     
   }
   return true;
 };
@@ -252,14 +217,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // Leader Key
 //
 
+LEADER_EXTERNS();
+
 bool leader_found;
 #ifdef AUDIO_ENABLE
 float leader_start_song[][2]   = SONG(ONE_UP_SOUND);
 float leader_succeed_song[][2] = SONG(ALL_STAR);
 float leader_fail_song[][2]    = SONG(MARIO_GAMEOVER);
 #endif
-
-LEADER_EXTERNS();
 
 void matrix_scan_user(void) {
 
@@ -325,6 +290,7 @@ void leader_end(void) {
 //
 
 // tap dance on yr colon
+
 // Send ; on Single Tap, : on Double Tap
 void dance_scln_finished(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
@@ -342,11 +308,42 @@ void dance_scln_reset(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
+// Send ' on Single Tap, " on Double Tap
+void dance_quot_finished(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        register_code(KC_QUOT);
+    } else {
+        register_code16(KC_DQUO);
+    }
+}
+
+void dance_quot_reset(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        unregister_code(KC_QUOT);
+    } else {
+        unregister_code16(KC_DQUO);
+    }
+}
+
 // All tap dance functions 
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_SCLN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_scln_finished, dance_scln_reset),
+    [TD_QUOT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_quot_finished, dance_quot_reset),
 };
 
+//
+// per key tapping term
+//
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case SCLN:
+            return 150;
+        case QUOT:
+            return 150;
+        default:
+            return TAPPING_TERM;
+    }
+}
 
 /* BLANK
  * ,-----------------------------------------------------------------------------------.
