@@ -50,6 +50,7 @@ enum tapdance_keycodes {
 // hold spc for number pad
 #define SPC_NUM LT(_NUMBER, KC_SPC)
 
+#define KC_NAV TG(_NAV)
 
 // a key for mdash
 #define KC_MDASH LALT(KC_MINS)
@@ -74,15 +75,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |Shift |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  |Shift?|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |  FN  |  Ctrl|  Alt |  Cmd | Spc  | Tab  | Entr | Bksp | Left | Down |  Up  | Right|
+ * |  FN  |  F14 |  NAV |  Cmd | Spc  | Tab  | Entr | Bksp | Left | Down |  Up  | Right|
  * `-----------------------------------------------------------------------------------'
  */
 [_COLEMAK] = LAYOUT_preonic_grid(
-  KC_GRAVE,KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
+  KC_GRAVE,KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_F13,
   KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCLN,    KC_BSLS,
   ESC_NAV, LCTL_A,  LALT_R,  LCMD_S,  HOME_T,  KC_G,    KC_M,    RSFT_N,  RCMD_E,  LALT_I,  RCTL_O,  QUOT,
   KC_LSPO, KC_Z,    RALT_X,  KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, RALT_DOT,KC_SLSH, KC_RSPC,
-  KC_LEAD, KC_LCTRL,KC_LALT, ESC_CMD, SPC_NUM, TAB_LWR, ENT_RSE, KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+  KC_LEAD, KC_F14,  KC_NAV,ESC_CMD, SPC_NUM, TAB_LWR, ENT_RSE, KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
 /* Lower
@@ -135,7 +136,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |  !   |  @   |  #   |  $   |  %   |  *   |  4   |  5   |  6   |  +   |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |  (   |  ^   |  &   |  *   |  )   |  /   |  1   |  2   |  3   |  -   |NumLck|
+ * |      |      |  ^   |  &   |  *   |      |  /   |  1   |  2   |  3   |  -   |NumLck|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |  0   |  .   |  _   |PrScr |
  * `-----------------------------------------------------------------------------------'
@@ -144,7 +145,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_P7,   KC_P8,   KC_P9,   KC_P0,   KC_PEQL,
   _______, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_PAST, KC_P4,   KC_P5,   KC_P6,   KC_PPLS, KC_PENT,
-  _______, KC_LPRN, KC_CIRC, KC_AMPR, KC_ASTR, KC_RPRN, KC_PSLS, KC_P1,   KC_P2,   KC_P3,   KC_PMNS, KC_NLCK,
+  _______, _______, KC_CIRC, KC_AMPR, KC_ASTR, _______, KC_PSLS, KC_P1,   KC_P2,   KC_P3,   KC_PMNS, KC_NLCK,
   _______, _______, _______, _______, _______, _______, _______, _______, KC_P0,   KC_PDOT, KC_UNDS, KC_PSCR
 ),
 
@@ -340,6 +341,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return 150;
         case QUOT:
             return 150;
+        case ESC_NAV:
+            return 150;            
         default:
             return TAPPING_TERM;
     }
