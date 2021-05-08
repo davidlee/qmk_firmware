@@ -58,22 +58,14 @@ enum preonic_keycodes {
 #define SPC_NUM LT(_NUMBER, KC_SPC)
 
 // tap for \, hold for right shift
-#define RSFT_SLSH RSFT_T(KC_BSLS)
+// #define RSFT_SLSH RSFT_T(KC_BSLS)
 
 // tap for —, hold for hyper
 #define HYPE HYPR_T(KC_UNDS)
-
+// tap for =, hold for RALT
 #define RALT_EQL RALT_T(KC_EQL)
 
-#define KC_MDASH LALT(KC_MINS  )
-// #define NAV_LOCK TO(_NAV)
-
-// spc + bksp -> DEL
-// todo - allow multi tap. via layersc
-// const uint16_t PROGMEM spc_combo[] = { SPC_NUM, KC_BSPC, COMBO_END };
-// combo_t key_combos[COMBO_COUNT]    = { COMBO(spc_combo, KC_DEL) };
-
-
+#define KC_MDASH LALT(KC_MINS)
 
 //
 // Keymap
@@ -98,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRAVE,KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
   KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, _______,
   ESC_NAV, LCTL_A,  LALT_R,  LCMD_S,  HOME_T,  KC_G,    KC_M,    RSFT_N,  RCMD_E,  LALT_I,  RCTL_O,  KC_QUOT,
-  KC_LSFT, KC_Z,    RALT_X,  KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, RALT_DOT,KC_SLSH, RSFT_SLSH,
+  KC_LSPO, KC_Z,    RALT_X,  KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, RALT_DOT,KC_SLSH, KC_RSPC,
   KC_LEAD, KC_LCTRL,KC_LALT, ESC_CMD, SPC_NUM, TAB_LWR, ENT_RSE, KC_BSPC, KC_DEL,  HYPE,    RALT_EQL, _______ // KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
