@@ -316,8 +316,8 @@ void matrix_scan_user(void) {
       leader_found = true;
     }     
 
-    // RET - TOGGLE RAISE LAYER
-    SEQ_ONE_KEY(KC_RET) { 
+    // ENTER - TOGGLE RAISE LAYER
+    SEQ_ONE_KEY(KC_ENT) { 
       layer_invert(_RAISE);
       leader_found = true;
     }     
