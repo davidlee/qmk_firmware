@@ -18,7 +18,6 @@ enum preonic_keycodes {
   NAV,
   NUMBER,
   MOUSE,
-  // FNKEY,
   BASE
 };
 
@@ -322,6 +321,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 };
 
 //
+// musics
+//
+#ifdef AUDIO_ENABLE
+float tone_startup[][2] = {
+  {NOTE_B5, 20},
+  {NOTE_B6, 8},
+  {NOTE_DS6, 20},
+  {NOTE_B6, 8}
+};
+#endif
+
+void matrix_init_user(void) {
+  #ifdef AUDIO_ENABLE
+    startup_user();
+  #endif
+}
+void startup_user()
+{
+  // _delay_ms(20); // gets rid of tick
+  PLAY_SONG(tone_startup);
+}
+//
 // Leader Key
 //
 
@@ -329,9 +350,9 @@ LEADER_EXTERNS();
 
 bool leader_found;
 #ifdef AUDIO_ENABLE
-float leader_start_song[][2]   = SONG(ONE_UP_SOUND);
-float leader_succeed_song[][2] = SONG(ALL_STAR);
-float leader_fail_song[][2]    = SONG(MARIO_GAMEOVER);
+// float leader_start_song[][2]   = SONG(CAPS_LOCK_ON_SOUND);
+float leader_succeed_song[][2] = SONG(TERMINAL_SOUND);
+float leader_fail_song[][2]    = SONG(CAPS_LOCK_OFF_SOUND);
 #endif
 
 void matrix_scan_user(void) {
@@ -396,11 +417,11 @@ void matrix_scan_user(void) {
   }    
 }
 
-void leader_start(void) {
-#ifdef AUDIO_ENABLE
-    PLAY_SONG(leader_start_song);
-#endif
-}
+// void leader_start(void) {
+// #ifdef AUDIO_ENABLE
+//     PLAY_SONG(leader_start_song);
+// #endif
+// }
 
 void leader_end(void) {
   if (leader_found) {

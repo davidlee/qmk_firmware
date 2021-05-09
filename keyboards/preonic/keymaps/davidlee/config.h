@@ -37,16 +37,31 @@
 // mouse emulation
 #define MK_KINETIC_SPEED                                
 
-#define MOUSEKEY_DELAY 8
-#define MOUSEKEY_INTERVAL 8
-#define MOUSEKEY_MOVE_DELTA 2    
-#define MOUSEKEY_INITIAL_SPEED 4
-#define MOUSEKEY_BASE_SPEED 1
-#define MOUSEKEY_DECELERATED_SPEED 1                        
-#define MOUSEKEY_ACCELERATED_SPEED 500
+// Recommended for heavy chording.
+#define QMK_KEYS_PER_SCAN 4
 
-#define MOUSEKEY_WHEEL_INITIAL_MOVEMENTS 16
-#define MOUSEKEY_WHEEL_BASE_MOVEMENTS 32                                
-#define MOUSEKEY_WHEEL_ACCELERATED_MOVEMENTS 48
-#define MOUSEKEY_WHEEL_DECELERATED_MOVEMENTS 8
+// Mouse key speed and acceleration.
+#undef MOUSEKEY_DELAY
+#define MOUSEKEY_DELAY          0
+#undef MOUSEKEY_INTERVAL
+#define MOUSEKEY_INTERVAL       16
+#undef MOUSEKEY_WHEEL_DELAY
+#define MOUSEKEY_WHEEL_DELAY    0
+#undef MOUSEKEY_MAX_SPEED
+#define MOUSEKEY_MAX_SPEED      6
+#undef MOUSEKEY_TIME_TO_MAX
+#define MOUSEKEY_TIME_TO_MAX    64
+                                
+// #define MOUSEKEY_DELAY 8
+// #define MOUSEKEY_INTERVAL 8
+// #define MOUSEKEY_MOVE_DELTA 2    
+// #define MOUSEKEY_INITIAL_SPEED 4
+// #define MOUSEKEY_BASE_SPEED 1
+// #define MOUSEKEY_DECELERATED_SPEED 1                        
+// #define MOUSEKEY_ACCELERATED_SPEED 500
+
+// #define MOUSEKEY_WHEEL_INITIAL_MOVEMENTS 16
+// #define MOUSEKEY_WHEEL_BASE_MOVEMENTS 32                                
+// #define MOUSEKEY_WHEEL_ACCELERATED_MOVEMENTS 48
+// #define MOUSEKEY_WHEEL_DECELERATED_MOVEMENTS 8
                 
