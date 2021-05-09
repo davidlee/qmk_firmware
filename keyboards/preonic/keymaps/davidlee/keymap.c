@@ -239,7 +239,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
-[_FNKEY] = LAYOUT_preonic_grid(
+[_ADJUST] = LAYOUT_preonic_grid(
   _______, AU_ON,   AU_OFF, AU_TOG,   _______, _______, _______, _______, _______, _______, _______, _______,
   _______, MU_ON,   MU_OFF, MU_TOG,   MU_MOD,  _______, _______, _______, _______, _______, _______, _______,
   BASE,    CK_TOGG, CK_UP,  CK_DOWN,  CK_RST,  _______, _______, _______, _______, _______, _______, _______,
@@ -250,41 +250,48 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 //
-// ADJUST layer
+// RGB status lights
 // 
 
 layer_state_t layer_state_set_user(layer_state_t state) {
+  // turn on ADJUST when both LOWER and RAISE are active.
+  state = update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+
   switch (get_highest_layer(state)) {
-    case _RAISE:
+    case _FNKEY:
       rgblight_enable();
-      rgblight_setrgb (0x00,  0x00, 0xFF);
+      rgblight_setrgb (0x5A,  0x5A, 0x00);
+      break;      
+    case _NUMBER:
+      rgblight_enable();
+      rgblight_setrgb (0xFF,  0x7A, 0x00);
       break;
     case _LOWER:
       rgblight_enable();
       rgblight_setrgb (0xFF,  0x00, 0x00);
       break;
+    case _RAISE:
+      rgblight_enable();
+      rgblight_setrgb (0x00,  0x00, 0xFF);        
+      break;
     case _NAV:
       rgblight_enable();
       rgblight_setrgb (0x00,  0xFF, 0x00);
-      break;
-    case _NUMBER:
-      rgblight_enable();
-      rgblight_setrgb (0xFF,  0x7A, 0x00);
       break;
     case _MOUSE:
       rgblight_enable();
       rgblight_setrgb (0x00,  0xFF, 0x7A);
       break;                  
     case _ADJUST:
-      // TODO seems we get wrong colour for ADJUST, may need to handle this elsewhere
       rgblight_enable();
       rgblight_setrgb (0x7A,  0x00, 0xFF);
       break;
-    default: //  for any other layers, or the default layer
+    default: 
       rgblight_disable();
       break;      
     }
-  return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+
+  return state;
 }
 
 // Colemak key
