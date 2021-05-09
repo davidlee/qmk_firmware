@@ -34,7 +34,6 @@ enum tapdance_keycodes {
 #define HOME_T LSFT_T(KC_T)
 #define RALT_X RALT_T(KC_X)
 
-
 // Right-hand home row mods
 #define RSFT_N RSFT_T(KC_N)
 #define RCMD_E RCMD_T(KC_E)
@@ -45,12 +44,13 @@ enum tapdance_keycodes {
 
 // side esc — hold for NAV
 #define ESC_NAV LT(_NAV, KC_ESC)
+
 // tap for esc, hold for cmd
 #define ESC_CMD LCMD_T(KC_ESC)
-// tap for return, hold for raise
-#define ENT_RSE LT(_RAISE, KC_ENT)
 // tap for tab, hold for lower
 #define TAB_LWR LT(_LOWER, KC_TAB)
+// tap for return, hold for raise
+#define ENT_RSE LT(_RAISE, KC_ENT)
 // hold spc for number pad
 #define SPC_NUM LT(_NUMBER, KC_SPC)
 
@@ -87,7 +87,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |Shift |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  |Shift |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |  FN  |      |  NAV |  Cmd | Spc  | Tab  | Entr | Bksp | Left | Down |  Up  | Right|
+ * |  FN  | Ctrl |  ⬥  |  Cmd | Spc  | Lwr  | Rse  | Bksp |  ←   |   ↓  |   ↑  |  →   |
  * `-----------------------------------------------------------------------------------'
  */
 [_COLEMAK] = LAYOUT_preonic_grid(
@@ -95,7 +95,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCLN,    KC_BSLS,
   ESC_NAV, LCTL_A,  LALT_R,  LCMD_S,  HOME_T,  KC_G,    KC_M,    RSFT_N,  RCMD_E,  LALT_I,  RCTL_O,  QUOT,
   KC_LSPO, KC_Z,    RALT_X,  KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, RALT_DOT,KC_SLSH, KC_RSPC,
-  KC_LEAD, _______, KC_NAV,  ESC_CMD, SPC_NUM, TAB_LWR, ENT_RSE, KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+  KC_LEAD, _______, _______, ESC_CMD, SPC_NUM, TAB_LWR, ENT_RSE, KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
 /* FNKEY
@@ -412,16 +412,9 @@ void matrix_scan_user(void) {
     }
 
     // todo leader key to toggle CMD being a one shot symbol layer key
-
     leader_end();
   }    
 }
-
-// void leader_start(void) {
-// #ifdef AUDIO_ENABLE
-//     PLAY_SONG(leader_start_song);
-// #endif
-// }
 
 void leader_end(void) {
   if (leader_found) {
