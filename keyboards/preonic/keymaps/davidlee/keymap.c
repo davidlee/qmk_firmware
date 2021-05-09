@@ -64,6 +64,14 @@ enum tapdance_keycodes {
 #define SCLN TD(TD_SCLN)
 #define QUOT TD(TD_QUOT)
 
+// shift on lower, tap for braces
+#define LCBR_SH LSFT_T(KC_LCBR)
+#define RCBR_SH RSFT_T(KC_RCBR)
+
+// shift on raise, tap for brackets
+#define LBRC_SH LSFT_T(KC_LBRC)
+#define RBRC_SH RSFT_T(KC_RBRC)
+
 //
 // Keymap
 //
@@ -150,7 +158,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______,
   KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______,
   BASE,    _______, _______, _______, _______, _______, KC_MDASH,KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE,
-  KC_LCBR, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_RCBR, 
+  LCBR_SH, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RCBR_SH, 
   _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
 ),
 
@@ -171,7 +179,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  KC_F21,  KC_F22,  KC_F23,  KC_F24, 
   _______, KC_F12,  KC_F7,   KC_F8,   KC_F9,   _______, _______, _______, _______, KC_LPRN, KC_RPRN, KC_F21,
   BASE,    KC_F11,  KC_F4,   KC_F5,   KC_F6,   _______, _______, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS,
-  KC_LBRC, KC_F10,  KC_F1,   KC_F2,   KC_F3,   _______, _______, _______, _______, _______, _______, KC_RBRC,
+  LBRC_SH, KC_F10,  KC_F1,   KC_F2,   KC_F3,   _______, _______, _______, _______, _______, _______, RBRC_SH,
   _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
 ),
 
