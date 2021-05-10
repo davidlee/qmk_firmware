@@ -53,6 +53,8 @@ enum tapdance_keycodes {
 #define ENT_RSE LT(_RAISE, KC_ENT)
 // hold spc for number pad
 #define SPC_NUM LT(_NUMBER, KC_SPC)
+// hold backspace for NAV layer
+#define BS_NAV LT(_NAV, KC_BSPC)
 
 #define KC_NAV TG(_NAV)
 
@@ -95,7 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCLN,    KC_BSLS,
   ESC_NAV, LCTL_A,  LALT_R,  LCMD_S,  HOME_T,  KC_G,    KC_M,    RSFT_N,  RCMD_E,  LALT_I,  RCTL_O,  QUOT,
   KC_LSPO, KC_Z,    RALT_X,  KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, RALT_DOT,KC_SLSH, KC_RSPC,
-  KC_LEAD, _______, _______, ESC_CMD, SPC_NUM, TAB_LWR, ENT_RSE, KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+  KC_LEAD, _______, _______, ESC_CMD, SPC_NUM, TAB_LWR, ENT_RSE, BS_NAV,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
 /* FNKEY
@@ -189,7 +191,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      | HOME |   Up | PGUP |      |      |  Undo| Cut  | Copy | Paste|      | // TODO undo etc
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | BASE |      | Left |  Down| Right|      | LOCK |  Left| Down | Up   | Right|      |
+ * | BASE | LOCK | Left |  Down| Right|      | LOCK |  Left| Down | Up   | Right|      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      | END  |      | PGDN |      | INS  |  HOME| PGDN | PGUP | END  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -482,9 +484,9 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case SCLN:
-          return 150;
+          return 180;
         case QUOT:
-          return 150;
+          return 175;
         case ESC_NAV:
           return 150;            
         default:
