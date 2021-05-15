@@ -43,7 +43,10 @@ enum tapdance_keycodes {
 
 
 // side esc — hold for NAV
-#define ESC_NAV LT(_NAV, KC_ESC)
+// #define ESC_NAV LT(_NAV, KC_ESC)
+
+// tap for grave, hold for CTRL
+#define CTL_ESC LCTL_T(KC_ESC)
 
 // tap for esc, hold for cmd
 #define ESC_CMD LCMD_T(KC_ESC)
@@ -56,7 +59,7 @@ enum tapdance_keycodes {
 // hold backspace for NAV layer
 #define BS_NAV LT(_NAV, KC_BSPC)
 
-#define KC_NAV TG(_NAV)
+// #define KC_NAV TG(_NAV)
 
 // a key for mdash
 #define KC_MDASH LALT(KC_MINS)
@@ -72,6 +75,12 @@ enum tapdance_keycodes {
 // shift on raise, tap for brackets
 #define LBRC_SH LSFT_T(KC_LBRC)
 #define RBRC_SH RSFT_T(KC_RBRC)
+
+
+#define KC_UNDO  LCMD(KC_Z)
+#define KC_CUT   LCMD(KC_X)
+#define KC_COPY  LCMD(KC_C)
+#define KC_CMDV  LCMD(KC_V)
 
 //
 // Keymap
@@ -89,13 +98,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |Shift |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  |Shift |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |  FN  | Ctrl |  ⬥  |  Cmd | Spc  | Lwr  | Rse  | Bksp |  ←   |   ↓  |   ↑  |  →   |
+ * | MENU |      |      |  Cmd | Spc  | Lwr  | Rse  | Bksp |  ⬅️  |  ⬇️  |  ⬆️  |  ➡️  |
  * `-----------------------------------------------------------------------------------'
  */
 [_COLEMAK] = LAYOUT_preonic_grid(
-  KC_GRAVE,KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL,
+  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL,
   KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCLN,    KC_BSLS,
-  ESC_NAV, LCTL_A,  LALT_R,  LCMD_S,  HOME_T,  KC_G,    KC_M,    RSFT_N,  RCMD_E,  LALT_I,  RCTL_O,  QUOT,
+  CTL_ESC, LCTL_A,  LALT_R,  LCMD_S,  HOME_T,  KC_G,    KC_M,    RSFT_N,  RCMD_E,  LALT_I,  RCTL_O,  QUOT,
   KC_LSPO, KC_Z,    RALT_X,  KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, RALT_DOT,KC_SLSH, KC_RSPC,
   KC_LEAD, _______, _______, ESC_CMD, SPC_NUM, TAB_LWR, ENT_RSE, BS_NAV,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
@@ -189,51 +198,51 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      | HOME |   Up | PGUP |      |      |  Undo| Cut  | Copy | Paste|      | // TODO undo etc
+ * |      |      |      |      |      |      |      |  Undo| Cut  | Copy | Paste|      | // TODO undo etc
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | BASE | LOCK | Left |  Down| Right|      | LOCK |  Left| Down | Up   | Right|      |
+ * |      |      |      |      |      |      | LOCK |  Left| Down | Up   | Right|      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      | END  |      | PGDN |      | INS  |  HOME| PGDN | PGUP | END  |      |
+ * |      |      |      |      |      |      | INS  |  HOME| PGDN | PGUP | END  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |      |      |      |      |      |      |      |      | Next | Vol- | Vol+ | Play |
  * `-----------------------------------------------------------------------------------'
  */
 [_NAV] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, KC_HOME, KC_UP,   KC_PGUP, _______, _______, _______, _______, _______, _______, _______,
-  BASE,    _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, KC_LOCK, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,
+  _______, _______, KC_HOME, KC_UP,   KC_PGUP, _______, _______, KC_UNDO, KC_CUT , KC_COPY, KC_CMDV, _______,
+  _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, KC_LOCK, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,
   _______, _______, KC_END,  _______, KC_PGDN, _______, KC_INS,  KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+  _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
 ),
 
 /* Mouse
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |  whL | whR  |  mUp |  whU |      |      |      |      |      |      |      |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | BASE |  b1  |  mLt |  mDn |  mRt |      |      |  mLt |  mDn |  mUp |  mRt |      | 
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |  b2  |  b2  |  b3  |  whD |      |      | whLt | whDn |  whUp| whRt |      |                                               
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |  b1  |  b2  |  b3  |  b4  |  b5  |  b6  |
+ * |      |      |      |      |      |      |  b1  |  mL  |  mDn |  mUp |  mR  | BASE | 
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |  b3  |  b2  |  b1  |      |  b2  | whLt | whDn |  whUp| whRt |      |                                               
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_MOUSE] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, KC_WH_L, KC_WH_R, KC_MS_U, KC_WH_U, _______, _______, _______, _______, _______, _______, _______,
-  BASE,    KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______,
-  _______, KC_BTN2, KC_BTN2, KC_BTN3, KC_WH_D, _______, _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______,
-  _______, _______, _______, _______, _______, _______, KC_BTN1, KC_BTN2, KC_BTN3, KC_BTN4, KC_BTN5, KC_BTN6
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  BASE,    _______, _______, _______, _______, _______, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, BASE,
+  _______, _______, KC_BTN3, KC_BTN2, KC_BTN1, _______, KC_BTN2, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
-/* ADJUST
+/* ADJUST??
  * ,-----------------------------------------------------------------------------------.
  * |      |AU_ON |AU_OFF|AU_TOG|      |      |      |      |      |      |      |      |  <- emoji
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |MU_ON |MU_OFF|MU_TOG|MU_MOD|      |      |      |      |      |      |      |  <- symbols like »·›•
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | BASE |CK_TOG|CK_UP |CK_DN |CK_RST|      |      |      |      |      |      |      |  <- word / para movement shortcuts
+ * | BASE |CK_TOG|CK_UP |CK_DN |CK_RST|      | MOUSE|      |      |      |      |      |  <- word / para movement shortcuts
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |                                               
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -243,7 +252,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_ADJUST] = LAYOUT_preonic_grid(
   _______, AU_ON,   AU_OFF, AU_TOG,   _______, _______, _______, _______, _______, _______, _______, _______,
   _______, MU_ON,   MU_OFF, MU_TOG,   MU_MOD,  _______, _______, _______, _______, _______, _______, _______,
-  BASE,    CK_TOGG, CK_UP,  CK_DOWN,  CK_RST,  _______, _______, _______, _______, _______, _______, _______,
+  BASE,    CK_TOGG, CK_UP,  CK_DOWN,  CK_RST,  _______, MOUSE,   _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
@@ -406,6 +415,12 @@ void matrix_scan_user(void) {
       leader_found = true;
     }
 
+    // ESC — send CMD-ALT-ESC
+    SEQ_ONE_KEY(KC_Q) {
+      
+      leader_found = true;
+    }    
+
     // F — toggle FNKEYS :: TODO FF for one shot
     // FIXME doesn't seem to be working
     SEQ_ONE_KEY(KC_F) {
@@ -487,8 +502,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
           return 180;
         case QUOT:
           return 175;
-        case ESC_NAV:
-          return 150;            
+        // case ESC_NAV:
+        //   return 150;            
         default:
           return TAPPING_TERM;
     }
