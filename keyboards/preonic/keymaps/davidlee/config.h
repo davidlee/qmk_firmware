@@ -27,30 +27,32 @@
 // Apply the modifier on keys that are tapped during a short hold of a modtap
 #define PERMISSIVE_HOLD
 
+
+#define COMBO_TERM 70 
 // allow opt-cmd-esc
 // #define GRAVE_ESC_ALT_OVERRIDE    
 
 // allow leader
-#define LEADER_TIMEOUT 300
-#define LEADER_PER_KEY_TIMING
-
-// mouse emulation
-#define MK_KINETIC_SPEED                                
+#define LEADER_TIMEOUT 500
+#define LEADER_PER_KEY_TIMING                           
 
 // Recommended for heavy chording.
 #define QMK_KEYS_PER_SCAN 4
 
+
+// mouse emulation
+
 // Mouse key speed and acceleration.
 #undef MOUSEKEY_DELAY
-#define MOUSEKEY_DELAY          0
+#define MOUSEKEY_DELAY          30
 #undef MOUSEKEY_INTERVAL
 #define MOUSEKEY_INTERVAL       16
 #undef MOUSEKEY_WHEEL_DELAY
-#define MOUSEKEY_WHEEL_DELAY    0
+#define MOUSEKEY_WHEEL_DELAY    10
 #undef MOUSEKEY_MAX_SPEED
-#define MOUSEKEY_MAX_SPEED      6
+#define MOUSEKEY_MAX_SPEED      8
 #undef MOUSEKEY_TIME_TO_MAX
-#define MOUSEKEY_TIME_TO_MAX    64
+#define MOUSEKEY_TIME_TO_MAX    40
                                 
 // #define MOUSEKEY_DELAY 8
 // #define MOUSEKEY_INTERVAL 8
