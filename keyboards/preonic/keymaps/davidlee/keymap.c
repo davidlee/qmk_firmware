@@ -41,9 +41,8 @@ enum tapdance_keycodes {
 #define RCTL_O RCTL_T(KC_O)
 #define RALT_DOT RALT_T(KC_DOT)
 
-
-// side esc — hold for NAV
-// #define ESC_NAV LT(_NAV, KC_ESC)
+// hold W for mouse layer
+#define W_MOUS LT(_MOUSE, KC_W)
 
 // tap for grave, hold for CTRL
 #define CTL_ESC LCTL_T(KC_ESC)
@@ -103,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_COLEMAK] = LAYOUT_preonic_grid(
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL,
-  KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCLN,    KC_BSLS,
+  KC_TAB,  KC_Q,    W_MOUS,  KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCLN,    KC_BSLS,
   CTL_ESC, LCTL_A,  LALT_R,  LCMD_S,  HOME_T,  KC_G,    KC_M,    RSFT_N,  RCMD_E,  LALT_I,  RCTL_O,  QUOT,
   KC_LSPO, KC_Z,    RALT_X,  KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, RALT_DOT,KC_SLSH, KC_RSPC,
   KC_LEAD, _______, _______, ESC_CMD, SPC_NUM, TAB_LWR, ENT_RSE, BS_NAV,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
@@ -134,7 +133,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |      |  b3  |      |  b2  |  b1  |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |  b1  |  mL  |  mDn |  mUp |  mR  | BASE | 
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -145,7 +144,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_MOUSE] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  _______, KC_BTN3, _______, KC_BTN2, KC_BTN1, _______, _______, _______, _______, _______, _______, _______,
   BASE,    _______, _______, _______, _______, _______, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, BASE,
   _______, _______, KC_BTN3, KC_BTN2, KC_BTN1, _______, KC_BTN2, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
