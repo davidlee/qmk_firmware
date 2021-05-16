@@ -26,17 +26,6 @@ enum tapdance_keycodes {
     TD_QUOT
 };
 
-// COMBOS
-enum combos {
-  SHIFTS_CAPS
-};
-
-const uint16_t PROGMEM caps_combo[] = {KC_LSPO, KC_RSPC, COMBO_END};
-
-combo_t key_combos[COMBO_COUNT] = {
-  [SHIFTS_CAPS] = COMBO(caps_combo, KC_CAPS)
-};
-
 // Left-hand home row mods
 #define LCTL_A LCTL_T(KC_A)
 #define LALT_R LALT_T(KC_R)
@@ -73,8 +62,10 @@ combo_t key_combos[COMBO_COUNT] = {
 // a key for mdash
 #define KC_MDASH LALT(KC_MINS)
 
+// TAP DANCE KEYS
 // semicolon w/ tapdance for colon
 #define SCLN TD(TD_SCLN)
+// quote or double tap for double quote
 #define QUOT TD(TD_QUOT)
 
 // shift on lower, tap for braces
@@ -85,7 +76,7 @@ combo_t key_combos[COMBO_COUNT] = {
 #define LBRC_SH LSFT_T(KC_LBRC)
 #define RBRC_SH RSFT_T(KC_RBRC)
 
-
+// CLIPBOARD management
 #define KC_UNDO  LCMD(KC_Z)
 #define KC_CUT   LCMD(KC_X)
 #define KC_COPY  LCMD(KC_C)
@@ -460,8 +451,6 @@ void leader_end(void) {
 // tap dances
 //
 
-// tap dance on yr colon
-
 // Send ; on Single Tap, : on Double Tap
 void dance_scln_finished(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
@@ -499,7 +488,7 @@ void dance_quot_reset(qk_tap_dance_state_t *state, void *user_data) {
 // All tap dance functions 
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_SCLN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_scln_finished, dance_scln_reset),
-    [TD_QUOT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_quot_finished, dance_quot_reset),
+    [TD_QUOT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_quot_finished, dance_quot_reset)
 };
 
 //

@@ -1,7 +1,5 @@
 #pragma once
 
-#define COMBO_COUNT 1
-
 #ifdef AUDIO_ENABLE
     #define STARTUP_SONG SONG(PREONIC_SOUND)
     // #define STARTUP_SONG SONG(NO_SOUND)
@@ -27,18 +25,12 @@
 // Apply the modifier on keys that are tapped during a short hold of a modtap
 #define PERMISSIVE_HOLD
 
-
-#define COMBO_TERM 70 
-// allow opt-cmd-esc
-// #define GRAVE_ESC_ALT_OVERRIDE    
-
 // allow leader
 #define LEADER_TIMEOUT 500
 #define LEADER_PER_KEY_TIMING                           
 
 // Recommended for heavy chording.
 #define QMK_KEYS_PER_SCAN 4
-
 
 // mouse emulation
 
@@ -53,17 +45,3 @@
 #define MOUSEKEY_MAX_SPEED      8
 #undef MOUSEKEY_TIME_TO_MAX
 #define MOUSEKEY_TIME_TO_MAX    40
-                                
-// #define MOUSEKEY_DELAY 8
-// #define MOUSEKEY_INTERVAL 8
-// #define MOUSEKEY_MOVE_DELTA 2    
-// #define MOUSEKEY_INITIAL_SPEED 4
-// #define MOUSEKEY_BASE_SPEED 1
-// #define MOUSEKEY_DECELERATED_SPEED 1                        
-// #define MOUSEKEY_ACCELERATED_SPEED 500
-
-// #define MOUSEKEY_WHEEL_INITIAL_MOVEMENTS 16
-// #define MOUSEKEY_WHEEL_BASE_MOVEMENTS 32                                
-// #define MOUSEKEY_WHEEL_ACCELERATED_MOVEMENTS 48
-// #define MOUSEKEY_WHEEL_DECELERATED_MOVEMENTS 8
-                
