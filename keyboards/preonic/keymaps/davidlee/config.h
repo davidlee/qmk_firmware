@@ -1,6 +1,6 @@
 #pragma once
 
-// #define COMBO_COUNT 1
+#define COMBO_COUNT 1
 
 #ifdef AUDIO_ENABLE
     #define STARTUP_SONG SONG(PREONIC_SOUND)

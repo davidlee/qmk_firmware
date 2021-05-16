@@ -26,6 +26,16 @@ enum tapdance_keycodes {
     TD_QUOT
 };
 
+// COMBOS
+enum combos {
+  SHIFTS_CAPS
+};
+
+const uint16_t PROGMEM caps_combo[] = {KC_LSPO, KC_RSPC, COMBO_END};
+
+combo_t key_combos[COMBO_COUNT] = {
+  [SHIFTS_CAPS] = COMBO(caps_combo, KC_CAPS)
+};
 
 // Left-hand home row mods
 #define LCTL_A LCTL_T(KC_A)
