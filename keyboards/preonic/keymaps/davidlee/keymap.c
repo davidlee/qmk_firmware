@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include "features/casemodes.h"
 
 enum preonic_layers {
   _COLEMAK,
@@ -24,7 +25,8 @@ enum preonic_keycodes {
 
 enum tapdance_keycodes {
     TD_SCLN,
-    TD_QUOT
+    TD_QUOT,
+    TD_SHFT
 };
 
 // Left-hand home row mods
@@ -66,14 +68,8 @@ enum tapdance_keycodes {
 #define SCLN TD(TD_SCLN)
 // quote or double tap for double quote
 #define QUOT TD(TD_QUOT)
-
-// shift on lower, tap for braces
-#define LCBR_SH LSFT_T(KC_LCBR)
-#define RCBR_SH RSFT_T(KC_RCBR)
-
-// shift on raise, tap for brackets
-#define LBRC_SH LSFT_T(KC_LBRC)
-#define RBRC_SH RSFT_T(KC_RBRC)
+// double shift is caps
+#define SFT_LCK TD(TD_SHFT)
 
 // CLIPBOARD management
 #define KC_UNDO  LCMD(KC_Z)
@@ -95,17 +91,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * | Esc  |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  |  '   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |Shift |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  |Shift |
+ * |Shift |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  | Enter|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | MENU |  FN  |      |  Cmd | Spc  | Lwr  | Rse  | Bksp |  ⬅️  |  ⬇️  |  ⬆️  |  ➡️  |
+ * | MENU |  FN  | CAPS |  Cmd | Spc  | Lwr  | Rse  | Bksp |  ⬅️  |  ⬇️  |  ⬆️  |  ➡️  |
  * `-----------------------------------------------------------------------------------'
  */
 [_COLEMAK] = LAYOUT_preonic_grid(
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL,
   KC_TAB,  KC_Q,    W_MOUS,  KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCLN,    KC_BSLS,
   CTL_ESC, LCTL_A,  LALT_R,  LCMD_S,  HOME_T,  KC_G,    KC_M,    RSFT_N,  RCMD_E,  LALT_I,  RCTL_O,  QUOT,
-  KC_LSPO, KC_Z,    RALT_X,  KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, RALT_DOT,KC_SLSH, KC_RSPC,
-  KC_LEAD, FNKEY,   _______, ESC_CMD, SPC_NUM, TAB_LWR, ENT_RSE, BS_NAV,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+  SFT_LCK, KC_Z,    RALT_X,  KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, RALT_DOT,KC_SLSH, KC_SFTENT,
+  KC_LEAD, FNKEY,   KC_CAPS, ESC_CMD, SPC_NUM, TAB_LWR, ENT_RSE, BS_NAV,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
 /* FNKEY
@@ -171,7 +167,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, _______, _______, _______, _______, KC_P0,   KC_PDOT, KC_UNDS, KC_PSCR
 ),
 
+
 /* Lower
+ * ,-----------------------------------------------------------------------------------.
+ * |  F13 |  F14 |  F15 |  F16 |  F17 |  F18 |  F19 |  F20 |  F21 |  F22 |  F23 |  F24 |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |      |  F12 |  F7  |  F8  |  F9  |      |      | Eject| Play | Back | Fwd  |  Pwr |     
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |  F11 |  F4  |  F5  |  F6  |      |      | Shft | Cmd  | Alt  | Ctrl | Play |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |  F10 |  F1  |  F2  |  F3  |      | Prev | Next | Vol- | Vol+ | Mute |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_LOWER] = LAYOUT_preonic_grid(
+  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  KC_F21,  KC_F22,  KC_F23,  KC_F24, 
+  _______, KC_F12,  KC_F7,   KC_F8,   KC_F9,   _______, _______, KC_EJCT, KC_MPLY, KC_WBAK, KC_WFWD, KC_PWR, 
+  _______, KC_F11,  KC_F4,   KC_F5,   KC_F6,   _______, KC_EJCT, KC_LSFT, KC_LCMD, KC_LOPT, KC_LCTL, KC_MPLY, 
+  _______, KC_F10,  KC_F1,   KC_F2,   KC_F3,   _______, KC_MPRV, KC_MNXT, KC_VOLD, KC_VOLU, KC_MUTE, _______,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ 
+),
+
+// TODO add home row mod support
+//
+
+/* Raise
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
@@ -179,40 +200,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |  !   |  /   |  *   |   _  |  \   |  ,   |  .   |   -  |   =  |  ;   |  "   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |  <   |  {   |  [   |   (  |      |  ?   |  )   |   ]  |   }  |  >   |      |  
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-[_LOWER] = LAYOUT_preonic_grid(
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  KC_GRV,  KC_TILD, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_UNDS, KC_PLUS, KC_COLN, KC_PIPE,
-  _______, KC_EXLM, KC_SLSH, KC_ASTR, KC_UNDS, KC_BSLS, KC_COMM, KC_DOT,  KC_MINS, KC_EQL,  KC_SCLN, KC_DQUO,  
-  _______, KC_LT,   KC_LCBR, KC_LBRC, KC_LPRN, _______, KC_QUES, KC_RPRN, KC_RBRC, KC_RCBR, KC_GT,   _______, 
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ 
-),
-
-/* RAISE
- * ,-----------------------------------------------------------------------------------.
- * |  F13 |  F14 |  F15 |  F16 |  F17 |  F18 |  F19 |  F20 |  F21 |  F22 |  F23 |  F24 |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |  F12 |  F7  |  F8  |  F9  |      |      |      |      |      |      |      |     
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |  F11 |  F4  |  F5  |  F6  |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |  F10 |  F1  |  F2  |  F3  |      |      |      |      |      |      |      |  
+ * | LOCK |  <   |  {   |  [   |   (  |  ––  |  ?   |  )   |   ]  |   }  |  >   |      |  
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT_preonic_grid(
-  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  KC_F21,  KC_F22,  KC_F23,  KC_F24, 
-  _______, KC_F12,  KC_F7,   KC_F8,   KC_F9,   _______, _______, _______, _______, _______, _______, _______, 
-  _______, KC_F11,  KC_F4,   KC_F5,   KC_F6,   _______, _______, _______, _______, _______, _______, _______, 
-  _______, KC_F10,  KC_F1,   KC_F2,   KC_F3,   _______, _______, _______, _______, _______, _______, _______, 
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  KC_GRV,  KC_TILD, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_UNDS, KC_PLUS, KC_COLN, KC_PIPE,
+  _______, KC_EXLM, KC_SLSH, KC_ASTR, KC_UNDS, KC_BSLS, KC_COMM, KC_DOT,  KC_MINS, KC_EQL,  KC_SCLN, KC_DQUO,  
+  KC_LOCK, KC_LT,   KC_LCBR, KC_LBRC, KC_LPRN, KC_MDASH, KC_QUES, KC_RPRN, KC_RBRC, KC_RCBR, KC_GT,   _______, 
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ 
 ),
-
 
 /* NAV
  * ,-----------------------------------------------------------------------------------.
@@ -220,9 +219,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |  Undo| Cut  | Copy | Paste|      | // TODO undo etc
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      | LOCK |  Left| Down | Up   | Right|      |
+ * |      |      |      |      |      |      |  INS |  Left| Down | Up   | Right|  DEL |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      | INS  |  HOME| PGDN | PGUP | END  |      |
+ * |      |      |      |      |      |      |      |  HOME| PGDN | PGUP | END  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      | Next | Vol- | Vol+ | Play |
  * `-----------------------------------------------------------------------------------'
@@ -230,8 +229,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_NAV] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   _______, _______, KC_HOME, KC_UP,   KC_PGUP, _______, _______, KC_UNDO, KC_CUT , KC_COPY, KC_CMDV, _______,
-  _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, KC_LOCK, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,
-  _______, _______, KC_END,  _______, KC_PGDN, _______, KC_INS,  KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______,
+  _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, KC_INS,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_DEL,
+  _______, _______, KC_END,  _______, KC_PGDN, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______,
   _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
 ),
 
@@ -307,6 +306,11 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 //
 //
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  // Process case modes
+  if (!process_case_modes(keycode, record)) {
+      return false;
+  }
+
   switch (keycode) {
     case COLEMAK:
       if (record->event.pressed) {
@@ -331,7 +335,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_invert(_FNKEY);
       }     
       return false;
-      break;           
+      break;                      
   }
   return true;
 };
@@ -444,7 +448,7 @@ void leader_end(void) {
 //
 
 // Send ; on Single Tap, : on Double Tap
-void dance_scln_finished(qk_tap_dance_state_t *state, void *user_data) {
+void td_scln_finished(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         register_code(KC_SCLN);
     } else {
@@ -452,7 +456,7 @@ void dance_scln_finished(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void dance_scln_reset(qk_tap_dance_state_t *state, void *user_data) {
+void td_scln_reset(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         unregister_code(KC_SCLN);
     } else {
@@ -461,7 +465,7 @@ void dance_scln_reset(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 // Send ' on Single Tap, " on Double Tap
-void dance_quot_finished(qk_tap_dance_state_t *state, void *user_data) {
+void td_quot_finished(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         register_code(KC_QUOT);
     } else {
@@ -469,7 +473,7 @@ void dance_quot_finished(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void dance_quot_reset(qk_tap_dance_state_t *state, void *user_data) {
+void td_quot_reset(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         unregister_code(KC_QUOT);
     } else {
@@ -477,10 +481,27 @@ void dance_quot_reset(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
+void td_shft_finished(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        register_code(KC_LSFT);
+    } else {
+        toggle_caps_word();
+    }
+}
+
+void td_shft_reset(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        unregister_code(KC_LSFT);
+    } else {
+        // ...
+    }
+}
+
 // All tap dance functions 
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_SCLN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_scln_finished, dance_scln_reset),
-    [TD_QUOT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_quot_finished, dance_quot_reset)
+    [TD_SCLN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_scln_finished, td_scln_reset),
+    [TD_QUOT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_quot_finished, td_quot_reset),
+    [TD_SHFT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_shft_finished, td_shft_reset),
 };
 
 //
@@ -489,9 +510,11 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case SCLN:
-          return 180;
+          return 170;
         case QUOT:
-          return 175;         
+          return 170;        
+        case SFT_LCK:
+          return 170; 
         default:
           return TAPPING_TERM;
     }
