@@ -33,6 +33,7 @@ enum tapdance_keycodes {
     TD_SHFT
 };
 
+// tap dance states
 typedef enum {
     TD_NONE,
     TD_UNKNOWN,
@@ -51,6 +52,10 @@ typedef struct {
 } td_tap_t;
 
 td_state_t cur_dance(qk_tap_dance_state_t *state);
+
+//
+// keycode aliases for legibility
+//
 
 // Left-hand home row mods
 #define LCTL_A LCTL_T(KC_A)
@@ -99,6 +104,7 @@ td_state_t cur_dance(qk_tap_dance_state_t *state);
 #define KC_CUT   LCMD(KC_X)
 #define KC_COPY  LCMD(KC_C)
 #define KC_CMDV  LCMD(KC_V)
+#define KC_REDO  LSFT(LCMD(KC_Z))
 
 //
 // Keymap
@@ -240,7 +246,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |  Undo| Cut  | Copy | Paste|      | // TODO undo etc
+ * |      |      |      |      |      |      |      |  Undo| Cut  | Copy | Paste| Redo | 
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |  INS |  Left| Down | Up   | Right|  DEL |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -251,9 +257,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_NAV] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, KC_HOME, KC_UP,   KC_PGUP, _______, _______, KC_UNDO, KC_CUT , KC_COPY, KC_CMDV, _______,
-  _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, KC_INS,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_DEL,
-  _______, _______, KC_END,  _______, KC_PGDN, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______,
+  _______, _______, _______, _______, _______, _______, _______, KC_UNDO, KC_CUT , KC_COPY, KC_CMDV, KC_REDO,
+  _______, _______, _______, _______, _______, _______, KC_INS,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_DEL,
+  _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______,
   _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
 ),
 
@@ -394,6 +400,9 @@ float leader_fail_song[][2]    = SONG(CAPS_LOCK_OFF_SOUND);
 
 void matrix_scan_user(void) {
 
+  //
+  //
+  //
   LEADER_DICTIONARY() {
     leading      = false;
     leader_found = false;
