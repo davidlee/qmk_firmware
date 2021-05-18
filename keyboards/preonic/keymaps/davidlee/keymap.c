@@ -26,10 +26,13 @@ enum preonic_keycodes {
   SC_SLACK,
   SC_DISC,
   SC_TERM,
+  SC_PASS,
   SC_EDITR,
+  SC_SUBL,
   SC_SPOT,
   SC_FINDR,
-  SC_ZETTL
+  SC_ZETTL,
+  SC_THNG
 };
 
 //
@@ -66,7 +69,7 @@ td_state_t cur_dance(qk_tap_dance_state_t *state);
 // keycode aliases for legibility
 //
 
-// Left-hand home row mods
+// Left-hand home row mods 
 #define LCTL_A LCTL_T(KC_A)
 #define LALT_R LALT_T(KC_R)
 #define LCMD_S LCMD_T(KC_S)
@@ -115,6 +118,8 @@ td_state_t cur_dance(qk_tap_dance_state_t *state);
 #define KC_CMDV  LCMD(KC_V)
 #define KC_REDO  LSFT(LCMD(KC_Z))
 
+#define CMD_LBRC LCMD(KC_LBRC)
+#define CMD_RBRC LCMD(KC_RBRC)
 
 //  Application shortcuts
 //
@@ -225,14 +230,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_LOWER] = LAYOUT_preonic_grid(
   KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  KC_F21,  KC_F22,  KC_F23,  KC_F24, 
-  _______, KC_F12,  KC_F7,   KC_F8,   KC_F9,   _______, _______, KC_EJCT, KC_MPLY, KC_WBAK, KC_WFWD, KC_PWR, 
+  _______, KC_F12,  KC_F7,   KC_F8,   KC_F9,   _______, _______, KC_EJCT, KC_MPLY, CMD_LBRC,CMD_RBRC, KC_PWR, 
   _______, KC_F11,  KC_F4,   KC_F5,   KC_F6,   _______, KC_EJCT, KC_LSFT, KC_LCMD, KC_LOPT, KC_LCTL, KC_MPLY, 
   _______, KC_F10,  KC_F1,   KC_F2,   KC_F3,   _______, KC_MPRV, KC_MNXT, KC_VOLD, KC_VOLU, KC_MUTE, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ 
 ),
 
-// TODO add home row mod support
-//
+// TODO cannot do home row mod support - how to allow mods + symbols?
 
 /* Raise
  * ,-----------------------------------------------------------------------------------.
@@ -242,17 +246,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |  !   |  /   |  *   |   _  |  \   |  ,   |  .   |   -  |   =  |  ;   |  "   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | LOCK |  <   |  {   |  [   |   (  |  ––  |  ?   |  )   |   ]  |   }  |  >   |      |  
+ * | SHFT |  <   |  {   |  [   |   (  |  ––  |  ?   |  )   |   ]  |   }  |  >   |      |  
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |      | CTRL | OPT  | CMD  |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   KC_GRV,  KC_TILD, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_UNDS, KC_PLUS, KC_COLN, KC_PIPE,
   _______, KC_EXLM, KC_SLSH, KC_ASTR, KC_UNDS, KC_BSLS, KC_COMM, KC_DOT,  KC_MINS, KC_EQL,  KC_SCLN, KC_DQUO,  
-  KC_LOCK, KC_LT,   KC_LCBR, KC_LBRC, KC_LPRN, KC_MDASH, KC_QUES, KC_RPRN, KC_RBRC, KC_RCBR, KC_GT,   _______, 
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ 
+  KC_LSFT, KC_LT,   KC_LCBR, KC_LBRC, KC_LPRN, KC_MDASH, KC_QUES, KC_RPRN, KC_RBRC, KC_RCBR, KC_GT,   _______, 
+  _______, KC_LCTL, KC_LOPT, _______, _______, _______, _______, _______, _______, _______, _______, _______ 
 ),
 
 /* NAV
@@ -278,9 +282,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* ADJUST
  * ,-----------------------------------------------------------------------------------.
- * | Term |      | Mail | Slack| Brows|Spot  |Discrd| Edit | Zettl|      |      |      |
+ * | Term | 1Pass| Mail | Slack| Brows|Spot  |Discrd| Edit | Zettl| Subl | Findr|Things|
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |    
+ * | Term | 1Pass| Mail | Slack| Brows|Spot  |Discrd| Edit | Zettl| Subl | Findr|Things|   
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -290,8 +294,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_preonic_grid(
-  SC_TERM, _______, SC_MAIL, SC_SLACK,SC_BROWS,SC_SPOT, SC_DISC, SC_EDITR,SC_ZETTL,_______, _______, _______, 
-  SC_TERM, _______, SC_MAIL, SC_SLACK,SC_BROWS,SC_BROWS,SC_DISC, SC_EDITR,SC_ZETTL,_______, _______, _______, 
+  SC_TERM, SC_PASS, SC_MAIL, SC_SLACK,SC_BROWS,SC_SPOT, SC_DISC, SC_EDITR,SC_ZETTL,SC_SUBL, SC_FINDR,SC_THNG, 
+  SC_TERM, SC_PASS, SC_MAIL, SC_SLACK,SC_BROWS,SC_BROWS,SC_DISC, SC_EDITR,SC_ZETTL,SC_SUBL, SC_FINDR,SC_THNG, 
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ 
@@ -381,6 +385,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     // shortcut keycodes (using spotlight)
     //                      
+                          
+    case SC_PASS:
+      if (record->event.pressed) {
+        tap_code16(LCMD(KC_SPC));
+        SEND_STRING("1password");
+        tap_code(KC_ENT);
+      return false;
+      break;        
+      }
     case SC_TERM:
       if (record->event.pressed) {
         tap_code16(LCMD(KC_SPC));
@@ -428,7 +441,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         tap_code(KC_ENT);
       return false;
       break;
-      }     
+      }        
+    case SC_SUBL:
+      if (record->event.pressed) {
+        tap_code16(LCMD(KC_SPC));
+        SEND_STRING("sublime");
+        tap_code(KC_ENT);
+      return false;
+      break;
+      }          
     case SC_SLACK:
       if (record->event.pressed) {
         tap_code16(LCMD(KC_SPC));
@@ -448,11 +469,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SC_FINDR:
       if (record->event.pressed) {
         tap_code16(LCMD(KC_SPC));
-        SEND_STRING("findr");
+        SEND_STRING("finder");
         tap_code(KC_ENT);
       return false;
       break;
-      }               
+      }
+    case SC_THNG:
+      if (record->event.pressed) {
+        tap_code16(LCMD(KC_SPC));
+        SEND_STRING("things");
+        tap_code(KC_ENT);
+      return false;
+      break;
+      }                      
   }
   return true;
 };
