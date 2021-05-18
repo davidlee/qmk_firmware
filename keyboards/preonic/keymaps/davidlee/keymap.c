@@ -20,7 +20,16 @@ enum preonic_keycodes {
   NAV,
   NUMBER,
   MOUSE,
-  BASE
+  BASE,
+  SC_BROWS,
+  SC_MAIL,
+  SC_SLACK,
+  SC_DISC,
+  SC_TERM,
+  SC_EDITR,
+  SC_SPOT,
+  SC_FINDR,
+  SC_ZETTL
 };
 
 //
@@ -106,7 +115,11 @@ td_state_t cur_dance(qk_tap_dance_state_t *state);
 #define KC_CMDV  LCMD(KC_V)
 #define KC_REDO  LSFT(LCMD(KC_Z))
 
+
+//  Application shortcuts
 //
+
+
 // Keymap
 //
 
@@ -265,7 +278,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* ADJUST
  * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * | Term |      | Mail | Slack| Brows|Spot  |Discrd| Edit | Zettl|      |      |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |    
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -277,8 +290,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_preonic_grid(
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
+  SC_TERM, _______, SC_MAIL, SC_SLACK,SC_BROWS,SC_SPOT, SC_DISC, SC_EDITR,SC_ZETTL,_______, _______, _______, 
+  SC_TERM, _______, SC_MAIL, SC_SLACK,SC_BROWS,SC_BROWS,SC_DISC, SC_EDITR,SC_ZETTL,_______, _______, _______, 
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ 
@@ -364,7 +377,82 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_invert(_FNKEY);
       }     
       return false;
-      break;                      
+      break;
+
+    // shortcut keycodes (using spotlight)
+    //                      
+    case SC_TERM:
+      if (record->event.pressed) {
+        tap_code16(LCMD(KC_SPC));
+        SEND_STRING("iterm");
+        tap_code(KC_ENT);
+      return false;
+      break;        
+      }                      
+    case SC_BROWS:
+      if (record->event.pressed) {
+        tap_code16(LCMD(KC_SPC));
+        SEND_STRING("brave");
+        tap_code(KC_ENT);
+      return false;
+      break;        
+      }        
+    case SC_MAIL:
+      if (record->event.pressed) {
+        tap_code16(LCMD(KC_SPC));
+        SEND_STRING("mailplane");
+        tap_code(KC_ENT);
+      return false;
+      break;        
+      }  
+    case SC_SPOT:
+      if (record->event.pressed) {
+        tap_code16(LCMD(KC_SPC));
+        SEND_STRING("spotify");
+        tap_code(KC_ENT);
+      return false;
+      break;
+      }     
+    case SC_EDITR:
+      if (record->event.pressed) {
+        tap_code16(LCMD(KC_SPC));
+        SEND_STRING("emacs");
+        tap_code(KC_ENT);
+      return false;
+      break;
+      }        
+    case SC_ZETTL:
+      if (record->event.pressed) {
+        tap_code16(LCMD(KC_SPC));
+        SEND_STRING("obsidian");
+        tap_code(KC_ENT);
+      return false;
+      break;
+      }     
+    case SC_SLACK:
+      if (record->event.pressed) {
+        tap_code16(LCMD(KC_SPC));
+        SEND_STRING("slack");
+        tap_code(KC_ENT);
+      return false;
+      break;
+      }       
+    case SC_DISC:
+      if (record->event.pressed) {
+        tap_code16(LCMD(KC_SPC));
+        SEND_STRING("discord");
+        tap_code(KC_ENT);
+      return false;
+      break;
+      }     
+    case SC_FINDR:
+      if (record->event.pressed) {
+        tap_code16(LCMD(KC_SPC));
+        SEND_STRING("findr");
+        tap_code(KC_ENT);
+      return false;
+      break;
+      }               
   }
   return true;
 };
