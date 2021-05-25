@@ -1,6 +1,8 @@
 #include QMK_KEYBOARD_H
 #include "features/casemodes.h"
 
+// TODO a way to hold down space bar ... its a thing for eg panning in Mural
+
 enum preonic_layers {
   _COLEMAK,
   _FNKEY,  
@@ -21,6 +23,7 @@ enum preonic_keycodes {
   NUMBER,
   MOUSE,
   BASE,
+  // shortcuts
   SC_BROWS,
   SC_MAIL,
   SC_SLACK,
@@ -219,7 +222,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |  F13 |  F14 |  F15 |  F16 |  F17 |  F18 |  F19 |  F20 |  F21 |  F22 |  F23 |  F24 |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |  F12 |  F7  |  F8  |  F9  |      |      | Eject| Play | Back | Fwd  |  Pwr |     
+ * |      |  F12 |  F7  |  F8  |  F9  |      |      | Eject| Play | Back | Fwd  |      |     
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |  F11 |  F4  |  F5  |  F6  |      |      | Shft | Cmd  | Alt  | Ctrl | Play |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -230,13 +233,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_LOWER] = LAYOUT_preonic_grid(
   KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  KC_F21,  KC_F22,  KC_F23,  KC_F24, 
-  _______, KC_F12,  KC_F7,   KC_F8,   KC_F9,   _______, _______, KC_EJCT, KC_MPLY, CMD_LBRC,CMD_RBRC, KC_PWR, 
+  _______, KC_F12,  KC_F7,   KC_F8,   KC_F9,   _______, _______, KC_EJCT, KC_MPLY, CMD_LBRC,CMD_RBRC,_______, 
   _______, KC_F11,  KC_F4,   KC_F5,   KC_F6,   _______, KC_EJCT, KC_LSFT, KC_LCMD, KC_LOPT, KC_LCTL, KC_MPLY, 
   _______, KC_F10,  KC_F1,   KC_F2,   KC_F3,   _______, KC_MPRV, KC_MNXT, KC_VOLD, KC_VOLU, KC_MUTE, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ 
 ),
-
-// TODO cannot do home row mod support - how to allow mods + symbols?
 
 /* Raise
  * ,-----------------------------------------------------------------------------------.
@@ -685,11 +686,15 @@ void td_quot_reset(qk_tap_dance_state_t *state, void *user_data) {
         unregister_code16(KC_DQUO);
     }
 }
+
+// LEFT shift - tap for one shot, double tap to caps word, triple for caps lock
 // 
 void td_shft_finished(qk_tap_dance_state_t *state, void *user_data) {
     shft_tap_state.state = cur_dance(state);
     switch (shft_tap_state.state) {
       case TD_SINGLE_TAP: 
+        set_oneshot_mods(MOD_LSFT);
+        break;
       case TD_DOUBLE_SINGLE_TAP: 
         toggle_caps_word();
         break;
@@ -698,9 +703,11 @@ void td_shft_finished(qk_tap_dance_state_t *state, void *user_data) {
         register_code(KC_LSFT); 
         break;
       case TD_DOUBLE_TAP: 
+        toggle_caps_word();
+        break;
+      case TD_TRIPLE_TAP: 
         tap_code(KC_CAPS); 
         break;
-      case TD_TRIPLE_TAP: break;
       case TD_TRIPLE_HOLD: break;
       case TD_UNKNOWN: break;
       case TD_NONE: break;
@@ -734,15 +741,16 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 //
 // per key tapping term 
+// TODO set tapping term to lower numbers on the home row mods
 //
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case SCLN:
-          return 200;
+          return TAPPING_TERM - 20;
         case QUOT:
-          return 180;        
+          return TAPPING_TERM - 20;
         case SFT_LCK:
-          return 200; 
+          return TAPPING_TERM + 20;
         default:
           return TAPPING_TERM;
     }
