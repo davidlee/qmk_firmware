@@ -430,7 +430,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SC_EDITR:
       if (record->event.pressed) {
         tap_code16(LCMD(KC_SPC));
-        SEND_STRING("emacs");
+        SEND_STRING("NotePlan");
         tap_code(KC_ENT);
       return false;
       break;
@@ -438,7 +438,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SC_ZETTL:
       if (record->event.pressed) {
         tap_code16(LCMD(KC_SPC));
-        SEND_STRING("obsidian");
+        SEND_STRING("remnote");
         tap_code(KC_ENT);
       return false;
       break;
@@ -716,19 +716,22 @@ void td_shft_finished(qk_tap_dance_state_t *state, void *user_data) {
 
 void td_shft_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (shft_tap_state.state) {
-      case TD_SINGLE_TAP: break;
+      case TD_SINGLE_TAP: 
+        disable_caps_word();
+        break;
       case TD_DOUBLE_SINGLE_TAP: break;
       case TD_SINGLE_HOLD: 
       case TD_DOUBLE_HOLD: 
-        unregister_code(KC_LSFT); 
+        unregister_code(KC_LSFT);
+        disable_caps_word();
         break;
       case TD_DOUBLE_TAP: break;
       case TD_TRIPLE_TAP: break;
       case TD_TRIPLE_HOLD: break;
       case TD_UNKNOWN: break;
       case TD_NONE: break;
-    shft_tap_state.state = TD_NONE;
   }
+  shft_tap_state.state = TD_NONE;
 }
 
 
