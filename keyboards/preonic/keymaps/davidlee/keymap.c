@@ -24,18 +24,18 @@ enum preonic_keycodes {
   MOUSE,
   BASE,
   // shortcuts
-  SC_BROWS,
-  SC_MAIL,
-  SC_SLACK,
-  SC_DISC,
-  SC_TERM,
-  SC_PASS,
-  SC_EDITR,
-  SC_SUBL,
-  SC_SPOT,
-  SC_FINDR,
-  SC_ZETTL,
-  SC_THNG
+  SC_TILD,
+  SC_1,
+  SC_2,
+  SC_3,
+  SC_4,
+  SC_5,
+  SC_6,
+  SC_7,
+  SC_8,
+  SC_9,
+  SC_0,
+  SC_DEL
 };
 
 //
@@ -192,7 +192,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_MOUSE] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   _______, KC_BTN3, _______, KC_BTN2, KC_BTN1, _______, _______, _______, _______, _______, _______, _______,
-  BASE,    _______, _______, _______, _______, _______, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, BASE,
+  _______, _______, _______, _______, _______, _______, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, BASE,
   _______, _______, KC_BTN3, KC_BTN2, KC_BTN1, _______, KC_BTN2, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
@@ -284,9 +284,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* ADJUST
  * ,-----------------------------------------------------------------------------------.
- * | Term | 1Pass| Mail | Slack| Brows|Spot  |Discrd| Edit | Zettl| Subl | Findr|Things|
+ * | Term | 1Pass| Brave| Mail | Slack|Notep |Remnot| Emacs| Ulyss| Subl |Things|Findr |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Term | 1Pass| Mail | Slack| Brows|Spot  |Discrd| Edit | Zettl| Subl | Findr|Things|   
+ * | Term | 1Pass| Brave| Mail | Slack|Notep |Remnot| Emacs| Ulyss| Subl |Things|Findr |   
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -296,8 +296,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_preonic_grid(
-  SC_TERM, SC_PASS, SC_MAIL, SC_SLACK,SC_BROWS,SC_SPOT, SC_DISC, SC_EDITR,SC_ZETTL,SC_SUBL, SC_FINDR,SC_THNG, 
-  SC_TERM, SC_PASS, SC_MAIL, SC_SLACK,SC_BROWS,SC_BROWS,SC_DISC, SC_EDITR,SC_ZETTL,SC_SUBL, SC_FINDR,SC_THNG, 
+  SC_TILD, SC_1,    SC_2,    SC_3,    SC_4,    SC_5,    SC_6,    SC_7,    SC_8,    SC_9,    SC_0,    SC_DEL, 
+  SC_TILD, SC_1,    SC_2,    SC_3,    SC_4,    SC_5,    SC_6,    SC_7,    SC_8,    SC_9,    SC_0,    SC_DEL, 
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ 
@@ -387,8 +387,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     // shortcut keycodes (using spotlight)
     //                      
-                          
-    case SC_PASS:
+    case SC_TILD:
+      if (record->event.pressed) {
+        tap_code16(LCMD(KC_SPC));
+        SEND_STRING("iterm");
+        tap_code(KC_ENT);
+      return false;
+      break;        
+      }                           
+    case SC_1:
       if (record->event.pressed) {
         tap_code16(LCMD(KC_SPC));
         SEND_STRING("1password");
@@ -396,15 +403,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
       break;        
       }
-    case SC_TERM:
-      if (record->event.pressed) {
-        tap_code16(LCMD(KC_SPC));
-        SEND_STRING("iterm");
-        tap_code(KC_ENT);
-      return false;
-      break;        
-      }                      
-    case SC_BROWS:
+    case SC_2:
       if (record->event.pressed) {
         tap_code16(LCMD(KC_SPC));
         SEND_STRING("brave");
@@ -412,7 +411,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
       break;        
       }        
-    case SC_MAIL:
+    case SC_3:
       if (record->event.pressed) {
         tap_code16(LCMD(KC_SPC));
         SEND_STRING("mailplane");
@@ -420,15 +419,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
       break;        
       }  
-    case SC_SPOT:
+    case SC_4:
       if (record->event.pressed) {
         tap_code16(LCMD(KC_SPC));
-        SEND_STRING("spotify");
+        SEND_STRING("slack");
         tap_code(KC_ENT);
       return false;
       break;
       }     
-    case SC_EDITR:
+    case SC_5:
       if (record->event.pressed) {
         tap_code16(LCMD(KC_SPC));
         SEND_STRING("NotePlan");
@@ -436,7 +435,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
       break;
       }        
-    case SC_ZETTL:
+    case SC_6:
       if (record->event.pressed) {
         tap_code16(LCMD(KC_SPC));
         SEND_STRING("remnote");
@@ -444,42 +443,42 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
       break;
       }        
-    case SC_SUBL:
+    case SC_7:
+      if (record->event.pressed) {
+        tap_code16(LCMD(KC_SPC));
+        SEND_STRING("emacs");
+        tap_code(KC_ENT);
+      return false;
+      break;
+      }          
+    case SC_8:
+      if (record->event.pressed) {
+        tap_code16(LCMD(KC_SPC));
+        SEND_STRING("ulysses");
+        tap_code(KC_ENT);
+      return false;
+      break;
+      }       
+    case SC_9:
       if (record->event.pressed) {
         tap_code16(LCMD(KC_SPC));
         SEND_STRING("sublime");
         tap_code(KC_ENT);
       return false;
       break;
-      }          
-    case SC_SLACK:
-      if (record->event.pressed) {
-        tap_code16(LCMD(KC_SPC));
-        SEND_STRING("slack");
-        tap_code(KC_ENT);
-      return false;
-      break;
-      }       
-    case SC_DISC:
-      if (record->event.pressed) {
-        tap_code16(LCMD(KC_SPC));
-        SEND_STRING("discord");
-        tap_code(KC_ENT);
-      return false;
-      break;
       }     
-    case SC_FINDR:
+    case SC_0:
       if (record->event.pressed) {
         tap_code16(LCMD(KC_SPC));
-        SEND_STRING("finder");
+        SEND_STRING("things");
         tap_code(KC_ENT);
       return false;
       break;
       }
-    case SC_THNG:
+    case SC_DEL:
       if (record->event.pressed) {
         tap_code16(LCMD(KC_SPC));
-        SEND_STRING("things");
+        SEND_STRING("finder");
         tap_code(KC_ENT);
       return false;
       break;
@@ -512,7 +511,6 @@ LEADER_EXTERNS();
 
 bool leader_found;
 #ifdef AUDIO_ENABLE
-// float leader_start_song[][2]   = SONG(CAPS_LOCK_ON_SOUND);
 float leader_succeed_song[][2] = SONG(TERMINAL_SOUND);
 float leader_fail_song[][2]    = SONG(CAPS_LOCK_OFF_SOUND);
 #endif
