@@ -111,7 +111,8 @@ td_state_t cur_dance(qk_tap_dance_state_t *state);
 #define SCLN TD(TD_SCLN)
 // quote or double tap for double quote
 #define QUOT TD(TD_QUOT)
-// double shift is caps
+
+// L shift tap dances
 #define SFT_LCK TD(TD_SHFT)
 
 // CLIPBOARD management
@@ -143,7 +144,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |Shift |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  | Enter|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | MENU |  FN  | CAPS |  Cmd | Spc  | Lwr  | Rse  | Bksp |  ⬅️  |  ⬇️  |  ⬆️  |  ➡️  |
+ * | MENU |  FN  | Opt  |  Cmd | Spc  | Lwr  | Rse  | Bksp |  ⬅️  |  ⬇️  |  ⬆️  |  ➡️  |
  * `-----------------------------------------------------------------------------------'
  */
 [_COLEMAK] = LAYOUT_preonic_grid(
@@ -151,7 +152,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,  KC_Q,    W_MOUS,  KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCLN,    KC_BSLS,
   CTL_ESC, LCTL_A,  LALT_R,  LCMD_S,  HOME_T,  KC_G,    KC_M,    RSFT_N,  RCMD_E,  LALT_I,  RCTL_O,  QUOT,
   SFT_LCK, KC_Z,    RALT_X,  KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, RALT_DOT,KC_SLSH, KC_SFTENT,
-  KC_LEAD, FNKEY,   KC_CAPS, ESC_CMD, SPC_NUM, TAB_LWR, ENT_RSE, BS_NAV,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+  KC_LEAD, FNKEY,   KC_LOPT, ESC_CMD, SPC_NUM, TAB_LWR, ENT_RSE, BS_NAV,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
 /* FNKEY
