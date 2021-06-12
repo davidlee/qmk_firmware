@@ -13,7 +13,7 @@
 #define MUSIC_MASK (keycode != KC_NO)
 
 // Configure the global tapping term (default: 200ms)
-#define TAPPING_TERM 170
+#define TAPPING_TERM 150
 #define TAPPING_TERM_PER_KEY
 
 // Prevent normal rollover on alphas from accidentally triggering mods.

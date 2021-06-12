@@ -223,7 +223,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |  F13 |  F14 |  F15 |  F16 |  F17 |  F18 |  F19 |  F20 |  F21 |  F22 |  F23 |  F24 |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |  F12 |  F7  |  F8  |  F9  |      |      | Eject| Play | Back | Fwd  |      |     
+ * |      |  F12 |  F7  |  F8  |  F9  |      |      | Eject| Play |CMD-[ |CMD-] |      |     
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |  F11 |  F4  |  F5  |  F6  |      |      | Shft | Cmd  | Alt  | Ctrl | Play |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -284,9 +284,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* ADJUST
  * ,-----------------------------------------------------------------------------------.
- * | Term | 1Pass| Brave| Mail | Slack|Notep |Remnot| Emacs| Ulyss| Subl |Things|Findr |
+ * | Term | 1Pass| Brave| Mail | Slack|Notep |Remnot| Music| Ulyss| Subl |Things|Findr |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Term | 1Pass| Brave| Mail | Slack|Notep |Remnot| Emacs| Ulyss| Subl |Things|Findr |   
+ * | Term | 1Pass| Brave| Mail | Slack|Notep |Remnot| Music| Ulyss| Subl |Things|Findr |   
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -446,7 +446,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SC_7:
       if (record->event.pressed) {
         tap_code16(LCMD(KC_SPC));
-        SEND_STRING("emacs");
+        SEND_STRING("spotify");
         tap_code(KC_ENT);
       return false;
       break;
@@ -748,9 +748,9 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case SCLN:
-          return TAPPING_TERM - 20;
+          return TAPPING_TERM;
         case QUOT:
-          return TAPPING_TERM - 20;
+          return TAPPING_TERM + 20;
         case SFT_LCK:
           return TAPPING_TERM + 20;
         default:
