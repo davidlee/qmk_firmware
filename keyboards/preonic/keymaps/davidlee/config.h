@@ -13,21 +13,21 @@
 #define MUSIC_MASK (keycode != KC_NO)
 
 // Configure the global tapping term (default: 200ms)
-#define TAPPING_TERM 150
-#define TAPPING_TERM_PER_KEY
+#define TAPPING_TERM 170
+#define TAPPING_TERM_PER_KEY 1
 
 // Prevent normal rollover on alphas from accidentally triggering mods.
-#define IGNORE_MOD_TAP_INTERRUPT
+#define IGNORE_MOD_TAP_INTERRUPT 1
 
 // Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
-#define TAPPING_FORCE_HOLD
+#define TAPPING_FORCE_HOLD 1
 
 // Apply the modifier on keys that are tapped during a short hold of a modtap
-#define PERMISSIVE_HOLD
+#define PERMISSIVE_HOLD 1
 
 // allow leader
 #define LEADER_TIMEOUT 500
-#define LEADER_PER_KEY_TIMING                           
+#define LEADER_PER_KEY_TIMING 1                           
 
 // Recommended for heavy chording.
 #define QMK_KEYS_PER_SCAN 4
