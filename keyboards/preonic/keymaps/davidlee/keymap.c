@@ -73,17 +73,17 @@ td_state_t cur_dance(qk_tap_dance_state_t *state);
 //
 
 // Left-hand home row mods 
-#define LCTL_A LCTL_T(KC_A)
-#define LALT_R LALT_T(KC_R)
-#define LCMD_S LCMD_T(KC_S)
+#define HOME_A LCTL_T(KC_A)
+#define HOME_R LALT_T(KC_R)
+#define HOME_S LCMD_T(KC_S)
 #define HOME_T LSFT_T(KC_T)
 #define RALT_X RALT_T(KC_X)
 
 // Right-hand home row mods
-#define RSFT_N RSFT_T(KC_N)
-#define RCMD_E RCMD_T(KC_E)
-#define LALT_I LALT_T(KC_I)
-#define RCTL_O RCTL_T(KC_O)
+#define HOME_N RSFT_T(KC_N)
+#define HOME_E RCMD_T(KC_E)
+#define HOME_I LALT_T(KC_I)
+#define HOME_O RCTL_T(KC_O)
 #define RALT_DOT RALT_T(KC_DOT)
 
 // hold W for mouse layer
@@ -150,7 +150,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_COLEMAK] = LAYOUT_preonic_grid(
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL,
   KC_TAB,  KC_Q,    W_MOUS,  KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCLN,    KC_BSLS,
-  CTL_ESC, LCTL_A,  LALT_R,  LCMD_S,  HOME_T,  KC_G,    KC_M,    RSFT_N,  RCMD_E,  LALT_I,  RCTL_O,  QUOT,
+  CTL_ESC, HOME_A,  HOME_R,  HOME_S,  HOME_T,  KC_G,    KC_M,    HOME_N,  HOME_E,  HOME_I,  HOME_O,  QUOT,
   SFT_LCK, KC_Z,    RALT_X,  KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, RALT_DOT,KC_SLSH, KC_SFTENT,
   KC_LEAD, FNKEY,   KC_LOPT, ESC_CMD, SPC_NUM, TAB_LWR, ENT_RSE, BS_NAV,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
@@ -747,6 +747,18 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 //
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+        case HOME_I:
+            // My ring finger tends to linger on the key 
+            // This tapping term allows me to type "ion" effortlessly.
+            return TAPPING_TERM + 50;
+        case HOME_O:
+            return TAPPING_TERM + 10;
+        // These next mod taps are used very frequently during typing.
+        // As such, the lower the tapping term, the faster the typing.
+        case HOME_S:
+            return TAPPING_TERM - 28;
+        case HOME_E:
+            return TAPPING_TERM - 26;
         case SCLN:
           return TAPPING_TERM;
         case QUOT:
