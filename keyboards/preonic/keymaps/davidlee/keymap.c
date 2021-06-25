@@ -749,7 +749,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case HOME_I:
             // My ring finger tends to linger on the key 
-            // This tapping term allows me to type "ion" effortlessly.
+            // This tapping term allows me to type "ion" reliably.
             return TAPPING_TERM + 50;
         case HOME_O:
             return TAPPING_TERM + 10;
@@ -769,3 +769,4 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
           return TAPPING_TERM;
     }
 }
+

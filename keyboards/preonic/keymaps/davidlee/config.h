@@ -23,7 +23,7 @@
 #define TAPPING_FORCE_HOLD 1
 
 // Apply the modifier on keys that are tapped during a short hold of a modtap
-#define PERMISSIVE_HOLD 1
+// #define PERMISSIVE_HOLD 1
 
 // allow leader
 #define LEADER_TIMEOUT 500
