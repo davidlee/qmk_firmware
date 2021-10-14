@@ -5,6 +5,7 @@
 
 enum preonic_layers {
   _COLEMAK,
+  _HOMEROWMODS,
   _FNKEY,  
   _NUMBER,
   _LOWER,
@@ -16,6 +17,7 @@ enum preonic_layers {
 
 enum preonic_keycodes {
   COLEMAK = SAFE_RANGE,
+  HOMEROWMODS,
   FNKEY,
   LOWER,
   RAISE,
@@ -73,17 +75,17 @@ td_state_t cur_dance(qk_tap_dance_state_t *state);
 //
 
 // Left-hand home row mods 
-#define HOME_A LCTL_T(KC_A)
-#define HOME_R LALT_T(KC_R)
-#define HOME_S LCMD_T(KC_S)
-#define HOME_T LSFT_T(KC_T)
+#define CTRL_A LCTL_T(KC_A)
+#define OPT_R LALT_T(KC_R)
+#define CMD_S LCMD_T(KC_S)
+#define SHIFT_T LSFT_T(KC_T)
 #define RALT_X RALT_T(KC_X)
 
 // Right-hand home row mods
-#define HOME_N RSFT_T(KC_N)
-#define HOME_E RCMD_T(KC_E)
-#define HOME_I LALT_T(KC_I)
-#define HOME_O RCTL_T(KC_O)
+#define SHIFT_N RSFT_T(KC_N)
+#define CMD_E RCMD_T(KC_E)
+#define OPT_I LALT_T(KC_I)
+#define CTRL_O RCTL_T(KC_O)
 #define RALT_DOT RALT_T(KC_DOT)
 
 // hold W for mouse layer
@@ -150,9 +152,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_COLEMAK] = LAYOUT_preonic_grid(
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL,
   KC_TAB,  KC_Q,    W_MOUS,  KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCLN,    KC_BSLS,
-  CTL_ESC, HOME_A,  HOME_R,  HOME_S,  HOME_T,  KC_G,    KC_M,    HOME_N,  HOME_E,  HOME_I,  HOME_O,  QUOT,
+  CTL_ESC, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    QUOT,
   SFT_LCK, KC_Z,    RALT_X,  KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, RALT_DOT,KC_SLSH, KC_SFTENT,
   KC_LEAD, FNKEY,   KC_LOPT, ESC_CMD, SPC_NUM, TAB_LWR, ENT_RSE, BS_NAV,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+),
+
+/* HomeRowMods
+ * ,-----------------------------------------------------------------------------------.
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      | Mouse|      |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |      | Ctrl | Alt  | Cmd  | Shift|      |      |Shift | Alt  | Cmd  | Ctrl |      |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * |      |      | rAlt |      |      |      |      |      | rAlt |      |      |      |                                               
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_HOMEROWMODS] = LAYOUT_preonic_grid(
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  _______, CTRL_A,  OPT_R,   CMD_S,   SHIFT_T, _______, _______, SHIFT_N, CMD_E,   OPT_I,   CTRL_O,  _______,
+  _______, _______, RALT_X,  _______, _______, _______, _______, _______, _______, RALT_DOT,_______, _______,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
 /* FNKEY
@@ -363,6 +386,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case COLEMAK:
       if (record->event.pressed) {
         set_single_persistent_default_layer(_COLEMAK);
+        layer_on(_HOMEROWMODS);
       }
       return false;
       break; 
@@ -587,7 +611,8 @@ void leader_end(void) {
 #endif
   } else {
     layer_clear();
-    set_single_persistent_default_layer(_COLEMAK);    
+    set_single_persistent_default_layer(_COLEMAK);
+    layer_on(_HOMEROWMODS);    
 #ifdef AUDIO_ENABLE
     PLAY_SONG(leader_fail_song);
 #endif  
@@ -749,17 +774,17 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 //
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case HOME_I:
+        case OPT_I:
             // My ring finger tends to linger on the key 
             // This tapping term allows me to type "ion" reliably.
             return TAPPING_TERM + 50;
-        case HOME_O:
+        case CTRL_O:
             return TAPPING_TERM + 10;
         // These next mod taps are used very frequently during typing.
         // As such, the lower the tapping term, the faster the typing.
-        case HOME_S:
+        case CMD_S:
             return TAPPING_TERM + 15;
-        case HOME_E:
+        case CMD_E:
             return TAPPING_TERM + 15;
         case SCLN:
           return TAPPING_TERM;
@@ -771,4 +796,3 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
           return TAPPING_TERM;
     }
 }
-
