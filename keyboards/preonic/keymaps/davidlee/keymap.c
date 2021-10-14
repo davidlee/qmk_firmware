@@ -390,7 +390,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SC_TILD:
       if (record->event.pressed) {
         tap_code16(LCMD(KC_SPC));
-        SEND_STRING("iterm");
+        SEND_STRING("kitty");
         tap_code(KC_ENT);
       return false;
       break;        
@@ -422,7 +422,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SC_4:
       if (record->event.pressed) {
         tap_code16(LCMD(KC_SPC));
-        SEND_STRING("slack");
+        SEND_STRING("emacs");
         tap_code(KC_ENT);
       return false;
       break;
@@ -430,7 +430,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SC_5:
       if (record->event.pressed) {
         tap_code16(LCMD(KC_SPC));
-        SEND_STRING("NotePlan");
+        SEND_STRING("slack");
         tap_code(KC_ENT);
       return false;
       break;
@@ -454,7 +454,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SC_8:
       if (record->event.pressed) {
         tap_code16(LCMD(KC_SPC));
-        SEND_STRING("ulysses");
+        SEND_STRING("sublime");
         tap_code(KC_ENT);
       return false;
       break;
@@ -462,7 +462,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SC_9:
       if (record->event.pressed) {
         tap_code16(LCMD(KC_SPC));
-        SEND_STRING("sublime");
+        SEND_STRING("");
         tap_code(KC_ENT);
       return false;
       break;
@@ -470,7 +470,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SC_0:
       if (record->event.pressed) {
         tap_code16(LCMD(KC_SPC));
-        SEND_STRING("things");
+        SEND_STRING("");
         tap_code(KC_ENT);
       return false;
       break;
@@ -523,7 +523,8 @@ void matrix_scan_user(void) {
   LEADER_DICTIONARY() {
     leading      = false;
     leader_found = false;
-
+    
+    /*  
     // COLEMAK & turn other layers off
     SEQ_ONE_KEY(KC_C) {
       layer_clear();
@@ -561,15 +562,16 @@ void matrix_scan_user(void) {
       leader_found = true;
     }     
 
-    // Q — RESET 
-    SEQ_ONE_KEY(KC_Q) {
-      reset_keyboard();
-      leader_found = true;
-    }
-
     // F — toggle FNKEYS on home row
     SEQ_ONE_KEY(KC_F) {
       layer_invert(_FNKEY);
+      leader_found = true;
+    }
+    */ 
+
+    // Q — RESET 
+    SEQ_ONE_KEY(KC_Q) {
+      reset_keyboard();
       leader_found = true;
     }
 
@@ -756,13 +758,13 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         // These next mod taps are used very frequently during typing.
         // As such, the lower the tapping term, the faster the typing.
         case HOME_S:
-            return TAPPING_TERM - 28;
+            return TAPPING_TERM + 15;
         case HOME_E:
-            return TAPPING_TERM - 26;
+            return TAPPING_TERM + 15;
         case SCLN:
           return TAPPING_TERM;
         case QUOT:
-          return TAPPING_TERM + 20;
+          return TAPPING_TERM;
         case SFT_LCK:
           return TAPPING_TERM + 20;
         default:
