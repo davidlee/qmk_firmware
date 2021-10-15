@@ -24,20 +24,7 @@ enum preonic_keycodes {
   NAV,
   NUMBER,
   MOUSE,
-  BASE,
-  // shortcuts
-  SC_TILD,
-  SC_1,
-  SC_2,
-  SC_3,
-  SC_4,
-  SC_5,
-  SC_6,
-  SC_7,
-  SC_8,
-  SC_9,
-  SC_0,
-  SC_DEL
+  BASE
 };
 
 //
@@ -205,9 +192,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |  b3  |      |  b2  |  b1  |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |  b1  |  mL  |  mDn |  mUp |  mR  | BASE | 
+ * |      |      |      |      |      |      |  b1  |  mL  |  mDn |  mUp |  mR  |      | 
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |  b3  |  b2  |  b1  |      |  b2  | whLt | whDn |  whUp| whRt |      |                                               
+ * |      |  b3  |  b3  |  b2  |  b1  |      |  b2  | whLt | whDn |  whUp| whRt |      |                                               
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
@@ -215,8 +202,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_MOUSE] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   _______, KC_BTN3, _______, KC_BTN2, KC_BTN1, _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, _______, _______, _______, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, BASE,
-  _______, _______, KC_BTN3, KC_BTN2, KC_BTN1, _______, KC_BTN2, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______,
+  _______, KC_ACL0, KC_ACL0, KC_ACL1, KC_ACL2, _______, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______,
+  _______, KC_BTN3, KC_BTN3, KC_BTN2, KC_BTN1, _______, KC_BTN2, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
@@ -265,7 +252,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Raise
  * ,-----------------------------------------------------------------------------------.
- * | Term | 1Pass| Brave| Mail | Slack|Notep |Remnot| Music| Ulyss| Subl |Things|Findr |
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |  `   |  ~   |  ;   |  :   |  |   |  /   |   \  |  &   |  *   |  [   |  ]   |  |   |     
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -277,7 +264,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT_preonic_grid(
-  SC_TILD, SC_1,    SC_2,    SC_3,    SC_4,    SC_5,    SC_6,    SC_7,    SC_8,    SC_9,    SC_0,    SC_DEL,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
   KC_GRV,  KC_TILD, KC_SCLN, KC_COLN, KC_PIPE, KC_SLSH, KC_BSLS, KC_AMPR, KC_ASTR, KC_LBRC, KC_RBRC, KC_PIPE,
   _______, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_MINS, KC_EQL,  KC_LPRN, KC_RPRN, KC_DQUO,  
   _______, KC_LT,   KC_GT,   KC_COMM, KC_DOT,  KC_QUES, KC_MDASH,KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, _______, 
@@ -390,12 +377,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break; 
-    case BASE:
-      if (record->event.pressed) {
-        layer_clear();
-      }   
-      return false;
-      break;
     case MOUSE:
       if (record->event.pressed) {
         layer_on(_MOUSE);
@@ -407,106 +388,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_invert(_FNKEY);
       }     
       return false;
-      break;
-
-    // shortcut keycodes (using spotlight)
-    //                      
-    case SC_TILD:
-      if (record->event.pressed) {
-        tap_code16(LCMD(KC_SPC));
-        SEND_STRING("kitty");
-        tap_code(KC_ENT);
-      return false;
-      break;        
-      }                           
-    case SC_1:
-      if (record->event.pressed) {
-        tap_code16(LCMD(KC_SPC));
-        SEND_STRING("1password");
-        tap_code(KC_ENT);
-      return false;
-      break;        
-      }
-    case SC_2:
-      if (record->event.pressed) {
-        tap_code16(LCMD(KC_SPC));
-        SEND_STRING("brave");
-        tap_code(KC_ENT);
-      return false;
-      break;        
-      }        
-    case SC_3:
-      if (record->event.pressed) {
-        tap_code16(LCMD(KC_SPC));
-        SEND_STRING("mailplane");
-        tap_code(KC_ENT);
-      return false;
-      break;        
-      }  
-    case SC_4:
-      if (record->event.pressed) {
-        tap_code16(LCMD(KC_SPC));
-        SEND_STRING("emacs");
-        tap_code(KC_ENT);
-      return false;
-      break;
-      }     
-    case SC_5:
-      if (record->event.pressed) {
-        tap_code16(LCMD(KC_SPC));
-        SEND_STRING("slack");
-        tap_code(KC_ENT);
-      return false;
-      break;
-      }        
-    case SC_6:
-      if (record->event.pressed) {
-        tap_code16(LCMD(KC_SPC));
-        SEND_STRING("remnote");
-        tap_code(KC_ENT);
-      return false;
-      break;
-      }        
-    case SC_7:
-      if (record->event.pressed) {
-        tap_code16(LCMD(KC_SPC));
-        SEND_STRING("spotify");
-        tap_code(KC_ENT);
-      return false;
-      break;
-      }          
-    case SC_8:
-      if (record->event.pressed) {
-        tap_code16(LCMD(KC_SPC));
-        SEND_STRING("sublime");
-        tap_code(KC_ENT);
-      return false;
-      break;
-      }       
-    case SC_9:
-      if (record->event.pressed) {
-        tap_code16(LCMD(KC_SPC));
-        SEND_STRING("");
-        tap_code(KC_ENT);
-      return false;
-      break;
-      }     
-    case SC_0:
-      if (record->event.pressed) {
-        tap_code16(LCMD(KC_SPC));
-        SEND_STRING("");
-        tap_code(KC_ENT);
-      return false;
-      break;
-      }
-    case SC_DEL:
-      if (record->event.pressed) {
-        tap_code16(LCMD(KC_SPC));
-        SEND_STRING("finder");
-        tap_code(KC_ENT);
-      return false;
-      break;
-      }                      
+      break;              
   }
   return true;
 };
@@ -515,7 +397,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // musics
 //
 #ifdef AUDIO_ENABLE
-float tone_startup[][2] = SONG(AUDIO_ON_SOUND);
+float tone_startup[][2] = SONG(NO_SOUND); 
 #endif
 
 void matrix_init_user(void) {
@@ -535,64 +417,15 @@ LEADER_EXTERNS();
 
 bool leader_found;
 #ifdef AUDIO_ENABLE
-float leader_succeed_song[][2] = SONG(TERMINAL_SOUND);
+float leader_succeed_song[][2] = SONG(CAPS_LOCK_ON_SOUND);
 float leader_fail_song[][2]    = SONG(CAPS_LOCK_OFF_SOUND);
 #endif
 
 void matrix_scan_user(void) {
-
-  //
-  //
-  //
   LEADER_DICTIONARY() {
     leading      = false;
     leader_found = false;
     
-    /*  
-    // COLEMAK & turn other layers off
-    SEQ_ONE_KEY(KC_C) {
-      layer_clear();
-      set_single_persistent_default_layer(_COLEMAK);
-      leader_found = true;
-    } 
-
-    // M - TOGGLE MOUSE LAYER
-    SEQ_ONE_KEY(KC_M) { 
-      layer_invert(_MOUSE);
-      leader_found = true;
-    }     
-
-    // SPC - TOGGLE NUMBER LAYER
-    SEQ_ONE_KEY(KC_SPC) { 
-      layer_invert(_NUMBER);
-      leader_found = true;
-    }     
-
-    // TAB - TOGGLE LOWER LAYER
-    SEQ_ONE_KEY(KC_TAB) { 
-      layer_invert(_LOWER);
-      leader_found = true;
-    }     
-
-    // ENTER - TOGGLE RAISE LAYER
-    SEQ_ONE_KEY(KC_ENT) { 
-      layer_invert(_RAISE);
-      leader_found = true;
-    }     
-
-    // ESC - TOGGLE NAV LAYER
-    SEQ_ONE_KEY(KC_ESC) {
-      layer_invert(_NAV);
-      leader_found = true;
-    }     
-
-    // F — toggle FNKEYS on home row
-    SEQ_ONE_KEY(KC_F) {
-      layer_invert(_FNKEY);
-      leader_found = true;
-    }
-    */ 
-
     // Q — RESET 
     SEQ_ONE_KEY(KC_Q) {
       reset_keyboard();
