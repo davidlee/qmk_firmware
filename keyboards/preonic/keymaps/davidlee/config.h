@@ -29,8 +29,8 @@
 #define LEADER_TIMEOUT 500
 #define LEADER_PER_KEY_TIMING 1                           
 
-// hopefully this allows use with iphone
-#define USB_MAX_POWER_CONSUMPTION 100
+// hopefully this allows use with iphone ... nope
+// #define USB_MAX_POWER_CONSUMPTION 100
 
 // Recommended for heavy chording.
 #define QMK_KEYS_PER_SCAN 4
