@@ -132,12 +132,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |Shift |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  | Enter|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | MENU |  Fn  | Opt  |  Cmd | Spc  | Lwr  | Rse  | Bksp |   ⬅️    ⬇️     ⬆️     ➡️  |
+ * |Leader|      | Del  | Space| SPACE| Tab  | Enter| Bksp |   ⬅️    ⬇️     ⬆️     ➡️  |   << TAP
+ * |      | Ctrl | Opt  |  Cmd | NUM  | Lwr  | Rse  | NAV  |      |      |      |      |   << HOLD
  * `-----------------------------------------------------------------------------------'
  */
 [_COLEMAK] = LAYOUT_preonic_grid(
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    XXXXXXX,
-  XXXXXXX, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCLN,    KC_DEL, // see if we can use other tab
+  XXXXXXX, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCLN,    KC_DEL,
   CTL_ESC, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    QUOT,
   SFT_LCK, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
   KC_LEAD, XXXXXXX, DEL_OPT, SPC_CMD, SPC_NUM, TAB_LWR, ENT_RSE, BS_NAV,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
@@ -253,20 +254,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |  `   |  7   |   5  |   3  |   1  |   9  |  8   |  0   |   2  |   4  |  6   |      |     
+ * |      |  7   |   5  |   3  |   1  |   9  |  8   |  0   |   2  |   4  |  6   |   \  |     
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |  `   |  $   |   @  |   #  |   !  |   %  |  (   |  -   |   =  |  [   |  ]   |   )  |
+ * |  (   |  $   |   @  |   #  |   !  |   %  |  ––  |  -   |   =  |  [   |  ]   |   )  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |  ^   |   &  |   *  |   ~  |   \  |  ––  |  _   |   +  |  {   |  }   |      |  
+ * |  `   |  ^   |   &  |   *  |   ~  |   (  |   )  |  _   |   +  |  {   |  }   |   |  | 
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
-  KC_GRV,  KC_7,   KC_5,     KC_3,    KC_1,    KC_9,    KC_8,    KC_0,    KC_2,    KC_4,    KC_6,    _______, 
-  KC_GRV,  KC_DLR, KC_AT,    KC_HASH, KC_EXLM, KC_PERC, KC_LPRN, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_RPRN, 
-  _______, KC_PERC,KC_AMPR,  KC_ASTR, KC_TILD, KC_BSLS, KC_MDASH,KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, _______, 
+  _______, KC_7,   KC_5,     KC_3,    KC_1,    KC_9,    KC_8,    KC_0,    KC_2,    KC_4,    KC_6,    KC_BSLS, 
+  KC_LPRN, KC_DLR, KC_AT,    KC_HASH, KC_EXLM, KC_PERC, KC_MDASH,KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_RPRN, 
+  KC_GRV,  KC_PERC,KC_AMPR,  KC_ASTR, KC_TILD, KC_LPRN, KC_RPRN, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE, 
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  
 ),
 
