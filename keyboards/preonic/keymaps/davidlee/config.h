@@ -10,6 +10,8 @@
                                 }
 #endif
 
+#define COMBO_COUNT 3
+
 #define MUSIC_MASK (keycode != KC_NO)
 
 // Configure the global tapping term (default: 200ms)

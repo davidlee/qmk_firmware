@@ -4,4 +4,6 @@ LEADER_ENABLE = yes
 KEY_LOCK_ENABLE = yes
 MOUSEKEY_ENABLE = yes
 AUDIO_ENABLE = yes
+DYNAMIC_MACRO_ENABLE = yes
+COMBO_ENABLE = yes
 SRC += features/casemodes.c
