@@ -1,8 +1,6 @@
 #include QMK_KEYBOARD_H
 #include "features/casemodes.h"
 
-// TODO a way to hold down space bar ... its a thing for eg panning in Mural
-
 enum preonic_layers {
   _COLEMAK,
   _QWERTY,
@@ -38,7 +36,8 @@ enum preonic_keycodes {
 enum tapdance_keycodes {
     TD_SCLN,
     TD_QUOT,
-    TD_SHFT
+    TD_SHFT,
+    TD_DOT,
 };
 
 // tap dance states
@@ -49,7 +48,7 @@ typedef enum {
     TD_SINGLE_HOLD,
     TD_DOUBLE_TAP,
     TD_DOUBLE_HOLD,
-    TD_DOUBLE_SINGLE_TAP, // Send two single taps
+    TD_DOUBLE_SINGLE_TAP, 
     TD_TRIPLE_TAP,
     TD_TRIPLE_HOLD
 } td_state_t;
@@ -61,22 +60,23 @@ typedef struct {
 
 td_state_t cur_dance(qk_tap_dance_state_t *state);
 
+
 //
 // keycode aliases for legibility
 //
 
 // Left-hand home row mods 
-#define CTRL_A LCTL_T(KC_A)
-#define OPT_R LALT_T(KC_R)
-#define CMD_S LCMD_T(KC_S)
+#define CTRL_A  LCTL_T(KC_A)
+#define OPT_R   LALT_T(KC_R)
+#define CMD_S   LCMD_T(KC_S)
 #define SHIFT_T LSFT_T(KC_T)
-#define RALT_X RALT_T(KC_X)
+#define RALT_X  RALT_T(KC_X)
 
 // Right-hand home row mods
-#define SHIFT_N RSFT_T(KC_N)
-#define CMD_E RCMD_T(KC_E)
-#define OPT_I LALT_T(KC_I)
-#define CTRL_O RCTL_T(KC_O)
+#define SHIFT_N  RSFT_T(KC_N)
+#define CMD_E    RCMD_T(KC_E)
+#define OPT_I    LALT_T(KC_I)
+#define CTRL_O   RCTL_T(KC_O)
 #define RALT_DOT RALT_T(KC_DOT)
 
 // hold W for mouse layer
@@ -107,14 +107,9 @@ td_state_t cur_dance(qk_tap_dance_state_t *state);
 #define KC_MDASH LALT(KC_MINS)
 
 // TAP DANCE KEYS
-// semicolon w/ tapdance for colon
 #define SCLN TD(TD_SCLN)
-// quote or double tap for double quote
 #define QUOT TD(TD_QUOT)
-
-// L shift tap dances
 #define SFT_LCK TD(TD_SHFT)
-
 // CLIPBOARD management
 #define KC_UNDO  LCMD(KC_Z)
 #define KC_CUT   LCMD(KC_X)
@@ -131,16 +126,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* COLEMAK-DH
  * ,-----------------------------------------------------------------------------------.
- * |  `   |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |  💩  |
+ * |  `   |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Tab  |   Q  |   W  |   F  |   P  |   B  |   J  |   L  |   U  |   Y  |   ;  |  Del |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * | Esc  |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  |   '  |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |Shift |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  | Enter|
+ * |Shift |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  | Shift|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |Leader|      |      |  Esc | Spc  | Tab  | Enter| Bksp |   ⬅️    ⬇️     ⬆️     ➡️  |   << TAP
- * |      | Ctrl | Opt  |  Cmd | NUM  | LWR  | RSE  | NAV  |      |      |      |      |   << HOLD
+ * |Leader|      |      |  Esc | Spc  | Tab  | Enter| Bksp | Shift|      |      | Fn   |   << TAP
+ * |      | Ctrl | Opt  |  Cmd | NUM  | LWR  | RSE  | NAV  | Shift|      |      | Fn   |   << HOLD
  * `-----------------------------------------------------------------------------------'
  */
 
@@ -148,8 +143,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    XXXXXXX,
   TAB_MEH, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCLN,    DEL_HYP,
   ESC_CTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    QUOT,
-  SFT_LCK, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
-  KC_LEAD, KC_LCTL, KC_LOPT, ESC_CMD, SPC_NUM, TAB_LWR, ENT_RSE, BS_NAV,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+  SFT_LCK, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,    KC_SLSH, SFT_LCK,
+  KC_LEAD, KC_LCTL, KC_LOPT, ESC_CMD, SPC_NUM, TAB_LWR, ENT_RSE, BS_NAV,  SFT_LCK, XXXXXXX, XXXXXXX, KC_ROPT
 ),
 
 /* QWERTY
@@ -169,7 +164,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
   _______, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    _______,
   _______, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    SCLN,    _______,
-  _______, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, RALT_DOT,KC_SLSH, _______,
+  _______, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
@@ -190,7 +185,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   _______, _______, W_MOUS,  _______, _______, _______, _______, _______, _______, _______, _______, _______,
   _______, CTRL_A,  OPT_R,   CMD_S,   SHIFT_T, _______, _______, SHIFT_N, CMD_E,   OPT_I,   CTRL_O,  _______,
-  _______, _______, RALT_X,  _______, _______, _______, _______, _______, _______, RALT_DOT,_______, _______,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
@@ -230,7 +225,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_MOUSE] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   _______, KC_BTN3, _______, KC_BTN2, KC_BTN1, _______, _______, _______, _______, _______, _______, _______,
-  _______, KC_ACL0, KC_ACL0, KC_ACL1, KC_ACL2, _______, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______,
+  _______, KC_ACL0, _______, KC_ACL2, KC_ACL1, _______, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______,
   _______, KC_BTN3, KC_BTN3, KC_BTN2, KC_BTN1, _______, KC_BTN2, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
@@ -519,18 +514,6 @@ void leader_end(void) {
   }
 }
 
-// combos
-
-const uint16_t PROGMEM combo_entr[] = {KC_DOT, KC_SLSH, COMBO_END};
-const uint16_t PROGMEM combo_quot[] = {KC_I, KC_O, COMBO_END};
-const uint16_t PROGMEM combo_bsls[] = {KC_Y, KC_SCLN, COMBO_END};
-
-combo_t key_combos[COMBO_COUNT] = {
-    COMBO(combo_entr, KC_ENTER),
-    COMBO(combo_bsls, KC_BSLASH),
-    COMBO(combo_quot, KC_QUOT)
-};
-
 //
 // tap dances
 //
@@ -580,8 +563,10 @@ td_state_t cur_dance(qk_tap_dance_state_t *state) {
     // If your tap dance key is 'KC_W', and you want to type "www." quickly - then you will need to add
     // an exception here to return a 'TD_TRIPLE_SINGLE_TAP', and define that enum just like 'TD_DOUBLE_SINGLE_TAP'
     if (state->count == 3) {
-        if (state->interrupted || !state->pressed) return TD_TRIPLE_TAP;
-        else return TD_TRIPLE_HOLD;
+        if (state->interrupted || !state->pressed)
+          return TD_TRIPLE_TAP;
+        else 
+          return TD_TRIPLE_HOLD;
     } else return TD_UNKNOWN;
 }
 
@@ -591,41 +576,8 @@ static td_tap_t shft_tap_state = {
     .state = TD_NONE
 };
 
-// Send ; on Single Tap, : on Double Tap
-void td_scln_finished(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        register_code(KC_SCLN);
-    } else {
-        register_code16(KC_COLN);
-    }
-}
 
-void td_scln_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        unregister_code(KC_SCLN);
-    } else {
-        unregister_code16(KC_COLN);
-    }
-}
-
-// Send ' on Single Tap, " on Double Tap
-void td_quot_finished(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        register_code(KC_QUOT);
-    } else {
-        register_code16(KC_DQUO);
-    }
-}
-
-void td_quot_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        unregister_code(KC_QUOT);
-    } else {
-        unregister_code16(KC_DQUO);
-    }
-}
-
-// LEFT shift - tap for one shot, double tap to caps word, triple for caps lock
+// shift - tap for one shot, double tap to caps word, triple for caps lock
 // 
 void td_shft_finished(qk_tap_dance_state_t *state, void *user_data) {
     shft_tap_state.state = cur_dance(state);
@@ -633,50 +585,53 @@ void td_shft_finished(qk_tap_dance_state_t *state, void *user_data) {
       case TD_SINGLE_TAP: 
         set_oneshot_mods(MOD_LSFT);
         break;
+
+      case TD_DOUBLE_TAP: 
       case TD_DOUBLE_SINGLE_TAP: 
         toggle_caps_word();
         break;
+
+      case TD_TRIPLE_TAP: 
+        tap_code(KC_CAPS); 
+        break;
+
       case TD_SINGLE_HOLD: 
       case TD_DOUBLE_HOLD: 
         register_code(KC_LSFT); 
         break;
-      case TD_DOUBLE_TAP: 
-        toggle_caps_word();
+
+      case TD_UNKNOWN: 
+      case TD_NONE: 
+      case TD_TRIPLE_HOLD: 
         break;
-      case TD_TRIPLE_TAP: 
-        tap_code(KC_CAPS); 
-        break;
-      case TD_TRIPLE_HOLD: break;
-      case TD_UNKNOWN: break;
-      case TD_NONE: break;
     }
 }
 
 void td_shft_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (shft_tap_state.state) {
       case TD_SINGLE_TAP: 
+      case TD_DOUBLE_SINGLE_TAP: 
         disable_caps_word();
         break;
-      case TD_DOUBLE_SINGLE_TAP: break;
       case TD_SINGLE_HOLD: 
       case TD_DOUBLE_HOLD: 
         unregister_code(KC_LSFT);
         disable_caps_word();
         break;
-      case TD_DOUBLE_TAP: break;
-      case TD_TRIPLE_TAP: break;
-      case TD_TRIPLE_HOLD: break;
-      case TD_UNKNOWN: break;
-      case TD_NONE: break;
+      case TD_DOUBLE_TAP: 
+      case TD_TRIPLE_TAP: 
+      case TD_TRIPLE_HOLD: 
+      case TD_UNKNOWN: 
+      case TD_NONE: 
+        break;
   }
   shft_tap_state.state = TD_NONE;
 }
 
-
 // All tap dance functions 
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_SCLN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_scln_finished, td_scln_reset),
-    [TD_QUOT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_quot_finished, td_quot_reset),
+    [TD_SCLN] = ACTION_TAP_DANCE_DOUBLE(KC_SCLN, KC_COLN),
+    [TD_QUOT] = ACTION_TAP_DANCE_DOUBLE(KC_QUOT, KC_DQUO),
     [TD_SHFT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_shft_finished, td_shft_reset)
 };
 
@@ -687,17 +642,18 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case OPT_I:
-            // My ring finger tends to linger on the key 
-            // This tapping term allows me to type "ion" reliably.
+            // ring finger tends to linger 
             return TAPPING_TERM + 50;
         case CTRL_O:
-            return TAPPING_TERM + 10;
+            return TAPPING_TERM;
+        case OPT_R: 
+            return TAPPING_TERM + 30;
         // These next mod taps are used very frequently during typing.
         // As such, the lower the tapping term, the faster the typing.
         case CMD_S:
-            return TAPPING_TERM + 15;
+            return TAPPING_TERM;
         case CMD_E:
-            return TAPPING_TERM + 15;
+            return TAPPING_TERM;
         case SCLN:
           return TAPPING_TERM;
         case QUOT:

@@ -10,7 +10,7 @@
                                 }
 #endif
 
-#define COMBO_COUNT 3
+#define COMBO_COUNT 2
 
 #define MUSIC_MASK (keycode != KC_NO)
 
