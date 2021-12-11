@@ -422,14 +422,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break; 
     case QWERTY:
       if (record->event.pressed) {
-        // set_single_persistent_default_layer(_COLEMAK); // not implemented yet
-        // layer_on(_HOMEROWMODS);
+        layer_clear();
+        // need COLEMAK on for mods, etc.
+        set_single_persistent_default_layer(_COLEMAK);
+        layer_on(_QWERTY);
       }
       return false;
       break;       
     case HR_MODS:
       if (record->event.pressed) {
-        // layer_invert(_HOMEROWMODS);
+        layer_invert(_HOMEROWMODS);
       }
       return false;
       break;       
@@ -643,7 +645,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case OPT_I:
             // ring finger tends to linger 
-            return TAPPING_TERM + 50;
+            return TAPPING_TERM + 30;
         case CTRL_O:
             return TAPPING_TERM;
         case OPT_R: 
@@ -659,7 +661,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case QUOT:
           return TAPPING_TERM;
         case SFT_LCK:
-          return TAPPING_TERM + 20;
+          return TAPPING_TERM - 20;
         default:
           return TAPPING_TERM;
     }
