@@ -414,9 +414,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case COLEMAK:
       if (record->event.pressed) {
-        layer_clear();
-        set_single_persistent_default_layer(_COLEMAK);
-        layer_on(_HOMEROWMODS);
+        startup_user();
       }
       return false;
       break; 
@@ -465,13 +463,18 @@ float tone_startup[][2] = SONG(NO_SOUND);
 #endif
 
 void matrix_init_user(void) {
-  #ifdef AUDIO_ENABLE
-    startup_user();
-  #endif
+  startup_user();
 }
+
 void startup_user()
 {
-  PLAY_SONG(tone_startup);
+  layer_clear();
+  set_single_persistent_default_layer(_COLEMAK);
+  layer_on(_HOMEROWMODS); 
+
+  #ifdef AUDIO_ENABLE
+    PLAY_SONG(tone_startup);
+  #endif
 }
 //
 // Leader Key
@@ -507,9 +510,7 @@ void leader_end(void) {
     PLAY_SONG(leader_succeed_song);
 #endif
   } else {
-    layer_clear();
-    set_single_persistent_default_layer(_COLEMAK);
-    layer_on(_HOMEROWMODS);    
+  startup_user();   
 #ifdef AUDIO_ENABLE
     PLAY_SONG(leader_fail_song);
 #endif  

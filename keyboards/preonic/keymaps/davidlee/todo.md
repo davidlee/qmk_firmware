@@ -1,5 +1,11 @@
 # TODO
 
+
+ - add progamming word case support, refactor shift keys, etc from https://github.com/andrewjrae/kyria-keymap#case-modes
+   -  https://github.com/andrewjrae/kyria-keymap/blob/master/features/casemodes.c
+ - split keymap into nicer file
+
+
  * improve magic shift
    - when you double-tap it then hit an alpha without pausing for the TAPPING_TERM there is no effect.
    - tapping should cancel Caps Lock .. wait, it does if you pause after - same issue again.
