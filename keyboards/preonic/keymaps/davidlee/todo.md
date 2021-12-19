@@ -13,7 +13,6 @@
    
 
 
-
  - FIGURE out how to make tapping SHIFT disable CAPS Lck
  - proper / iterate QWERTY gaming layer
  - Planck compatibility
