@@ -88,17 +88,22 @@ td_state_t cur_dance(qk_tap_dance_state_t *state);
 #define TAB_MEH MT(MOD_MEH, KC_TAB)
 // tap for esc, hold for cmd
 #define ESC_CMD LCMD_T(KC_ESCAPE)
-// tap for tab, hold for lower
-#define TAB_LWR LT(_LOWER, KC_TAB)
-// tap for return, hold for raise
-#define ENT_RSE LT(_RAISE, KC_ENT)
+
 // hold spc for number pad
 #define SPC_NUM LT(_NUMBER, KC_SPC)
-// hold backspace for NAV layer
-#define BS_NAV LT(_NAV, KC_BSPC)
+// tap for tab, hold for lower
+#define TAB_LWR LT(_LOWER, KC_TAB)
+
+// tap for one shot shift, hold for raise
+#define BS_RSE LT(_RAISE, KC_BSPC)
+// hold for NAV layer; tap for OSM LSFT (TODO!)
+#define SFT_NAV LT(_NAV, KC_LSFT)
 
 // hold HYPER, tap DEL
 #define DEL_HYP MT(MOD_HYPR, KC_DEL)
+
+// OSM raise
+#define OSL_RSE OSL(_RAISE)
 
 
 // a key for mdash
@@ -124,7 +129,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* COLEMAK-DH
  * ,-----------------------------------------------------------------------------------.
- * |  `   |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |      |
+ * |  `   |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |  BS  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Tab  |   Q  |   W  |   F  |   P  |   B  |   J  |   L  |   U  |   Y  |   ;  |  Del |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
@@ -132,17 +137,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |Shift |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  | Shift|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |Fn    |      |      |  Esc | Spc  | Tab  | Enter| Bksp | Shift|      |      | MENU |   << TAP
- * |Fn    | Ctrl | Opt  |  Cmd | NUM  | LWR  | RSE  | NAV  | Shift| Meh  | Meh  |      |   << HOLD
+ * |Fn    |      |      |  Esc | Spc  | Tab  | BkSp | Shift| Enter|   -  |   ?? | MENU |   << TAP
+ * |Fn    | Ctrl | Opt  |  Cmd | NUM  | LWR  | RSE  | NAV  |      |      |      |      |   << HOLD
  * `-----------------------------------------------------------------------------------'
  */
 
 [_COLEMAK] = LAYOUT_preonic_grid(
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    XXXXXXX, // <- use this for dynamic macros?
+  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC, 
   TAB_MEH, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCLN,    DEL_HYP,
   ESC_CTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    QUOT,
   SFT_LCK, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, SFT_LCK,
-  KC_ROPT, KC_LCTL, KC_LOPT, ESC_CMD, SPC_NUM, TAB_LWR, ENT_RSE, BS_NAV,  SFT_LCK, MOD_MEH, MOD_MEH, KC_LEAD
+  KC_ROPT, KC_LCTL, KC_LOPT, ESC_CMD, SPC_NUM, TAB_LWR, BS_RSE,  SFT_NAV, KC_ENT,  KC_MINS, OSL_RSE, KC_LEAD
 ),
 
 /* QWERTY
@@ -279,7 +284,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |      |   $  |   @  |   #  |  !   |  ?   |  ––  |   -  |   =  |   {  |   }  |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |   ~  |   %  |   &  |  :   |  ;   | PGDN |   _  |   +  |   |  |   \  |      |
+ * |      |   ~  |   %  |   &  |  :   |  ;   | PGDN |   _  |   +  |   |  |   \  | Enter|
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
@@ -289,7 +294,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
   _______, KC_GRV, KC_ASTR,  KC_CIRC, KC_DQUO, KC_QUOT, KC_PGUP, KC_LPRN, KC_RPRN, KC_LBRC, KC_RBRC, _______,   
   _______, KC_DLR, KC_AT,    KC_HASH, KC_EXLM, KC_QUES, KC_MDASH,KC_MINS, KC_EQL,  KC_LCBR, KC_RCBR, _______, 
-  _______, KC_TILD,KC_PERC,  KC_AMPR, KC_COLN, KC_SCLN, KC_PGDN, KC_UNDS, KC_PLUS, KC_PIPE, KC_BSLS, _______, 
+  _______, KC_TILD,KC_PERC,  KC_AMPR, KC_COLN, KC_SCLN, KC_PGDN, KC_UNDS, KC_PLUS, KC_PIPE, KC_BSLS, KC_ENTER, 
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  
 ),
 
@@ -343,7 +348,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |RESET |      |      |      |      |      | Mask |      |      |      |      |Leader|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |HRMODS|Colemk|      |      |      |      |      |      |      |      | 
+ * |      |      |HRMods|Colemk|      |      |      |      |      |      |      |      | 
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
@@ -497,7 +502,7 @@ void matrix_scan_user(void) {
       leader_found = true;
     }
 
-    // todo leader key to toggle CMD being a one shot symbol layer key
+    
     leader_end();
   }    
 }

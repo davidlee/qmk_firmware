@@ -10,8 +10,11 @@
                                 }
 #endif
 
+// wait do I actually have any combos?
 #define COMBO_COUNT 2
 
+// https://github.com/qmk/qmk_firmware/blob/b68d8fe82eac0be9ca8862fdf94ae4bfbbb0735e/quantum/audio/song_list.h
+                                
 #define MUSIC_MASK (keycode != KC_NO)
 
 // Configure the global tapping term (default: 200ms)
@@ -37,7 +40,7 @@
 // #define USB_MAX_POWER_CONSUMPTION 100
 
 // Recommended for heavy chording.
-#define QMK_KEYS_PER_SCAN 4
+// #define QMK_KEYS_PER_SCAN 4
 
 // mouse emulation
 
@@ -54,6 +57,6 @@
 #undef MOUSEKEY_WHEEL_DELAY
 #define MOUSEKEY_WHEEL_DELAY    10
 #undef MOUSEKEY_MAX_SPEED
-#define MOUSEKEY_MAX_SPEED      10
+#define MOUSEKEY_MAX_SPEED      8
 #undef MOUSEKEY_TIME_TO_MAX
 #define MOUSEKEY_TIME_TO_MAX    50
