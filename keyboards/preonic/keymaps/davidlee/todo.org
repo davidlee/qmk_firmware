@@ -1,3 +1,0 @@
-* todo
-** a way to hold down space bar 
-**   

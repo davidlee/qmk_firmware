@@ -583,8 +583,10 @@ void td_shft_finished(qk_tap_dance_state_t *state, void *user_data) {
         break;
 
       case TD_DOUBLE_HOLD: 
-      case TD_TRIPLE_TAP: 
-        PLAY_SONG(caps_lock_on_sound); 
+      case TD_TRIPLE_TAP:
+        #ifdef AUDIO_ENABLE
+          PLAY_SONG(caps_lock_on_sound); 
+        #endif
         tap_code(KC_CAPS);
         break;
 
