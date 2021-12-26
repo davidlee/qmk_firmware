@@ -1,5 +1,5 @@
 SRC += davidlee.c
-# SRC += features/casemodes.c
+SRC += features/casemodes.c
 
 MOUSEKEY_ENABLE      = yes
 AUDIO_ENABLE         = yes
@@ -9,3 +9,4 @@ COMBO_ENABLE         = no
 AUTO_SHIFT_ENABLE    = no
 DYNAMIC_MACRO_ENABLE = no
 LEADER_ENABLE        = no
+UNICODE_ENABLE       = no

@@ -30,6 +30,12 @@
 #define CTRL_O   RCTL_T(KC_O)
 #define RALT_DOT RALT_T(KC_DOT)
 
+// other mod-tap keys
+#define	Z_MED    LT(_MED, KC_Z)
+#define	SLS_MED  LT(_MED, KC_SLSH)
+#define	F_FUN 	 LT(_FUN, KC_F)
+
+
 // hold for mouse layer
 #define W_PTR     LT(_PTR, KC_W)
 #define QUO_PTR   LT(_PTR, KC_QUOTE)
