@@ -1,21 +1,22 @@
 #include QMK_KEYBOARD_H
+
+#include "davidlee.h"
 #include "features/casemodes.h"
 
-enum preonic_layers {
+
+enum userspace_layers {
   _COLEMAK,
   _QWERTY,
   _HOMEROWMODS,
   _NUMBER,
-  _EMOJI,
   _LOWER,
   _RAISE,
-  _NAV,
+  _NAVS,
   _MOUSE,
   _ADJUST,
-  _MIN_MASK
 };
 
-enum preonic_keycodes {
+enum userspace_custom_keycodes {
   COLEMAK = SAFE_RANGE,
   QWERTY,
   HOMEROWMODS,
@@ -29,10 +30,6 @@ enum preonic_keycodes {
   MINMASK
 };
 
-//
-// tap dance stuff
-//
-
 enum tapdance_keycodes {
     TD_SCLN,
     TD_QUOT,
@@ -40,87 +37,73 @@ enum tapdance_keycodes {
     TD_DOT,
 };
 
-// tap dance states
-typedef enum {
-    TD_NONE,
-    TD_UNKNOWN,
-    TD_SINGLE_TAP,
-    TD_SINGLE_HOLD,
-    TD_DOUBLE_TAP,
-    TD_DOUBLE_HOLD,
-    TD_DOUBLE_SINGLE_TAP, 
-    TD_TRIPLE_TAP,
-    TD_TRIPLE_HOLD
-} td_state_t;
-
-typedef struct {
-    bool is_press_action;
-    td_state_t state;
-} td_tap_t;
-
-td_state_t cur_dance(qk_tap_dance_state_t *state);
-
-
 //
 // keycode aliases for legibility
 //
+#define W_MOUS   LT(_MOUSE, KC_W)
+#define TAB_LWR  LT(_LOWER, KC_TAB)
+#define BS_RSE   LT(_RAISE, KC_BSPC)
+#define SFT_NAV  LT(_NAVS,KC_LSFT)
+#define OSL_RSE  OSL(_RAISE)
 
-// Left-hand home row mods 
-#define CTRL_A  LCTL_T(KC_A)
-#define OPT_R   LALT_T(KC_R)
-#define CMD_S   LCMD_T(KC_S)
-#define SHIFT_T LSFT_T(KC_T)
-#define RALT_X  RALT_T(KC_X)
+#ifdef TAP_DANCE_ENABLE
+  #define SCLN     TD(TD_SCLN)
+  #define QUOT     TD(TD_QUOT)
+  #define SFT_LCK  TD(TD_SHFT)
+#endif
 
-// Right-hand home row mods
-#define SHIFT_N  RSFT_T(KC_N)
-#define CMD_E    RCMD_T(KC_E)
-#define OPT_I    LALT_T(KC_I)
-#define CTRL_O   RCTL_T(KC_O)
-#define RALT_DOT RALT_T(KC_DOT)
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case OPT_I:
+      return TAPPING_TERM + 30;
+    case CTRL_O:
+      return TAPPING_TERM;
+    case OPT_R: 
+      return TAPPING_TERM + 30;
+    case CMD_S:
+      return TAPPING_TERM;
+    case CMD_E:
+      return TAPPING_TERM;
+    default:
+      return TAPPING_TERM;
+  }
+}
 
-// hold W for mouse layer
-#define W_MOUS LT(_MOUSE, KC_W)
+layer_state_t layer_state_set_user(layer_state_t state) {
+  // turn on ADJUST when both LOWER and RAISE are active.
+  state = update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 
-// tap for grave, hold for CTRL
-#define ESC_CTL LCTL_T(KC_ESC)
-// hold MEH, tap TAB
-#define TAB_MEH MT(MOD_MEH, KC_TAB)
-// tap for esc, hold for cmd
-#define ESC_CMD LCMD_T(KC_ESCAPE)
+  switch (get_highest_layer(state)) {
+    case _NUMBER:
+      rgblight_enable();
+      rgblight_setrgb (0xFF,  0x7A, 0x00);
+      break;
+    case _LOWER:
+      rgblight_enable();
+      rgblight_setrgb (0xFF,  0x00, 0x00);
+      break;
+    case _RAISE:
+      rgblight_enable();
+      rgblight_setrgb (0x00,  0x00, 0xFF);        
+      break;
+    case _NAVS:      rgblight_enable();
+      rgblight_setrgb (0x00,  0xFF, 0x00);
+      break;
+    case _MOUSE:
+      rgblight_enable();
+      rgblight_setrgb (0x00,  0xFF, 0x7A);
+      break;                  
+    case _ADJUST:
+      rgblight_enable();
+      rgblight_setrgb (0x7A,  0x00, 0xFF);
+      break;
+    default: 
+      rgblight_disable();
+      break;      
+    }
 
-// hold spc for number pad
-#define SPC_NUM LT(_NUMBER, KC_SPC)
-// tap for tab, hold for lower
-#define TAB_LWR LT(_LOWER, KC_TAB)
-
-// tap for one shot shift, hold for raise
-#define BS_RSE LT(_RAISE, KC_BSPC)
-// hold for NAV layer; tap for OSM LSFT (TODO!)
-#define SFT_NAV LT(_NAV, KC_LSFT)
-
-// hold HYPER, tap DEL
-#define DEL_HYP MT(MOD_HYPR, KC_DEL)
-
-// OSM raise
-#define OSL_RSE OSL(_RAISE)
-
-
-// a key for mdash
-#define KC_MDASH LALT(KC_MINS)
-
-// TAP DANCE KEYS
-#define SCLN TD(TD_SCLN)
-#define QUOT TD(TD_QUOT)
-#define SFT_LCK TD(TD_SHFT)
-// CLIPBOARD management
-#define KC_UNDO  LCMD(KC_Z)
-#define KC_CUT   LCMD(KC_X)
-#define KC_COPY  LCMD(KC_C)
-#define KC_CMDV  LCMD(KC_V)
-
-#define CMD_LBRC LCMD(KC_LBRC)
-#define CMD_RBRC LCMD(KC_RBRC)
+  return state;
+}
 
 // Keymap
 //
@@ -192,26 +175,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
-/* EMOJI
- * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |  
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      | 
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-[_EMOJI] = LAYOUT_preonic_grid(
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ 
-),
+
 /* PTR 
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |      |      |      |      |      |      |
@@ -220,7 +184,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |  b1  |  mL  |  mDn |  mUp |  mR  |      | 
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |  b3  |  b3  |  b2  |  b1  |      |  b2  | whLt | whDn |  whUp| whRt |      |                                               
+ * |      |  b3  |  b3  |  b2  |  b1  |      |  b2  | whL  | whDn |  whUp| whR  |      |                                               
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
@@ -248,12 +212,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_NUMBER] = LAYOUT_preonic_grid(
   KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11, 
-  _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_P7,   KC_P8,   KC_P9,   KC_PMNS, _______,
-  _______, _______, _______, _______, _______, _______, KC_PAST, KC_P4,   KC_P5,   KC_P6,   KC_PPLS, _______,
-  _______, SFT_LCK, KC_NLCK, KC_SLCK, KC_PAUS, _______, KC_PSLS, KC_P1,   KC_P2,   KC_P3,   KC_PEQL, KC_PENT,
-  _______, _______, _______, _______, _______, _______, KC_PDOT, KC_P0,   _______, _______, _______, _______
+  _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_PMNS, _______,
+  _______, _______, _______, _______, _______, _______, KC_PAST, KC_4,    KC_5,    KC_6,    KC_PPLS, _______,
+  _______, SFT_LCK, KC_NLCK, KC_SLCK, KC_PAUS, _______, KC_PSLS, KC_1,    KC_2,    KC_3,    KC_PEQL, KC_PENT,
+  _______, _______, _______, _______, _______, _______, KC_PDOT, KC_0,    _______, _______, _______, _______
 ),
 
+
+// TODO separate FUN and MEDIA LAYERS 
 
 /* LWR
  * ,-----------------------------------------------------------------------------------.
@@ -261,7 +227,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |      |  F12 |  F7  |  F8  |  F9  |      | Eject| Stop | Play |CMD-[ |CMD-] |      |     
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |  F11 |  F4  |  F5  |  F6  |      |      | Shft | Cmd  | Alt  | Ctrl |      |
+ * |      |  F11 |  F4  |  F5  |  F6  |      |      | Shft | Cmd  | Opt  | Ctrl |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |  F10 |  F1  |  F2  |  F3  |      | Prev | Next | Vol- | Vol+ | Mute |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -311,33 +277,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      | SPC  |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
                     */
-[_NAV] = LAYOUT_preonic_grid(
+[_NAVS]= LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, _______, _______, _______, _______, KC_UNDO, KC_CUT , KC_COPY, KC_CMDV, _______,
+  _______, _______, _______, _______, _______, _______, _______, UNDO,    CUT,     COPY,    PASTE,   _______,
   _______, _______, _______, DM_PLY1, DM_PLY2, _______, KC_INS,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,
   KC_CAPS, DM_RSTP, _______, DM_REC1, DM_REC2, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_CAPS,
   _______, _______, _______, _______, KC_SPACE,_______, _______, _______, _______, _______, _______, _______
-),
-
-/* MIN
- * ,-----------------------------------------------------------------------------------.
- * |######|######|######|######|######|######|######|######|######|######|######|######|
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |######|      |      |      |      |      |      |      |      |      |      |######|
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |######|      |      |      |      |      |      |      |      |      |      |######|
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |######|      |      |      |      |      |      |      |      |      |      |######|
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |######|######|######|      |      |      |      |      |      |######|######|######|
- * `-----------------------------------------------------------------------------------'
- */
-[_MIN_MASK] = LAYOUT_preonic_grid(
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, XXXXXXX,
-  XXXXXXX, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, XXXXXXX,
-  XXXXXXX, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______, _______, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX
 ),
 
 /* ADJ
@@ -364,52 +309,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 //
-// RGB status lights
-// 
-
-layer_state_t layer_state_set_user(layer_state_t state) {
-  // turn on ADJUST when both LOWER and RAISE are active.
-  state = update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
-
-  switch (get_highest_layer(state)) {
-    case _NUMBER:
-      rgblight_enable();
-      rgblight_setrgb (0xFF,  0x7A, 0x00);
-      break;
-    case _LOWER:
-      rgblight_enable();
-      rgblight_setrgb (0xFF,  0x00, 0x00);
-      break;
-    case _RAISE:
-      rgblight_enable();
-      rgblight_setrgb (0x00,  0x00, 0xFF);        
-      break;
-    case _NAV:
-      rgblight_enable();
-      rgblight_setrgb (0x00,  0xFF, 0x00);
-      break;
-    case _MOUSE:
-      rgblight_enable();
-      rgblight_setrgb (0x00,  0xFF, 0x7A);
-      break;                  
-    case _ADJUST:
-      rgblight_enable();
-      rgblight_setrgb (0x7A,  0x00, 0xFF);
-      break;
-    default: 
-      rgblight_disable();
-      break;      
-    }
-
-  return state;
-}
-
-//
-//
+// process record
 //
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  // Process case modes
   if (!process_case_modes(keycode, record)) {
       return false;
   }
@@ -442,12 +345,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }     
       return false;
       break; 
-    case MINMASK:
-      if (record->event.pressed) {
-        layer_invert(_MIN_MASK);
-      }     
-      return false;
-      break; 
     case K_RESET:
       if (record->event.pressed) {
         reset_keyboard();
@@ -461,6 +358,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 //
 // musics
 //
+
 #ifdef AUDIO_ENABLE
 float tone_startup[][2] = SONG(NO_SOUND); 
 #endif
@@ -479,6 +377,7 @@ void startup_user()
     PLAY_SONG(tone_startup);
   #endif
 }
+
 //
 // Leader Key
 //
@@ -530,6 +429,12 @@ void leader_end(void) {
 float caps_lock_on_sound[][2]  = SONG(CAPS_LOCK_ON_SOUND);
 float caps_lock_off_sound[][2] = SONG(CAPS_LOCK_OFF_SOUND);
 #endif
+
+td_state_t cur_dance(qk_tap_dance_state_t *state);
+
+void td_shft_finished(qk_tap_dance_state_t *state, void *user_data);
+void td_shft_reset(qk_tap_dance_state_t *state, void *user_data);
+
 
 td_state_t cur_dance(qk_tap_dance_state_t *state) {
     if (state->count == 1) {
@@ -630,32 +535,4 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_SHFT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_shft_finished, td_shft_reset)
 };
 
-//
-// per key tapping term 
-// TODO set tapping term to lower numbers on the home row mods
-//
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case OPT_I:
-            // ring finger tends to linger 
-            return TAPPING_TERM + 30;
-        case CTRL_O:
-            return TAPPING_TERM;
-        case OPT_R: 
-            return TAPPING_TERM + 30;
-        // These next mod taps are used very frequently during typing.
-        // As such, the lower the tapping term, the faster the typing.
-        case CMD_S:
-            return TAPPING_TERM;
-        case CMD_E:
-            return TAPPING_TERM;
-        case SCLN:
-          return TAPPING_TERM;
-        case QUOT:
-          return TAPPING_TERM;
-        case SFT_LCK:
-          return TAPPING_TERM;
-        default:
-          return TAPPING_TERM;
-    }
-}
+

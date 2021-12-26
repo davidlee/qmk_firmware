@@ -1,3 +1,5 @@
+#include "config_common.h"
+
 #pragma once
 
 #ifdef AUDIO_ENABLE
@@ -9,7 +11,7 @@
     #define MUSIC_MASK (keycode != KC_NO)
 #endif
 
-#define COMBO_COUNT 2          
+#define COMBO_COUNT 2
 
 #define TAPPING_TERM 170
 #define TAPPING_TERM_PER_KEY 1
@@ -17,12 +19,12 @@
 #define TAPPING_FORCE_HOLD 1
 #define PERMISSIVE_HOLD 1
 
-#define CAPSWORD_USE_SHIFT 1
+// #define CAPSWORD_USE_SHIFT 1
 
 // Auto Shift
-#define NO_AUTO_SHIFT_ALPHA
-#define AUTO_SHIFT_TIMEOUT 150
-#define AUTO_SHIFT_NO_SETUP
+// #define NO_AUTO_SHIFT_ALPHA
+// #define AUTO_SHIFT_TIMEOUT 150
+// #define AUTO_SHIFT_NO_SETUP
 
 #define LEADER_TIMEOUT 250
 #define LEADER_PER_KEY_TIMING 1                           
@@ -30,8 +32,13 @@
 #define QMK_KEYS_PER_SCAN 4
 
 // #define MK_COMBINED 1
+#undef MOUSEKEY_DELAY
 #define MOUSEKEY_DELAY          0
+#undef MOUSEKEY_INTERVAL
 #define MOUSEKEY_INTERVAL       8
+#undef MOUSEKEY_WHEEL_DELAY
 #define MOUSEKEY_WHEEL_DELAY    10
+#undef MOUSEKEY_MAX_SPEED
 #define MOUSEKEY_MAX_SPEED      8
+#undef MOUSEKEY_TIME_TO_MAX
 #define MOUSEKEY_TIME_TO_MAX    50
