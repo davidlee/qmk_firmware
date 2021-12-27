@@ -86,7 +86,8 @@ layer_state_t layer_state_set_user(layer_state_t state) {
       rgblight_enable();
       rgblight_setrgb (0x00,  0x00, 0xFF);        
       break;
-    case _NAVS:      rgblight_enable();
+    case _NAVS:      
+      rgblight_enable();
       rgblight_setrgb (0x00,  0xFF, 0x00);
       break;
     case _MOUSE:

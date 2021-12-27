@@ -12,6 +12,8 @@
 #    include "tap_dances.h"
 #endif
 
+bool caps_is_active(void);
+
 //
 // keycode aliases 
 //
