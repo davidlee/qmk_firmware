@@ -6,6 +6,7 @@
 
 enum planck_layers {
   _CMK,  // Colemak-DH
+  _GAM,  // Gaming / QWERTY
   _QTY,  // QWERTY
   _NUM,  // Numbers
   _SYM,  // Symbols
@@ -25,13 +26,17 @@ enum planck_keycodes {
   BS_WORD,
   PTR_LCK,
   EXT_PTR,
-  MIC_TGL
+  EXT_GAM,
+  MIC_TGL,
+  L_GAM,
+  L_NUM
 };
 
 #define GRV_MEH  MT(MOD_MEH, KC_GRAVE)
 #define SHIFTY   OSM(MOD_LSFT) 
 #define SHIFT    KC_LSFT
 #define _noop__  KC_NO 
+#define L_NAV    MO(_NAV)
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -67,6 +72,10 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   state = update_tri_layer_state(state, _SYM, _NAV, _ADJ);
 
   switch (get_highest_layer(state)) {
+    case _GAM:
+      rgblight_enable();
+      rgblight_setrgb (0x00,  0x55, 0x90);
+      break;
     case _NUM:
       rgblight_enable();
       rgblight_setrgb (0xFF,  0x7A, 0x00);
@@ -135,12 +144,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
 
+    case L_GAM: 
+      layer_on(_GAM);
+      return false;
+
     case PTR_LCK: //  TODO FIXME 
       //layer_on(_PTR);
       return false;
 
     case EXT_PTR:
       layer_off(_PTR);
+      return false;
+
+    case EXT_GAM:
+      layer_off(_GAM);
       return false;
 
     case KC_CAPS:        
@@ -218,6 +235,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_ROPT, KC_LCTL, KC_LOPT, ESC_CMD, SPC_NUM, TAB_SYM, BS_WORD, BS_NAV,  KC_ENTER,KC_LBRC, KC_RBRC, KC_LEAD
 ),
 
+
+/* Qwerty
+ * ,-----------------------------------------------------------------------------------.
+ * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  "   |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      | Ctrl | Alt  | GUI  |  Spc |  Num | EXIT | Bspc | Left | Down |  Up  |Right |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_GAM] = LAYOUT_planck_grid(
+    KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
+    KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT ,
+    _______, KC_LCTL, KC_LALT, KC_LGUI, KC_SPC,  L_NUM,   EXT_GAM, KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+),
+
 /* NUM 
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |  [   |  7   |  8   |  9   |  ]   |      |
@@ -265,7 +301,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      | Ctrl |  Opt |  Cmd | Shift|      |      |  Left| Down | Up   | Right|      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Caps | Undo |  Cut |  Copy| Paste|      |      |  Home| PGDN | PGUP | End  | Enter|
+ * | Caps | Undo |  Cut |  Copy| Paste| Paste|      |  Home| PGDN | PGUP | End  | Enter|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |  Cmd | Spc  |  Tab |      |  ##  |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
@@ -274,7 +310,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_NAV] = LAYOUT_planck_grid(
   _______, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, KC_INS,  KC_DEL,  _noop__, _noop__, _______,
   _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _noop__, _noop__, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _noop__,
-  KC_CAPS, UNDO,    CUT,     COPY,    PASTE,   _noop__, _noop__, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_ENTER,
+  KC_CAPS, UNDO,    CUT,     COPY,    PASTE,   PASTE,   _noop__, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_ENTER,
   _______, _______, _______, KC_LCMD, KC_SPACE,KC_TAB,  _noop__, _______, _noop__, _______, _______, _______
 ),
 
@@ -282,20 +318,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* PTR
  * ,-----------------------------------------------------------------------------------.
- * |      |      |  ##  | LOCK |      |      |      |      |  mU  |  whU |      |      |
+ * |      | Exit |  ##  | LOCK |      |      | Exit |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Exit | Ctrl |  Opt |  Cmd | Shift|      | Exit | mL   |  mD  |  mR  | LOCK |  ##  |
+ * | Exit | Ctrl |  Opt |  Cmd | Shift|      | Lock | mL   |  mD  |  mU  |  mR  |  ##  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Shift|      |      |      |      |      |      | whL  |  whR |  whD |      |      |
+ * | Shift|      |      |      |      |      | Exit | whL  |  whD |  whD | whR  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |  b2  |  b1  |  b3  |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 
 [_PTR] = LAYOUT_planck_grid(
-  _noop__, _noop__, _______, PTR_LCK, _noop__, _noop__, _noop__, _noop__, KC_MS_U, KC_WH_U, _noop__, _noop__,
-  EXT_PTR, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _noop__, EXT_PTR, KC_MS_L, KC_MS_D, KC_MS_R, PTR_LCK, _______,
-  KC_LSFT, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, KC_WH_L, KC_WH_R, KC_WH_D, _noop__, _noop__,
+  _noop__, _noop__, _______, PTR_LCK, _noop__, _noop__, EXT_PTR, _noop__, _noop__, _noop__, _noop__, _noop__,
+  EXT_PTR, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _noop__, PTR_LCK, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______,
+  KC_LSFT, _noop__, _noop__, _noop__, _noop__, _noop__, EXT_PTR, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _noop__,
   _______, _______, _______, _noop__, _noop__, _noop__, KC_BTN2, KC_BTN1, KC_BTN3, _______, _______, _______
 ),
 
@@ -304,18 +340,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * | RESET| ScrLk| Pause|  ##  |CapWrd|      |      |  F7  |  F8  |  F9  |  F12 |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Ctrl |  Opt |  Cmd | Shift|      |  DnD |  F4  |  F5  |  F6  |  F11 |MisCtl|
+ * |      | Ctrl |  Opt |  Cmd | Shift| Game |  DnD |  F4  |  F5  |  F6  |  F11 |MisCtl|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Caps |      |      |      |      |      |      |  F1  |  F2  |  F3  |  F10 |LchPad|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |  Cmd |  Spc |      |      |      |      |      |      |      |
+ * |      |      |      |  Cmd |  Spc | Tab  |      | Bspc |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 
 [_FUN] = LAYOUT_planck_grid(
   RESET,   KC_SLCK, KC_PAUS, _______, CAP_WRD, _noop__, _noop__, KC_F7,   KC_F8,   KC_F9,   KC_F12,  _______, 
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _noop__, DND,     KC_F4,   KC_F5,   KC_F6,   KC_F11,  _______, 
-  KC_CAPS, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, KC_F1,   KC_F2,   KC_F3,   KC_F10,  _______, 
+  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, L_GAM,    DND,     KC_F4,   KC_F5,   KC_F6,   KC_F11,  MISNCTRL, 
+  KC_CAPS, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, KC_F1,   KC_F2,   KC_F3,   KC_F10,  LNCHPAD, 
   _______, _______, _______, KC_LCMD, KC_SPC,  KC_TAB,  _noop__, KC_BSPC, _______, _______, _______, _______
 
 ),
@@ -343,7 +379,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |      | Reset| Debug|      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |      |      |      |      |      | GAM  |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -353,7 +389,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_ADJ] = LAYOUT_planck_grid(
   _______, RESET,   DEBUG,   _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, _______, _______, L_GAM,   _______, _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
