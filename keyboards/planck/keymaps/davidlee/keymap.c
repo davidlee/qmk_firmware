@@ -33,8 +33,7 @@ enum planck_keycodes {
 };
 
 #define GRV_MEH  MT(MOD_MEH, KC_GRAVE)
-#define SHIFTY   OSM(MOD_LSFT) 
-#define SHIFT    KC_LSFT
+#define SHIFT    OSM(MOD_LSFT) 
 #define _noop__  KC_NO 
 #define L_NAV    MO(_NAV)
 
@@ -56,16 +55,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
       return TAPPING_TERM;
   }
 }
-
-// https://github.com/qmk/qmk_firmware/blob/d8f0faabdad2e2bc80d2258bda80e6b9e9918b63/docs/custom_quantum_functions.md#led-control
-// bool caps_lock_on;
-// void led_set_kb(uint8_t usb_led) {
-//   if (usb_led & (1<<USB_LED_CAPS_LOCK)) {
-//     caps_lock_on = true;
-//   } else {
-//     caps_lock_on = false;
-//   }
-// }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
   // turn on ADJUST when both of these layers are active.
