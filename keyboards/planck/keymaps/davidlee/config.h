@@ -13,13 +13,23 @@
 
 #define COMBO_COUNT 2
 
-#define TAPPING_TERM 170
+#define TAPPING_TERM 160
 #define TAPPING_TERM_PER_KEY 1
 #define IGNORE_MOD_TAP_INTERRUPT 1
-#define TAPPING_FORCE_HOLD 1
-#define PERMISSIVE_HOLD 1
+#define TAP_CODE_DELAY 5      // 100
+#define TAP_HOLD_CAPS_DELAY 0 // 200
+// #define TAPPING_FORCE_HOLD 1
+// #define PERMISSIVE_HOLD 1
 
-#define CAPSWORD_USE_SHIFT 1
+
+#define COMBO_ALLOW_ACTION_KEYS
+#define COMBO_STRICT_TIMER
+#define EXTRA_SHORT_COMBOS
+#define COMBO_TERM (TAPPING_TERM/5) // time to get all combo keys down
+#define COMBO_HOLD (COMBO_TERM*4)   // time to hold to trigger delayed combo
+#define ADAPTIVE_TERM COMBO_HOLD    // use COMBO_HOLD time as a standard threshold (same recation time)
+
+// #define CAPSWORD_USE_SHIFT 1
 
 #define QMK_KEYS_PER_SCAN 4
 
