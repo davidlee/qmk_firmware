@@ -38,6 +38,22 @@ enum planck_keycodes {
 #define _noop__  KC_NO 
 #define L_NAV    MO(_NAV)
 #define BTN_BS   LT(_BTN,LCMD(KC_BSPC))
+#define FN       KC_ROPT // requires karabiner
+
+#define Q_HYP    MT(MOD_HYPR, KC_Q)
+#define W_MEH    MT(MOD_MEH, KC_W)
+#define F_CMD    MT(MOD_LGUI, KC_F)
+
+#define G_FN     MT(MOD_RALT, KC_G)
+#define M_FN     MT(MOD_RALT, KC_M)
+
+#define U_CMD    MT(MOD_LGUI, KC_U)
+#define Y_MEH    MT(MOD_MEH, KC_Y)
+#define SCLN_HYP MT(MOD_HYPR, KC_SCOLON)
+
+#define P_PTR    LT(_PTR, KC_P)
+#define D_FUN    LT(_FUN, KC_D)
+
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -109,8 +125,12 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
+  // Process case modes
+  if (!process_case_modes(keycode, record)) {
+    return false;
+  }
 
+  switch (keycode) {
     case MISNCTRL:
       if (record->event.pressed) {
         host_consumer_send(0x29F);
@@ -156,9 +176,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     case CAP_WRD:        
       if (record->event.pressed) {
-       // enable_caps_word();
-      } else {
-        enable_caps_word();
+       enable_caps_word();
       }
       return false;   
 
@@ -203,16 +221,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
  * |  Fn  | Ctrl | Opt  |  Esc | Spc  | Tab  | Bspc | BkSp | Enter|   [  |   ]  | Menu | 
  * `-----------------------------------------------------------------------------------'
  */
-
  /* Home Row Mods / Layers (hold behaviours)
  * ,-----------------------------------------------------------------------------------.
- * | Meh  |      | Mouse| Fun  |      |      |      |      |      |      |      | Hyper|
+ * |  Meh | Hyper|  Meh |  Cmd |  Ptr |      |      |      |  Cmd |  Meh | Hyper| Hyper|
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Cmd  | Ctrl | Opt  |      | Shift|      |      | Shift| Opt  |      | Ctrl | Cmd  |
+ * |  Cmd | Ctrl |  Opt |      | Shift|  Fn  |  Fn  | Shift|      |  Opt | Ctrl |  Cmd |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      | Media|      |      |      |      |      |      |      |      | Media|      |                                               
+ * |      | Media|      |      |  Fun |      |      |      |      |      | Media|      |                                               
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |  Cmd |  Num |  Sym | Btn  |  Nav | Cmd  |      |      |      |
+ * |      |      |      |  Cmd |  Num |  Sym |  Btn |  Nav |  Cmd |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 
@@ -234,7 +251,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      | Ctrl |  Opt |  Cmd | Shift|   '  |  (   |  4   |  5   |  6   |  )   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Caps |CapWrd| En – | Em — |   -  |   =  |  `   |  1   |  2   |  3   |  \   |      |
+ * |CapWd |CapWd | En – | Em — |   -  |   =  |  `   |  1   |  2   |  3   |  \   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |  ##  |      |  .   |  0   |  Cmd |      |      |      |
  * `-----------------------------------------------------------------------------------'
@@ -246,7 +263,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |  Fn  | Ctrl |  Opt |  Cmd | Shift|   "  |   <  |  $   |  %   |  ^   |   >  |      | 
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Caps |      |      |      |   _  |   +  |   ~  |  !   |  @   |  #   |  |   |      |                                               
+ * | Caps | Caps |      |      |   _  |   +  |   ~  |  !   |  @   |  #   |  |   |      |                                               
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |  ##  |   (  |  )   |  Cmd |  [   |   ]  |      |
  * `-----------------------------------------------------------------------------------'
@@ -280,7 +297,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 /* FUN 
  * ,-----------------------------------------------------------------------------------.
- * | RESET| ScrLk| Pause|  ##  |CapWrd|      |      |  F7  |  F8  |  F9  |  F12 |      |
+ * | RESET| ScrLk| Pause|  ##  |      |      |      |  F7  |  F8  |  F9  |  F12 |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      | Ctrl |  Opt |  Cmd | Shift| Game |  DnD |  F4  |  F5  |  F6  |  F11 |MisCtl|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -304,9 +321,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 /* BTN 
  * ,-----------------------------------------------------------------------------------.
- * |  Cmd | Ctrl |  Opt |  Cmd | Shift|      |      | Shift|  Cmd |  Opt | Ctrl |  Cmd |
+ * |  Cmd | Hyper|  Meh |  Cmd | Shift|      |      | Shift|  Cmd |  Meh | Hyper|  Cmd |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |  Cmd | Ctrl |  Opt |  Cmd | Shift|      |      | Shift|  Cmd |  Opt | Ctrl |  Cmd |
+ * |  Cmd | Ctrl |  Opt |  Cmd | Shift|  Fn  |  Fn  | Shift|  Cmd |  Opt | Ctrl |  Cmd |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |  Cmd | Ctrl |  Opt |  Cmd | Shift|      |      | Shift|  Cmd |  Opt | Ctrl |  Cmd |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -329,10 +346,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_CMK] = LAYOUT_planck_grid(
-  GRV_MEH, KC_Q,    W_PTR,   F_FUN,   KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, DEL_HYP,
-  ESC_CMD, CTRL_A,  OPT_R,   KC_S,    SHIFT_T, KC_G,    KC_M,    SHIFT_N, KC_E,    OPT_I,   CTRL_O,  CMD_QOT,
-  SHIFT,   Z_MED,   KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  SLS_MED, SHIFT,
-  KC_ROPT, KC_LCTL, KC_LOPT, ESC_CMD, SPC_NUM, TAB_SYM, BTN_BS,  BS_NAV,  ENT_CMD, KC_LBRC, KC_RBRC, KC_LEAD
+  GRV_MEH, Q_HYP,   W_MEH,   F_CMD,   P_PTR,    KC_B,    KC_J,    KC_L,    U_CMD,   Y_MEH,   SCLN_HYP,DEL_HYP,
+  ESC_CMD, CTRL_A,  OPT_R,   KC_S,    SHIFT_T, G_FN,    M_FN,    SHIFT_N, KC_E,    OPT_I,   CTRL_O,  CMD_QOT,
+  SHIFT,   Z_MED,   KC_X,    KC_C,    D_FUN,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  SLS_MED, SHIFT,
+  FN,      KC_LCTL, KC_LOPT, ESC_CMD, SPC_NUM, TAB_SYM, BTN_BS,  BS_NAV,  ENT_CMD, KC_LBRC, KC_RBRC, KC_LEAD
 ),
 
 [_GAM] = LAYOUT_planck_grid(
@@ -345,14 +362,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_NUM] = LAYOUT_planck_grid(
   _______, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, KC_7,    KC_8,    KC_9,    KC_RBRC, _______,
   _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_QUOT, KC_LPRN, KC_4,    KC_5,    KC_6,    KC_RPRN, _______,
-  KC_CAPS, CAP_WRD, EN_DASH, EM_DASH, KC_MINS, KC_EQL,  KC_GRAVE,KC_1,    KC_2,    KC_3,    KC_BSLS, _______,
+  CAP_WRD, CAP_WRD, EN_DASH, EM_DASH, KC_MINS, KC_EQL,  KC_GRAVE,KC_1,    KC_2,    KC_3,    KC_BSLS, _______,
   _______, _______, _______, _noop__, _______, _noop__, KC_PDOT, KC_0,    KC_RCMD, _______, _______, _______
 ),
 
 [_SYM] = LAYOUT_planck_grid(
   KC_TILD, _noop__, _noop__, _noop__, _noop__, _noop__, KC_LCBR, KC_AMPR, KC_ASTR, KC_LPRN, KC_RCBR, _______,
   KC_ROPT, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_DQUO, KC_LT,   KC_DLR,  KC_PERC, KC_CIRC, KC_GT,   _______,
-  KC_CAPS, _noop__, _noop__, _noop__, KC_UNDS, KC_PLUS, KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_PIPE, _______,
+  KC_CAPS, KC_CAPS, _noop__, _noop__, KC_UNDS, KC_PLUS, KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_PIPE, _______,
   _______, _______, _______, _noop__, _noop__, _______, KC_LPRN, KC_RPRN, KC_RCMD, KC_LBRC, KC_RBRC, _______
 ),
 
@@ -371,7 +388,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_FUN] = LAYOUT_planck_grid(
-  RESET,   KC_SLCK, KC_PAUS, _______, CAP_WRD, _noop__, _noop__, KC_F7,   KC_F8,   KC_F9,   KC_F12,  _______, 
+  RESET,   KC_SLCK, KC_PAUS, _______, _noop__, _noop__, _noop__, KC_F7,   KC_F8,   KC_F9,   KC_F12,  _______, 
   _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, L_GAM,    DND,    KC_F4,   KC_F5,   KC_F6,   KC_F11,  MISNCTRL, 
   KC_CAPS, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, KC_F1,   KC_F2,   KC_F3,   KC_F10,  LNCHPAD, 
   _______, _______, _______, KC_LCMD, KC_SPC,  KC_TAB,  _noop__, KC_BSPC, _______, _______, _______, _______

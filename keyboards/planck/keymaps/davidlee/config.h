@@ -1,4 +1,4 @@
-#include "config_common.h"
+// #include "config_common.h"
 
 #pragma once
 
@@ -29,7 +29,7 @@
 #define COMBO_HOLD (COMBO_TERM*4)   // time to hold to trigger delayed combo
 #define ADAPTIVE_TERM COMBO_HOLD    // use COMBO_HOLD time as a standard threshold (same recation time)
 
-// #define CAPSWORD_USE_SHIFT 1
+#define CAPSWORD_USE_SHIFT 1
 
 #define QMK_KEYS_PER_SCAN 4
 
