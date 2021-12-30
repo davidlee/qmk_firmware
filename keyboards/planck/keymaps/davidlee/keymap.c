@@ -14,6 +14,7 @@ enum planck_layers {
   _MED,  // Media
   _FUN,  // Functions
   _PTR,  // Pointer
+  _BTN,  // Buttons
   _ADJ,  // Adjust
 };
 
@@ -36,6 +37,7 @@ enum planck_keycodes {
 #define SHIFT    OSM(MOD_LSFT) 
 #define _noop__  KC_NO 
 #define L_NAV    MO(_NAV)
+#define BTN_BS   LT(_BTN,LCMD(KC_BSPC))
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -44,13 +46,13 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     case CTRL_A:
       return TAPPING_TERM;
     case OPT_R: 
-      return TAPPING_TERM + 30;
+      return TAPPING_TERM + 20;
     case OPT_I:
-      return TAPPING_TERM + 30;
+      return TAPPING_TERM + 20;
     case CMD_S:
-      return TAPPING_TERM - 30;
+      return TAPPING_TERM - 10;
     case CMD_E:
-      return TAPPING_TERM - 30;
+      return TAPPING_TERM - 10;
     default:
       return TAPPING_TERM;
   }
@@ -150,16 +152,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
 
     case KC_CAPS:        
-      // if (!caps_lock_on) {  
-      //   rgblight_enable();
-      //   rgblight_setrgb (0xFF, 0xFF, 0xFF);
-      // } else {
-      //   rgblight_disable();
-      // }
       return true; // process normal behaviour      
 
     case CAP_WRD:        
-      enable_caps_word();
+      if (record->event.pressed) {
+       // enable_caps_word();
+      } else {
+        enable_caps_word();
+      }
       return false;   
 
     case BS_WORD:        
@@ -201,7 +201,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  | Shift|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |  Fn  | Ctrl | Opt  |  Esc | Spc  | Tab  | BS_Wd| BkSp | Enter|   [  |   ]  | Menu | 
+ * |  Fn  | Ctrl | Opt  |  Esc | Spc  | Tab  | Bspc | BkSp | Enter|   [  |   ]  | Menu | 
  * `-----------------------------------------------------------------------------------'
  */
 
@@ -209,19 +209,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * | Meh  |      | Mouse| Fun  |      |      |      |      |      |      |      | Hyper|
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      | Ctrl | Opt  | Cmd  | Shift|      |      | Shift| Opt  | Cmd  | Ctrl | Mouse|
+ * | Cmd  | Ctrl | Opt  |      | Shift|      |      | Shift| Opt  |      | Ctrl | Cmd  |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |      | Media|      |      |      |      |      |      |      |      | Media|      |                                               
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |  Cmd |  Num |  Sym | Shift|  Nav |      |      |      |      |
+ * |      |      |      |  Cmd |  Num |  Sym | Btn  |  Nav | Cmd  |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 
 [_CMK] = LAYOUT_planck_grid(
   GRV_MEH, KC_Q,    W_PTR,   F_FUN,   KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, DEL_HYP,
-  ESC_CTL, CTRL_A,  OPT_R,   CMD_S,   SHIFT_T, KC_G,    KC_M,    SHIFT_N, CMD_E,   OPT_I,   CTRL_O,  QUO_PTR,
+  ESC_CMD, CTRL_A,  OPT_R,   KC_S,    SHIFT_T, KC_G,    KC_M,    SHIFT_N, KC_E,    OPT_I,   CTRL_O,  CMD_QOT,
   SHIFT,   Z_MED,   KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  SLS_MED, SHIFT,
-  KC_ROPT, KC_LCTL, KC_LOPT, ESC_CMD, SPC_NUM, TAB_SYM, BS_WORD, BS_NAV,  KC_ENTER,KC_LBRC, KC_RBRC, KC_LEAD
+  KC_ROPT, KC_LCTL, KC_LOPT, ESC_CMD, SPC_NUM, TAB_SYM, BTN_BS,  BS_NAV,  ENT_CMD, KC_LBRC, KC_RBRC, KC_LEAD
 ),
 
 
@@ -339,7 +339,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_FUN] = LAYOUT_planck_grid(
   RESET,   KC_SLCK, KC_PAUS, _______, CAP_WRD, _noop__, _noop__, KC_F7,   KC_F8,   KC_F9,   KC_F12,  _______, 
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, L_GAM,    DND,     KC_F4,   KC_F5,   KC_F6,   KC_F11,  MISNCTRL, 
+  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, L_GAM,    DND,    KC_F4,   KC_F5,   KC_F6,   KC_F11,  MISNCTRL, 
   KC_CAPS, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, KC_F1,   KC_F2,   KC_F3,   KC_F10,  LNCHPAD, 
   _______, _______, _______, KC_LCMD, KC_SPC,  KC_TAB,  _noop__, KC_BSPC, _______, _______, _______, _______
 
@@ -362,6 +362,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _noop__, MIC_TGL, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, _______,
   _______, _______, CUT,     COPY,    PASTE,   _noop__, KC_PWR,  _noop__, _noop__, _noop__, _______, _______,
   _______, _______, _______, _noop__, _noop__, _noop__, KC_STOP, KC_MPLY, KC_MUTE, _______, _______, _______ 
+),
+
+/* BTN 
+ * ,-----------------------------------------------------------------------------------.
+ * |  Cmd | Ctrl |  Opt |  Cmd | Shift|      |      | Shift|  Cmd |  Opt | Ctrl |  Cmd |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |  Cmd | Ctrl |  Opt |  Cmd | Shift|      |      | Shift|  Cmd |  Opt | Ctrl |  Cmd |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |  Cmd | Ctrl |  Opt |  Cmd | Shift|      |      | Shift|  Cmd |  Opt | Ctrl |  Cmd |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      | Tab  |  Spc |  ##  |      |      |      |      |      |
+ * `-----------------------------------------------------------------------------------'
+ */
+
+[_BTN] = LAYOUT_planck_grid(
+  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _noop__, _noop__, KC_RSFT, KC_RCMD, KC_ROPT, KC_RCTL, _______,
+  KC_LCMD, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _noop__, _noop__, KC_RSFT, KC_RCMD, KC_ROPT, KC_RCTL, KC_RCMD,
+  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _noop__, _noop__, KC_RSFT, KC_RCMD, KC_ROPT, KC_RCTL, _______,
+  _______, _______, _______, _______, KC_TAB,  KC_SPACE,_noop__, _noop__, _______, _______, _______, _______
 ),
 
 /* ADJ 

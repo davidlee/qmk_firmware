@@ -52,10 +52,11 @@ bool caps_is_active(void);
 #define TAB_SYM  LT(_SYM, KC_TAB)
 
 #define BS_NAV   LT(_NAV, KC_BSPC)
+#define ENT_CMD  MT(MOD_LGUI, KC_ENTER)
 
 // right side mods
 #define DEL_HYP  MT(MOD_HYPR, KC_DEL)
-
+#define CMD_QOT  MT(MOD_LGUI, KC_QUOTE)
 
 // clipboard
 #define UNDO   LCMD(KC_Z)
