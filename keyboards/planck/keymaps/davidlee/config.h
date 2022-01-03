@@ -2,6 +2,11 @@
 
 #pragma once
 
+#ifndef USB_MAX_POWER_CONSUMPTION
+#  define USB_MAX_POWER_CONSUMPTION 100
+#endif
+
+
 #ifdef AUDIO_ENABLE
     #define STARTUP_SONG SONG(NO_SOUND)
 
@@ -13,7 +18,7 @@
 
 #define COMBO_COUNT 2
 
-#define TAPPING_TERM 160
+#define TAPPING_TERM 180
 #define TAPPING_TERM_PER_KEY 1
 #define IGNORE_MOD_TAP_INTERRUPT 1
 #define TAP_CODE_DELAY 5      // 100
