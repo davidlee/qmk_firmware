@@ -299,9 +299,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 /* NUM 
  * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |  [   |  7   |  8   |  9   |  ]   |      |
+ * |  `   |  1   |   2  |   3  |   4  |   5  |  6   |  7   |  8   |  9   |  0   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Ctrl |  Opt |  Cmd | Shift|   '  |  (   |  4   |  5   |  6   |  )   |      |
+ * |      | Ctrl |  Opt |  Cmd | Shift|   '  |  [   |  4   |  5   |  6   |  ]   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |CapWd |CapWd | En – | Em — |   -  |   =  |  `   |  1   |  2   |  3   |  \   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -311,16 +311,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 /* SYM 
  * ,-----------------------------------------------------------------------------------.
- * |  ~   |      |      |      |      |      |   {  |  &   |  *   |  (   |   }  |      |
+ * |  ~   |   !  |  @   |  #   |   $  |   %  |   ^  |   &  |  *   |  (   |  )   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |  Fn  | Ctrl |  Opt |  Cmd | Shift|   "  |   <  |  $   |  %   |  ^   |   >  |      | 
+ * |  Fn  | Ctrl |  Opt |  Cmd | Shift|   "  |   {  |   $  |  %   |  ^   |  }   |      | 
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Caps | Caps |      |      |   _  |   +  |   ~  |  !   |  @   |  #   |  |   |      |                                               
+ * | Caps | Caps |      |      |   _  |   +  |   ~  |   !  |  @   |  #   |  |   |      |                                               
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |  ##  |   (  |  )   |  Cmd |  [   |   ]  |      |
+ * |      |      |      |      |      |  ##  |   (  |   )  |  Cmd |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
-
 
 /* NAV
  * ,-----------------------------------------------------------------------------------.
@@ -413,15 +412,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_NUM] = LAYOUT_planck_grid(
-  _______, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, KC_7,    KC_8,    KC_9,    KC_RBRC, _______,
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_QUOT, KC_LPRN, KC_4,    KC_5,    KC_6,    KC_RPRN, _______,
+  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0, _______,
+  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_QUOT, KC_LBRC, KC_4,    KC_5,    KC_6,    KC_RBRC, _______,
   CAP_WRD, CAP_WRD, EN_DASH, EM_DASH, KC_MINS, KC_EQL,  KC_GRAVE,KC_1,    KC_2,    KC_3,    KC_BSLS, _______,
   _______, _______, _______, _noop__, _______, _noop__, KC_PDOT, KC_0,    KC_RCMD, _______, _______, _______
 ),
 
 [_SYM] = LAYOUT_planck_grid(
-  KC_TILD, _noop__, _noop__, _noop__, _noop__, _noop__, KC_LCBR, KC_AMPR, KC_ASTR, KC_LPRN, KC_RCBR, _______,
-  KC_ROPT, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_DQUO, KC_LT,   KC_DLR,  KC_PERC, KC_CIRC, KC_GT,   _______,
+  KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______,
+  KC_ROPT, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_DQUO, KC_LCBR, KC_DLR,  KC_PERC, KC_CIRC, KC_RCBR, _______,
   KC_CAPS, KC_CAPS, _noop__, _noop__, KC_UNDS, KC_PLUS, KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_PIPE, _______,
   _______, _______, _______, _noop__, _noop__, _______, KC_LPRN, KC_RPRN, KC_RCMD, KC_LBRC, KC_RBRC, _______
 ),
@@ -457,7 +456,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_BTN] = LAYOUT_planck_grid(
   _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _noop__, _noop__, KC_RSFT, KC_RCMD, KC_ROPT, KC_RCTL, _______,
-  KC_LCMD, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, FN,      FN, KC_RSFT, KC_RCMD, KC_ROPT, KC_RCTL, KC_RCMD,
+  KC_LCMD, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, FN,      FN,      KC_RSFT, KC_RCMD, KC_ROPT, KC_RCTL, KC_RCMD,
   _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _noop__, _noop__, KC_RSFT, KC_RCMD, KC_ROPT, KC_RCTL, _______,
   _______, _______, _______, _______, KC_TAB,  KC_SPACE,_noop__, _noop__, _______, _______, _______, _______
 ),
