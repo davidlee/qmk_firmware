@@ -313,7 +313,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
  * ,-----------------------------------------------------------------------------------.
  * |  ~   |   !  |  @   |  #   |   $  |   %  |   ^  |   &  |  *   |  (   |  )   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |  Fn  | Ctrl |  Opt |  Cmd | Shift|   "  |   {  |   $  |  %   |  ^   |  }   |      | 
+ * |      | Ctrl |  Opt |  Cmd | Shift|   "  |   {  |   $  |  %   |  ^   |  }   |      | 
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Caps | Caps |      |      |   _  |   +  |   ~  |   !  |  @   |  #   |  |   |      |                                               
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -323,11 +323,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 /* NAV
  * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |  Ins |  Del |      |      |      |
+ * |      |      |      |      |      |      |      | Back | Cmd -| Cmd =| Fwd  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Ctrl |  Opt |  Cmd | Shift|      |      |  Left| Down | Up   | Right|      |
+ * |      | Ctrl |  Opt |  Cmd | Shift|      |      | Left | Down | Up   | Right|      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Caps | Undo |  Cut |  Copy| Paste| Paste|      |  Home| PGDN | PGUP | End  | Enter|
+ * | Caps | Undo |  Cut |  Copy| Paste| Paste|      | Home | PGDN | PGUP | End  | Enter|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |  Cmd | Spc  |  Tab |      |  ##  |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
@@ -348,11 +348,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 /* FUN 
  * ,-----------------------------------------------------------------------------------.
- * | RESET| ScrLk| Pause|  ##  |      |      |      |  F7  |  F8  |  F9  |  F12 |      |
+ * | RESET| ScrLk| Pause|      |      |      |      |  F7  |  F8  |  F9  |  F12 |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      | Ctrl |  Opt |  Cmd | Shift| Game |      |  F4  |  F5  |  F6  |  F11 |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Caps |      |      |      |      |      |      |  F1  |  F2  |  F3  |  F10 |      |
+ * | Caps |      |      |      |  ##  |      |      |  F1  |  F2  |  F3  |  F10 |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |  Cmd |  Spc | Tab  |      | Bspc |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
@@ -360,7 +360,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 /* MED
  * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      | Cmd [| Cmd -| Cmd =| Cmd ]|      |     
+ * |      |      |      |      |      |      |      |      |      |      |      |      |     
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      | Ctrl |  Opt |  Cmd | Shift|      |MicTgl| Prev | Vol- | Vol+ | Next |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -412,7 +412,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_NUM] = LAYOUT_planck_grid(
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0, _______,
+  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
   _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_QUOT, KC_LBRC, KC_4,    KC_5,    KC_6,    KC_RBRC, _______,
   CAP_WRD, CAP_WRD, EN_DASH, EM_DASH, KC_MINS, KC_EQL,  KC_GRAVE,KC_1,    KC_2,    KC_3,    KC_BSLS, _______,
   _______, _______, _______, _noop__, _______, _noop__, KC_PDOT, KC_0,    KC_RCMD, _______, _______, _______
@@ -420,13 +420,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_SYM] = LAYOUT_planck_grid(
   KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______,
-  KC_ROPT, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_DQUO, KC_LCBR, KC_DLR,  KC_PERC, KC_CIRC, KC_RCBR, _______,
+  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_DQUO, KC_LCBR, KC_DLR,  KC_PERC, KC_CIRC, KC_RCBR, _______,
   KC_CAPS, KC_CAPS, _noop__, _noop__, KC_UNDS, KC_PLUS, KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_PIPE, _______,
   _______, _______, _______, _noop__, _noop__, _______, KC_LPRN, KC_RPRN, KC_RCMD, KC_LBRC, KC_RBRC, _______
 ),
 
 [_NAV] = LAYOUT_planck_grid(
-  _______, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, KC_INS,  KC_DEL,  _noop__, _noop__, _______,
+  _______, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, CMD_LBRC,CMD_MINS,CMD_PLUS,CMD_RBRC,_noop__,
   _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _noop__, _noop__, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _noop__,
   KC_CAPS, UNDO,    CUT,     COPY,    PASTE,   PASTE,   _noop__, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_ENTER,
   _______, _______, _______, KC_LCMD, KC_SPACE,KC_TAB,  _noop__, _______, _noop__, _______, _______, _______
@@ -448,7 +448,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_MED] = LAYOUT_planck_grid(
-  _______, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, CMD_LBRC,CMD_MINS,CMD_PLUS,CMD_RBRC,_______, 
+  _______, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, _______, 
   _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _noop__, MIC_TGL, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, _______,
   _______, _______, CUT,     COPY,    PASTE,   _noop__, KC_PWR,  _noop__, _noop__, _noop__, _______, _______,
   _______, _______, _______, _noop__, _noop__, _noop__, KC_STOP, KC_MPLY, KC_MUTE, _______, _______, _______ 
