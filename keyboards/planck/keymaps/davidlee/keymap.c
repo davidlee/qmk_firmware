@@ -20,7 +20,6 @@ enum planck_layers {
 
 enum planck_keycodes {
   CAP_WRD = SAFE_RANGE,
-  BS_WORD,
   PTR_LCK,
   EXT_PTR,
   EXT_GAM,
@@ -84,9 +83,9 @@ enum planck_keycodes {
 #define CMD_PLUS LCMD(KC_PLUS)
 
 #define GRV_MEH  MT(MOD_MEH, KC_GRAVE)
-#define SHIFT    OSM(MOD_LSFT) 
+#define OS_SFT   OSM(MOD_LSFT) 
 #define _noop__  KC_NO 
-#define L_NAV    MO(_NAV)
+
 #define BTN_BS   LT(_BTN,LALT(KC_BSPC))
 #define FN       KC_ROPT // requires karabiner
 
@@ -176,34 +175,40 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
 
   switch (keycode) {
-    // prevent rolls from making home row CMD mods unusable
-    // adapted from https://precondition.github.io/home-row-mods#rolled-modifiers-cancellation    
-    
-    // FIXME these don't seem to be entering the case statement
-
-    case N_CMD:
-      tap_code(KC_QUOT);
-
-      if (record->tap.count > 0) {
-        if (get_mods() & MOD_BIT(KC_RGUI)) {
-          unregister_mods(MOD_BIT(KC_RGUI));
+    // prevent rolls from interfering with home row mods
+    // adapted from https://precondition.github.io/home-row-mods#rolled-modifiers-cancellation   
+    //
+    case RSFT_T(KC_N): 
+      if (record->tap.count == 1 && record->event.pressed) {
+        if (get_mods() & MOD_BIT(KC_RCMD)) {
+          unregister_mods(MOD_BIT(KC_RCMD));
           tap_code(KC_E);
           tap_code(KC_N);
-          add_mods(MOD_BIT(KC_RGUI));
+          add_mods(MOD_BIT(KC_RCMD));
           return false;
         }
       }
       return true;
 
-    case S_CMD:
-      if (record->tap.count > 0) {
-        if (get_mods() & MOD_BIT(KC_LGUI)) {
-          unregister_mods(MOD_BIT(KC_LGUI));
+    case LSFT_T(KC_T): 
+      if (record->tap.count == 1 && record->event.pressed) {
+        if (get_mods() & MOD_BIT(KC_LCMD)) {
+          unregister_mods(MOD_BIT(KC_LCMD));
           tap_code(KC_S);
           tap_code(KC_T);
-          add_mods(MOD_BIT(KC_LGUI));
+          add_mods(MOD_BIT(KC_LCMD));
           return false;
         }
+        // this is problematic because we're reserving ROPT for Fn
+        // we could use say F24 instead, but then we couldn't use mod-tap for it
+        
+        // if (get_mods() & MOD_BIT(KC_LOPT)) {
+        //   unregister_mods(MOD_BIT(KC_LOPT));
+        //   tap_code(KC_R);
+        //   tap_code(KC_S);
+        //   add_mods(MOD_BIT(KC_LOPT));
+        //   return false;
+        // }        
       }
       return true;
 
@@ -211,8 +216,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       layer_on(_GAM);
       return false;
 
-    case PTR_LCK: //  TODO FIXME 
-      //layer_on(_PTR);
+    case PTR_LCK:
+      layer_on(_PTR);
       return false;
 
     case EXT_PTR:
@@ -223,22 +228,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       layer_off(_GAM);
       return false;
 
-    case KC_CAPS:        
-      return true; // process normal behaviour      
-
     case CAP_WRD:        
       if (record->event.pressed) {
        enable_caps_word();
       }
-      return false;   
-
-    case BS_WORD:        
-      if (record->event.pressed) {
-        SEND_STRING(SS_DOWN(X_LOPT) SS_TAP(X_BSPACE));
-      } else { 
-        SEND_STRING(SS_UP(X_LOPT));
-      }
-      return false;   
+      return false;    
 
     default:
       return true; /* Process all other keycodes normally */
@@ -270,7 +264,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  | Shift|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |  Fn  | Ctrl | Opt  |  Esc | Spc  | Tab  | Bspc | BkSp | Enter|   [  |   ]  | Menu | 
+ * |  Fn  | Ctrl | Opt  |  Esc | Spc  | Tab  |Shiƒt | BkSp | Enter|   [  |   ]  | Menu | 
  * `-----------------------------------------------------------------------------------'
  */
  /* Home Row Mods / Layers (hold behaviours)
@@ -335,11 +329,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 /* PTR
  * ,-----------------------------------------------------------------------------------.
- * |      | Exit |  ##  | LOCK |      |      | Exit |      |      |      |      |      |
+ * |      |      | Exit | LOCK |  ##  |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Exit | Ctrl |  Opt |  Cmd | Shift|      | Lock | mL   |  mD  |  mU  |  mR  |  ##  |
+ * | Exit | Ctrl |  Opt |  Cmd | Shift|      | Exit | mL   |  mD  |  mU  |  mR  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Shift|      |      |      |      |      | Exit | whL  |  whD |  whD | whR  |      |
+ * | Shift|      |      |      |      |      |      | whL  |  whD |  whD | whR  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |  b2  |  b1  |  b3  |      |      |      |
  * `-----------------------------------------------------------------------------------'
@@ -400,8 +394,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_CMK] = LAYOUT_planck_grid(
   GRV_MEH, Q_HYP,   W_MEH,   KC_F,    P_PTR,    KC_B,    KC_J,    KC_L,    KC_U,    Y_MEH,   SCLN_HYP,DEL_HYP,
   ESC_CMD, A_CTRL,  R_OPT,   S_CMD,   T_SHIFT,  G_FN,    M_FN,    N_SHIFT, E_CMD,   I_OPT,   O_CTRL,  CMD_QOT,
-  SHIFT,   Z_MED,   KC_X,    KC_C,    D_FUN,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  SLS_MED, SHIFT,
-  FN,      KC_LCTL, KC_LOPT, ESC_CMD, SPC_NUM,  TAB_SYM, BTN_BS,  BS_NAV,  ENT_CMD, KC_LBRC, KC_RBRC, KC_LEAD
+  KC_LSFT, Z_MED,   KC_X,    KC_C,    D_FUN,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  SLS_MED, KC_RSFT,
+  FN,      KC_LCTL, KC_LOPT, ESC_CMD, SPC_NUM,  TAB_SYM, OS_SFT,  BS_NAV,  ENT_CMD, KC_LBRC, KC_RBRC, KC_LEAD
 ),
 
 [_GAM] = LAYOUT_planck_grid(
@@ -433,14 +427,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_PTR] = LAYOUT_planck_grid(
-  _noop__, _noop__, _______, PTR_LCK, _noop__, _noop__, EXT_PTR, _noop__, _noop__, _noop__, _noop__, _noop__,
-  EXT_PTR, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _noop__, PTR_LCK, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______,
-  KC_LSFT, _noop__, _noop__, _noop__, _noop__, _noop__, EXT_PTR, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _noop__,
+  _noop__, _noop__, EXT_PTR, PTR_LCK, _______, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__,
+  EXT_PTR, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _noop__, EXT_PTR, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______,
+  KC_LSFT, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _noop__,
   _______, _______, _______, _noop__, _noop__, _noop__, KC_BTN2, KC_BTN1, KC_BTN3, _______, _______, _______
 ),
 
 [_FUN] = LAYOUT_planck_grid(
-  RESET,   KC_SLCK, KC_PAUS, _______, _noop__, _noop__, _noop__, KC_F7,   KC_F8,   KC_F9,   KC_F12,  _______, 
+  RESET,   KC_SLCK, KC_PAUS, _______, PTR_LCK, _noop__, _noop__, KC_F7,   KC_F8,   KC_F9,   KC_F12,  _______, 
   _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, L_GAM,   _noop__, KC_F4,   KC_F5,   KC_F6,   KC_F11,  _______, 
   KC_CAPS, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, KC_F1,   KC_F2,   KC_F3,   KC_F10,  _______, 
   _______, _______, _______, KC_LCMD, KC_SPC,  KC_TAB,  _noop__, KC_BSPC, _______, _______, _______, _______
