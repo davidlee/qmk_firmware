@@ -16,7 +16,7 @@
     #define MUSIC_MASK (keycode != KC_NO)
 #endif
 
-// #define COMBO_COUNT 2
+#define COMBO_COUNT 1
 
 #define TAPPING_TERM 170
 #define TAPPING_TERM_PER_KEY 1
@@ -28,11 +28,11 @@
 #define AUTO_SHIFT_TIMEOUT 120
 #define AUTO_SHIFT_NO_SETUP
 
-// #define COMBO_ALLOW_ACTION_KEYS
-// #define COMBO_STRICT_TIMER
+#define COMBO_ALLOW_ACTION_KEYS
+#define COMBO_STRICT_TIMER
 // #define EXTRA_SHORT_COMBOS
-// #define COMBO_TERM (TAPPING_TERM/5) // time to get all combo keys down
-// #define COMBO_HOLD (COMBO_TERM*4)   // time to hold to trigger delayed combo
+#define COMBO_TERM (TAPPING_TERM/5) // time to get all combo keys down
+#define COMBO_HOLD (COMBO_TERM*4)   // time to hold to trigger delayed combo
 // #define ADAPTIVE_TERM COMBO_HOLD    // use COMBO_HOLD time as a standard threshold (same recation time)
 
 #define CAPSWORD_USE_SHIFT 1
@@ -44,9 +44,9 @@
 #undef MOUSEKEY_INTERVAL
 #define MOUSEKEY_INTERVAL       8
 #undef MOUSEKEY_MAX_SPEED
-#define MOUSEKEY_MAX_SPEED      8
+#define MOUSEKEY_MAX_SPEED      7
 #undef MOUSEKEY_TIME_TO_MAX
-#define MOUSEKEY_TIME_TO_MAX    50
+#define MOUSEKEY_TIME_TO_MAX    30
 
 #undef MOUSEKEY_WHEEL_DELAY
 #define MOUSEKEY_WHEEL_DELAY    10

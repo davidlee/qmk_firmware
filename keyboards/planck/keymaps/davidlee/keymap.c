@@ -176,16 +176,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           tap_code(KC_T);
           add_mods(MOD_BIT(KC_LCMD));
           return false;
-        }
-        // TODO continue this
-
-        // if (get_mods() & MOD_BIT(KC_LOPT)) {
-        //   unregister_mods(MOD_BIT(KC_LOPT));
-        //   tap_code(KC_R);
-        //   tap_code(KC_S);
-        //   add_mods(MOD_BIT(KC_LOPT));
-        //   return false;
-        // }        
+        }       
       }
       return true;
 
@@ -216,6 +207,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
   }
 }
+
+// N,U,I combo turns on PTR layer
+
+const uint16_t PROGMEM ptr_combo1[] = {N_SHIFT, KC_U, I_OPT, COMBO_END};
+combo_t key_combos[COMBO_COUNT] = {
+    COMBO(ptr_combo1, PTR_LCK),
+};
+
 
 /* BLANK 
  * ,-----------------------------------------------------------------------------------.
@@ -305,11 +304,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 /* PTR
  * ,-----------------------------------------------------------------------------------.
- * |      |      | Exit | LOCK |  ##  |      |      |      |      |      |      |      |
+ * |      |      | Exit | LOCK |  ##  |      |      | whL  |  mU  |  whR |  whU |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Exit | Ctrl |  Opt |  Cmd | Shift|      | Exit | mL   |  mD  |  mU  |  mR  |      |
+ * | Exit | Ctrl |  Opt |  Cmd | Shift|      | Exit | mL   |  mD  |  mR  |  whD |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Shift|      |      |      |      |      |      | whL  |  whD |  whD | whR  |      |
+ * | Shift|      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |  b2  |  b1  |  b3  |      |      |      |
  * `-----------------------------------------------------------------------------------'
@@ -381,9 +380,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_PTR] = LAYOUT_planck_grid(
-  _noop__, _noop__, EXT_PTR, PTR_LCK, _______, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__,
-  EXT_PTR, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _noop__, EXT_PTR, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______,
-  KC_LSFT, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _noop__,
+  _noop__, _noop__, EXT_PTR, PTR_LCK, _______, _noop__, _noop__, KC_WH_L, KC_MS_U, KC_WH_R, KC_WH_U, _noop__,
+  EXT_PTR, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _noop__, EXT_PTR, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D, EXT_PTR,
+  KC_LSFT, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__,
   _______, _______, _______, KC_TAB,  KC_SPACE,_noop__, KC_BTN2, KC_BTN1, KC_BTN3, _______, _______, _______
 ),
 
