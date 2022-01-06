@@ -21,8 +21,12 @@
 #define TAPPING_TERM 170
 #define TAPPING_TERM_PER_KEY 1
 #define IGNORE_MOD_TAP_INTERRUPT 1
-// #define TAP_CODE_DELAY 5      // 100
+#define TAP_CODE_DELAY 5      // 100
 // #define TAP_HOLD_CAPS_DELAY 0 // 200
+
+#define NO_AUTO_SHIFT_ALPHA
+#define AUTO_SHIFT_TIMEOUT 120
+#define AUTO_SHIFT_NO_SETUP
 
 // #define COMBO_ALLOW_ACTION_KEYS
 // #define COMBO_STRICT_TIMER
@@ -33,7 +37,7 @@
 
 #define CAPSWORD_USE_SHIFT 1
 
-// #define QMK_KEYS_PER_SCAN 4
+#define QMK_KEYS_PER_SCAN 4
 
 #undef MOUSEKEY_DELAY
 #define MOUSEKEY_DELAY          0
