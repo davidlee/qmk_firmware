@@ -201,7 +201,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         // this is problematic because we're reserving ROPT for Fn
         // we could use say F24 instead, but then we couldn't use mod-tap for it
-        
+
         // if (get_mods() & MOD_BIT(KC_LOPT)) {
         //   unregister_mods(MOD_BIT(KC_LOPT));
         //   tap_code(KC_R);
@@ -252,9 +252,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
  * `-----------------------------------------------------------------------------------'
  */
 
-
 // Keymap
-
 
 /* COLEMAK-DH
  * ,-----------------------------------------------------------------------------------.
@@ -264,30 +262,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  | Shift|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |  Fn  | Ctrl | Opt  |  Esc | Spc  | Tab  |Shiƒt | BkSp | Enter|   [  |   ]  | Menu | 
+ * |      |      |      |  Esc | Spc  | Tab  |Shiƒt | BkSp | Enter|      |      |      | 
  * `-----------------------------------------------------------------------------------'
- */
- /* Home Row Mods / Layers (hold behaviours)
+ *
+ * Home Row Mods / Layers (hold behaviours)
+ *
  * ,-----------------------------------------------------------------------------------.
- * |  Meh | Hyper|  Meh |      |  Ptr |      |      |      |      |  Meh | Hyper| Hyper|
+ * |      | Hyper|  Meh |      |  PTR |      |      |      |      |  Meh | Hyper|      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |  Cmd | Ctrl |  Opt |  Cmd | Shift|  Fn  |  Fn  | Shift|  Cmd |  Opt | Ctrl |  Cmd |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      | Media|      |      |  Fun |      |      |      |      |      | Media|      |                                               
+ * |      |  MED |      |      |  FUN |      |      |      |      |      |  MED |      |                                               
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |  Cmd |  Num |  Sym |  Btn |  Nav |  Cmd |      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-
-/* GAM (Qwerty)
- * ,-----------------------------------------------------------------------------------.
- * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  "   |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Ctrl | Alt  | GUI  |  Spc |  Num | EXIT | Bspc | Left | Down |  Up  |Right |
+ * |      |      |      |  Cmd |  NUM |      |  BTN |  NAV |  Cmd |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 
@@ -295,23 +282,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
  * ,-----------------------------------------------------------------------------------.
  * |  `   |  1   |   2  |   3  |   4  |   5  |  6   |  7   |  8   |  9   |  0   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Ctrl |  Opt |  Cmd | Shift|   '  |  [   |  4   |  5   |  6   |  ]   |      |
+ * |  Fn  | Ctrl |  Opt |  Cmd | Shift|   '  |  [   |  4   |  5   |  6   |  ]   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |CapWd |CapWd | En – | Em — |   -  |   =  |  `   |  1   |  2   |  3   |  \   |      |
+ * | Caps |CapWd | En – | Em — |   -  |   =  |  ;   |  1   |  2   |  3   |  \   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |  ##  |      |  .   |  0   |  Cmd |      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-
-/* SYM 
- * ,-----------------------------------------------------------------------------------.
- * |  ~   |   !  |  @   |  #   |   $  |   %  |   ^  |   &  |  *   |  (   |  )   |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Ctrl |  Opt |  Cmd | Shift|   "  |   {  |   $  |  %   |  ^   |  }   |      | 
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Caps | Caps |      |      |   _  |   +  |   ~  |   !  |  @   |  #   |  |   |      |                                               
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |  ##  |   (  |   )  |  Cmd |      |      |      |
+ * |      |      |      |      |  ##  |      |      |      |  0   |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 
@@ -327,26 +302,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
  * `-----------------------------------------------------------------------------------'
  */
 
-/* PTR
- * ,-----------------------------------------------------------------------------------.
- * |      |      | Exit | LOCK |  ##  |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Exit | Ctrl |  Opt |  Cmd | Shift|      | Exit | mL   |  mD  |  mU  |  mR  |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Shift|      |      |      |      |      |      | whL  |  whD |  whD | whR  |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |  b2  |  b1  |  b3  |      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-
-
 /* FUN 
  * ,-----------------------------------------------------------------------------------.
  * | RESET| ScrLk| Pause|      |      |      |      |  F7  |  F8  |  F9  |  F12 |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      | Ctrl |  Opt |  Cmd | Shift| Game |      |  F4  |  F5  |  F6  |  F11 |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Caps |      |      |      |  ##  |      |      |  F1  |  F2  |  F3  |  F10 |      |
+ * |      |      |      |      |  ##  |      |      |  F1  |  F2  |  F3  |  F10 |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |  Cmd |  Spc | Tab  |      | Bspc |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
@@ -364,27 +326,41 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
  * `-----------------------------------------------------------------------------------'
  */
 
+/* PTR
+ * ,-----------------------------------------------------------------------------------.
+ * |      |      | Exit | LOCK |  ##  |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Exit | Ctrl |  Opt |  Cmd | Shift|      | Exit | mL   |  mD  |  mU  |  mR  |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Shift|      |      |      |      |      |      | whL  |  whD |  whD | whR  |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |      |  b2  |  b1  |  b3  |      |      |      |
+ * `-----------------------------------------------------------------------------------'
+ */
+
 /* BTN 
  * ,-----------------------------------------------------------------------------------.
- * |  Cmd | Hyper|  Meh |  Cmd | Shift|      |      | Shift|  Cmd |  Meh | Hyper|  Cmd |
+ * |      | Hyper|  Meh |  Cmd | Shift|      |      | Shift|  Cmd |  Meh | Hyper|      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |  Cmd | Ctrl |  Opt |  Cmd | Shift|  Fn  |  Fn  | Shift|  Cmd |  Opt | Ctrl |  Cmd |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |  Cmd | Ctrl |  Opt |  Cmd | Shift|      |      | Shift|  Cmd |  Opt | Ctrl |  Cmd |
+ * |      | Ctrl |  Opt |  Cmd | Shift|      |      | Shift|  Cmd |  Opt | Ctrl |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      | Tab  |  Spc |  ##  |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 
-/* ADJ 
+//======================================================================================
+
+/* GAM (Qwerty)
  * ,-----------------------------------------------------------------------------------.
- * |      | Reset| Debug|      |      |      |      |      |      |      |      |      |
+ * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      | GAM  |      |      |      |      |      |      |
+ * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  "   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |      | Ctrl | Alt  | GUI  |  Spc |  Num | EXIT | Bspc | Left | Down |  Up  |Right |
  * `-----------------------------------------------------------------------------------'
  */
 
@@ -393,30 +369,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_CMK] = LAYOUT_planck_grid(
   GRV_MEH, Q_HYP,   W_MEH,   KC_F,    P_PTR,    KC_B,    KC_J,    KC_L,    KC_U,    Y_MEH,   SCLN_HYP,DEL_HYP,
-  ESC_CMD, A_CTRL,  R_OPT,   S_CMD,   T_SHIFT,  G_FN,    M_FN,    N_SHIFT, E_CMD,   I_OPT,   O_CTRL,  CMD_QOT,
+  ESC_CMD, A_CTRL,  R_OPT,   S_CMD,   T_SHIFT,  KC_G,    KC_M,    N_SHIFT, E_CMD,   I_OPT,   O_CTRL,  CMD_QOT,
   KC_LSFT, Z_MED,   KC_X,    KC_C,    D_FUN,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  SLS_MED, KC_RSFT,
-  FN,      KC_LCTL, KC_LOPT, ESC_CMD, SPC_NUM,  TAB_SYM, OS_SFT,  BS_NAV,  ENT_CMD, KC_LBRC, KC_RBRC, KC_LEAD
-),
-
-[_GAM] = LAYOUT_planck_grid(
-    KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
-    KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT ,
-    _______, KC_LCTL, KC_LALT, KC_LGUI, KC_SPC,  L_NUM,   EXT_GAM, KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+  _noop__, _noop__, _noop__, ESC_CMD, SPC_NUM,  TAB_SYM, OS_SFT,  BS_NAV,  ENT_CMD, _noop__, _noop__, _noop__
 ),
 
 [_NUM] = LAYOUT_planck_grid(
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_QUOT, KC_LBRC, KC_4,    KC_5,    KC_6,    KC_RBRC, _______,
-  CAP_WRD, CAP_WRD, EN_DASH, EM_DASH, KC_MINS, KC_EQL,  KC_GRAVE,KC_1,    KC_2,    KC_3,    KC_BSLS, _______,
+  FN,      KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_QUOT, KC_LBRC, KC_4,    KC_5,    KC_6,    KC_RBRC, _______,
+  KC_CAPS, CAP_WRD, EN_DASH, EM_DASH, KC_MINS, KC_EQL,  KC_SCLN, KC_1,    KC_2,    KC_3,    KC_BSLS, _______,
   _______, _______, _______, _noop__, _______, _noop__, KC_PDOT, KC_0,    KC_RCMD, _______, _______, _______
-),
-
-[_SYM] = LAYOUT_planck_grid(
-  KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______,
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_DQUO, KC_LCBR, KC_DLR,  KC_PERC, KC_CIRC, KC_RCBR, _______,
-  KC_CAPS, KC_CAPS, _noop__, _noop__, KC_UNDS, KC_PLUS, KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_PIPE, _______,
-  _______, _______, _______, _noop__, _noop__, _______, KC_LPRN, KC_RPRN, KC_RCMD, KC_LBRC, KC_RBRC, _______
 ),
 
 [_NAV] = LAYOUT_planck_grid(
@@ -436,7 +398,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_FUN] = LAYOUT_planck_grid(
   RESET,   KC_SLCK, KC_PAUS, _______, PTR_LCK, _noop__, _noop__, KC_F7,   KC_F8,   KC_F9,   KC_F12,  _______, 
   _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, L_GAM,   _noop__, KC_F4,   KC_F5,   KC_F6,   KC_F11,  _______, 
-  KC_CAPS, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, KC_F1,   KC_F2,   KC_F3,   KC_F10,  _______, 
+  _______, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, KC_F1,   KC_F2,   KC_F3,   KC_F10,  _______, 
   _______, _______, _______, KC_LCMD, KC_SPC,  KC_TAB,  _noop__, KC_BSPC, _______, _______, _______, _______
 
 ),
@@ -449,17 +411,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_BTN] = LAYOUT_planck_grid(
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _noop__, _noop__, KC_RSFT, KC_RCMD, KC_ROPT, KC_RCTL, _______,
+  _______, KC_HYPR, KC_MEH,  KC_LCMD, KC_LSFT, _noop__, _noop__, KC_RSFT, KC_RCMD, KC_MEH,  KC_HYPR, _______,
   KC_LCMD, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, FN,      FN,      KC_RSFT, KC_RCMD, KC_ROPT, KC_RCTL, KC_RCMD,
   _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _noop__, _noop__, KC_RSFT, KC_RCMD, KC_ROPT, KC_RCTL, _______,
-  _______, _______, _______, _______, KC_TAB,  KC_SPACE,_noop__, _noop__, _______, _______, _______, _______
+  _______, _______, _______, _______, KC_TAB,  KC_SPACE,_______, _noop__, _noop__, _______, _______, _______
 ),
 
-[_ADJ] = LAYOUT_planck_grid(
-  _______, RESET,   DEBUG,   _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, _______, _______, L_GAM,   _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+[_GAM] = LAYOUT_planck_grid(
+    KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
+    KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT ,
+    _______, KC_LCTL, KC_LALT, KC_LGUI, KC_SPC,  L_NUM,   EXT_GAM, KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
 };
