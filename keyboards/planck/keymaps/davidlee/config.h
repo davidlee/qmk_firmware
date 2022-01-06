@@ -16,7 +16,7 @@
     #define MUSIC_MASK (keycode != KC_NO)
 #endif
 
-#define COMBO_COUNT 1
+#define COMBO_COUNT 2
 
 #define TAPPING_TERM 170
 #define TAPPING_TERM_PER_KEY 1

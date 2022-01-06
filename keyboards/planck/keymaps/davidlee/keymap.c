@@ -22,7 +22,18 @@ enum planck_keycodes {
   EXT_GAM,
   L_GAM,
   SHIFTY,
+  BACKSPACE_WORD,
 };
+
+//
+// custom keycodes
+//
+
+#define FN       KC_F24 // requires karabiner
+
+#define _noop__  KC_NO
+#define XXXXXXX  KC_NO
+
 
 // Left-hand home row mods 
 #define A_CTRL   LCTL_T(KC_A)
@@ -36,16 +47,24 @@ enum planck_keycodes {
 #define I_OPT    LALT_T(KC_I)
 #define O_CTRL   RCTL_T(KC_O)
 
+// top row mod / layer-taps
+#define Q_HYP    MT(MOD_HYPR, KC_Q)
+#define W_MEH    MT(MOD_MEH, KC_W)
+#define F_FUN    LT(_FUN, KC_F)
+#define P_PTR    LT(_PTR, KC_P)
+
+#define Y_MEH    MT(MOD_MEH, KC_Y)
+#define SCLN_HYP MT(MOD_HYPR, KC_SCOLON)
+
 // other mod-tap keys
 #define Z_MED    LT(_MED, KC_Z)
-#define SLS_MED  LT(_MED, KC_SLSH)
-#define F_FUN    LT(_FUN, KC_F)
 
 // hold for mouse layer
 #define W_PTR     LT(_PTR, KC_W)
 #define QUO_PTR   LT(_PTR, KC_QUOTE)
 
 // left side mods
+#define GRV_MEH  MT(MOD_MEH, KC_GRAVE)
 #define ESC_CMD  LCMD_T(KC_ESCAPE)
 #define TAB_MEH  MT(MOD_MEH, KC_TAB)
 
@@ -75,23 +94,6 @@ enum planck_keycodes {
 #define CMD_MINS LCMD(KC_MINS)
 #define CMD_PLUS LCMD(KC_PLUS)
 
-#define GRV_MEH  MT(MOD_MEH, KC_GRAVE)
-#define OS_SFT   OSM(MOD_LSFT) 
-#define _noop__  KC_NO
-#define XXXXXXX  KC_NO
-
-#define BTN_BS   LT(_BTN,LALT(KC_BSPC))
-#define FN       KC_F24 // requires karabiner
-
-#define Q_HYP    MT(MOD_HYPR, KC_Q)
-#define W_MEH    MT(MOD_MEH, KC_W)
-
-#define N_CMD    MT(MOD_RGUI, KC_N)
-#define Y_MEH    MT(MOD_MEH, KC_Y)
-#define SCLN_HYP MT(MOD_HYPR, KC_SCOLON)
-
-#define P_PTR    LT(_PTR, KC_P)
-#define F_FUN    LT(_FUN, KC_F)
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -202,19 +204,34 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;    
 
+    case BACKSPACE_WORD:        
+      if (record->event.pressed) {
+        register_code(KC_LOPT);
+        tap_code(KC_BSPC);
+        unregister_code(KC_LOPT);
+      }
+      return false;
+
     default:
       return true; /* Process all other keycodes normally */
 
   }
 }
 
+//
+// COMBOS
+//
+
 // N,U,I combo turns on PTR layer
+const uint16_t PROGMEM ptr_combo[] = {N_SHIFT, KC_U, I_OPT, COMBO_END};
 
-const uint16_t PROGMEM ptr_combo1[] = {N_SHIFT, KC_U, I_OPT, COMBO_END};
+// backspace whole word on N,E
+const uint16_t PROGMEM bspc_combo[] = {N_SHIFT, E_CMD, COMBO_END};
+
 combo_t key_combos[COMBO_COUNT] = {
-    COMBO(ptr_combo1, PTR_LCK),
+    COMBO(ptr_combo, PTR_LCK),
+    COMBO(bspc_combo, BACKSPACE_WORD),
 };
-
 
 /* BLANK 
  * ,-----------------------------------------------------------------------------------.
