@@ -21,19 +21,13 @@ enum planck_keycodes {
   EXT_PTR,
   EXT_GAM,
   L_GAM,
-  SHIFTY,
+  // SHIFTY,
   BACKSPACE_WORD,
 };
 
 //
 // custom keycodes
 //
-
-#define FN       KC_F24 // requires karabiner
-
-#define _noop__  KC_NO
-#define XXXXXXX  KC_NO
-
 
 // Left-hand home row mods 
 #define A_CTRL   LCTL_T(KC_A)
@@ -65,18 +59,20 @@ enum planck_keycodes {
 
 // left side mods
 #define GRV_MEH  MT(MOD_MEH, KC_GRAVE)
-#define ESC_CMD  LCMD_T(KC_ESCAPE)
+#define ESC_CMD  RCMD_T(KC_ESCAPE) // use RCMD here so that Cmd-T works
 #define TAB_MEH  MT(MOD_MEH, KC_TAB)
 
 // bottom row mods
 #define SPC_NUM  LT(_NUM, KC_SPC)
 #define BS_NAV   LT(_NAV, KC_BSPC)
+#define SHIFTY   OSM(MOD_LSFT)
 
 #define L_BTN    MO(_BTN)
+#define L_FUN    MO(_FUN)
 
 // right side mods
 #define DEL_HYP  MT(MOD_HYPR, KC_DEL)
-#define CMD_QOT  MT(MOD_LGUI, KC_QUOTE)
+#define CMD_QOT  MT(MOD_LGUI, KC_QUOTE) // use LCMD here so that Cmd-N works
 
 // clipboard
 #define UNDO   LCMD(KC_Z)
@@ -92,8 +88,12 @@ enum planck_keycodes {
 #define CMD_LBRC LCMD(KC_LBRC)
 #define CMD_RBRC LCMD(KC_RBRC)
 #define CMD_MINS LCMD(KC_MINS)
-#define CMD_PLUS LCMD(KC_PLUS)
+#define CMD_EQL  LCMD(KC_EQL)
 
+#define FN       KC_F24 // requires karabiner
+#define XXXXXXX  KC_NO
+
+//
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -101,10 +101,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
       return TAPPING_TERM + 20;
     case I_OPT:
       return TAPPING_TERM + 20;
-    case S_CMD:
-      return TAPPING_TERM + 10;
-    case E_CMD:
-      return TAPPING_TERM + 10;
+    case SPC_NUM:
+      return TAPPING_TERM - 20;
+    case BS_NAV:
+      return TAPPING_TERM - 20;
     default:
       return TAPPING_TERM;
   }
@@ -233,6 +233,7 @@ combo_t key_combos[COMBO_COUNT] = {
     COMBO(bspc_combo, BACKSPACE_WORD),
 };
 
+
 /* BLANK 
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |      |      |      |      |      |      |
@@ -251,11 +252,11 @@ combo_t key_combos[COMBO_COUNT] = {
  * ,-----------------------------------------------------------------------------------.
  * |   `  |   Q  |   W  |   F  |   P  |   B  |   J  |   L  |   U  |   Y  |   ;  |  Del |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Esc  |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  |   '  |
+ * |  Esc |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  |   '  |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |  (   |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  | Enter|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      | Tab  | Spc  |      |      | BkSp | Enter|      |      |      | 
+ * |      |      |      | Tab  | Spc  |  FUN | Shift| BkSp | Enter|      |      |      | 
  * `-----------------------------------------------------------------------------------'
  *
  * Home Row Mods / Layers (hold behaviours)
@@ -267,7 +268,7 @@ combo_t key_combos[COMBO_COUNT] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|  MED |      |      |      |      |      |      |      |      |      | Shift|                                               
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |  NUM |  BTN | Shift|  NAV |      |      |      |      |
+ * |      |      |      |      |  NUM |  FUN | Shift|  NAV |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 
@@ -297,9 +298,9 @@ combo_t key_combos[COMBO_COUNT] = {
 
 /* FUN 
  * ,-----------------------------------------------------------------------------------.
- * | RESET| ScrLk| Pause|  ##  |      |      |      |  F7  |  F8  |  F9  |  F12 |      |
+ * | RESET| ScrLk| Pause|  ##  |  PTR |      |      |  F7  |  F8  |  F9  |  F12 |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Ctrl |  Opt |  Cmd | Shift| Game |      |  F4  |  F5  |  F6  |  F11 |      |
+ * |      | Ctrl |  Opt |  Cmd | Shift|  GAM |      |  F4  |  F5  |  F6  |  F11 |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |  F1  |  F2  |  F3  |  F10 |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -364,50 +365,50 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   GRV_MEH, Q_HYP,   W_MEH,   F_FUN,   P_PTR,    KC_B,   KC_J,    KC_L,    KC_U,    Y_MEH,   SCLN_HYP,DEL_HYP,
   ESC_CMD, A_CTRL,  R_OPT,   S_CMD,   T_SHIFT,  KC_G,   KC_M,    N_SHIFT, E_CMD,   I_OPT,   O_CTRL,  CMD_QOT,
   KC_LSPO, Z_MED,   KC_X,    KC_C,    KC_D,     KC_V,   KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
-  _noop__, _noop__, _noop__, KC_TAB,  SPC_NUM,  SHIFTY, SHIFTY,  BS_NAV,  KC_ENTER,_noop__, _noop__, _noop__
+  _______, _______, _______, KC_TAB,  SPC_NUM,  L_FUN,  SHIFTY,  BS_NAV,  KC_ENTER,_______, _______, _______
 ),
 
 [_NUM] = LAYOUT_planck_grid(
   KC_RPRN, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
   FN,      KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_UNDS, KC_LBRC, KC_4,    KC_5,    KC_6,    KC_RBRC, _______,
   KC_CAPS, CAP_WRD, EN_DASH, EM_DASH, KC_MINS, KC_EQL,  KC_COLN, KC_1,    KC_2,    KC_3,    KC_BSLS, _______,
-  _______, _______, _______, _noop__, _______, _noop__, KC_PDOT, KC_0,    _noop__, _______, _______, _______
+  _______, _______, _______, XXXXXXX, _______, XXXXXXX, KC_PDOT, KC_0,    XXXXXXX, _______, _______, _______
 ),
 
 [_NAV] = LAYOUT_planck_grid(
-  _______, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, CMD_LBRC,CMD_MINS,CMD_PLUS,CMD_RBRC,_noop__,
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _noop__, _noop__, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _noop__,
-  KC_CAPS, UNDO,    CUT,     COPY,    PASTE,   PASTE,   _noop__, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_ENTER,
-  _______, _______, _______, KC_TAB,  KC_SPACE,_noop__, _noop__, _______, _noop__, _______, _______, _______
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, CMD_LBRC,CMD_MINS,CMD_EQL ,CMD_RBRC,XXXXXXX,
+  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX,
+  KC_CAPS, UNDO,    CUT,     COPY,    PASTE,   PASTE,   XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_ENTER,
+  _______, _______, _______, KC_TAB,  KC_SPACE,XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, _______
 ),
 
 [_FUN] = LAYOUT_planck_grid(
-  RESET,   KC_SLCK, KC_PAUS, _______, PTR_LCK, _noop__, _noop__, KC_F7,   KC_F8,   KC_F9,   KC_F12,  _______, 
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, L_GAM,   _noop__, KC_F4,   KC_F5,   KC_F6,   KC_F11,  _______, 
-  _______, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, KC_F1,   KC_F2,   KC_F3,   KC_F10,  _______, 
-  _______, _______, _______, KC_TAB,  KC_SPACE,_noop__, _noop__, KC_BSPC, _______, _______, _______, _______
+  RESET,   KC_SLCK, KC_PAUS, _______, PTR_LCK, XXXXXXX, XXXXXXX, KC_F7,   KC_F8,   KC_F9,   KC_F12,  _______, 
+  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, L_GAM,   XXXXXXX, KC_F4,   KC_F5,   KC_F6,   KC_F11,  _______, 
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F10,  _______, 
+  _______, _______, _______, KC_TAB,  KC_SPACE,XXXXXXX, XXXXXXX, KC_BSPC, _______, _______, _______, _______
 
 ),
 
 [_MED] = LAYOUT_planck_grid(
-  _______, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, _______, 
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _noop__, _noop__, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, _______,
-  _______, _______, CUT,     COPY,    PASTE,   _noop__, KC_PWR,  _noop__, _noop__, _noop__, _______, _______,
-  _______, _______, _______, KC_TAB,  KC_SPACE,_noop__, KC_STOP, KC_MPLY, KC_MUTE, _______, _______, _______ 
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, 
+  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, XXXXXXX, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, _______,
+  _______, _______, CUT,     COPY,    PASTE,   XXXXXXX, KC_PWR,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+  _______, _______, _______, KC_TAB,  KC_SPACE,XXXXXXX, KC_STOP, KC_MPLY, KC_MUTE, _______, _______, _______ 
 ),
 
 [_PTR] = LAYOUT_planck_grid(
-  _noop__, _noop__, EXT_PTR, PTR_LCK, _______, _noop__, _noop__, KC_WH_L, KC_MS_U, KC_WH_R, KC_WH_U, _noop__,
-  EXT_PTR, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _noop__, EXT_PTR, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D, EXT_PTR,
-  KC_LSFT, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__, _noop__,
-  _______, _______, _______, KC_TAB,  KC_SPACE,_noop__, KC_BTN2, KC_BTN1, KC_BTN3, _______, _______, _______
+  XXXXXXX, XXXXXXX, EXT_PTR, PTR_LCK, _______, XXXXXXX, XXXXXXX, KC_WH_L, KC_MS_U, KC_WH_R, KC_WH_U, XXXXXXX,
+  EXT_PTR, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, EXT_PTR, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D, EXT_PTR,
+  KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  _______, _______, _______, KC_TAB,  KC_SPACE,XXXXXXX, KC_BTN2, KC_BTN1, KC_BTN3, _______, _______, _______
 ),
 
 [_BTN] = LAYOUT_planck_grid(
-  _______, KC_HYPR, KC_MEH,  KC_LCMD, KC_LSFT, _noop__, _noop__, KC_RSFT, KC_RCMD, KC_MEH,  KC_HYPR, _______,
+  _______, KC_HYPR, KC_MEH,  KC_LCMD, KC_LSFT, XXXXXXX, XXXXXXX, KC_RSFT, KC_RCMD, KC_MEH,  KC_HYPR, _______,
   KC_LCMD, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, FN,      FN,      KC_RSFT, KC_RCMD, KC_ROPT, KC_RCTL, KC_RCMD,
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _noop__, _noop__, KC_RSFT, KC_RCMD, KC_ROPT, KC_RCTL, _______,
-  _______, _______, _______, KC_TAB,  KC_SPACE,_______, _noop__, _noop__, _noop__, _______, _______, _______
+  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, XXXXXXX, KC_RSFT, KC_RCMD, KC_ROPT, KC_RCTL, _______,
+  _______, _______, _______, KC_TAB,  KC_SPACE,_______, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______
 ),
 
 [_GAM] = LAYOUT_planck_grid(
