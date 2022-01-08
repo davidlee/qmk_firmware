@@ -111,6 +111,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
+  // state = update_tri_layer_state(state, _NUM, _NAV, _BTN);
+
   switch (get_highest_layer(state)) {
     case _GAM:
       rgblight_enable();
@@ -135,7 +137,11 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     case _PTR:
       rgblight_enable();
       rgblight_setrgb (0x00,  0xFF, 0x7A);
-      break;                  
+      break;
+    case _BTN:
+      rgblight_enable();
+      rgblight_setrgb (0xC0,  0xFF, 0xFF);
+      break;                          
     default: 
       rgblight_disable();
       break;      
@@ -248,6 +254,10 @@ combo_t key_combos[COMBO_COUNT] = {
 
 // Keymap
 
+// TODO swap the FUN button for one that acts as an OSL for FUN when tapped, but an ML for BTN when held.
+// this seems like it might require some problem solving ... may just be better off activating BTN when
+// both home position thumb buttons are held, like ADJ in the default layout.   
+
 /* COLEMAK-DH
  * ,-----------------------------------------------------------------------------------.
  * |   `  |   Q  |   W  |   F  |   P  |   B  |   J  |   L  |   U  |   Y  |   ;  |  Del |
@@ -300,11 +310,11 @@ combo_t key_combos[COMBO_COUNT] = {
  * ,-----------------------------------------------------------------------------------.
  * | RESET| ScrLk| Pause|  ##  |  PTR |      |      |  F7  |  F8  |  F9  |  F12 |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Ctrl |  Opt |  Cmd | Shift|  GAM |      |  F4  |  F5  |  F6  |  F11 |      |
+ * | BTN  | Ctrl |  Opt |  Cmd | Shift|  GAM |      |  F4  |  F5  |  F6  |  F11 |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |  F1  |  F2  |  F3  |  F10 |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |  Tab |  Spc |      |      | Bspc |      |      |      |      |
+ * |      |      |      |  Tab |  Spc |  ##  |      | Bspc |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 
@@ -384,7 +394,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_FUN] = LAYOUT_planck_grid(
   RESET,   KC_SLCK, KC_PAUS, _______, PTR_LCK, XXXXXXX, XXXXXXX, KC_F7,   KC_F8,   KC_F9,   KC_F12,  _______, 
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, L_GAM,   XXXXXXX, KC_F4,   KC_F5,   KC_F6,   KC_F11,  _______, 
+  L_BTN,  KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, L_GAM,   XXXXXXX, KC_F4,   KC_F5,   KC_F6,   KC_F11,  _______, 
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F10,  _______, 
   _______, _______, _______, KC_TAB,  KC_SPACE,XXXXXXX, XXXXXXX, KC_BSPC, _______, _______, _______, _______
 
