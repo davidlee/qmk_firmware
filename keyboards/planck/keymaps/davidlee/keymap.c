@@ -64,12 +64,15 @@ enum planck_keycodes {
 #define TAB_MEH  MT(MOD_MEH, KC_TAB)
 
 // bottom row mods
+#define TAB_CMD  MT(MOD_LGUI, KC_TAB)
 #define SPC_NUM  LT(_NUM, KC_SPC)
-#define BS_NAV   LT(_NAV, KC_BSPC)
-#define SHIFTY   OSM(MOD_LSFT)
-
-#define L_BTN    MO(_BTN)
 #define L_FUN    MO(_FUN)
+#define L_BTN    MO(_BTN) // on FUN layer
+
+#define SHIFTY   OSM(MOD_LSFT)
+#define BS_NAV   LT(_NAV, KC_BSPC)
+#define ENT_CMD  MT(MOD_RGUI, KC_ENTER)
+
 
 // right side mods
 #define DEL_HYP  MT(MOD_HYPR, KC_DEL)
@@ -280,9 +283,9 @@ combo_t key_combos[COMBO_COUNT] = {
 
 // Keymap
 
-// TODO swap the FUN button for one that acts as an OSL for FUN when tapped, but an ML for BTN when held.
-// this seems like it might require some problem solving ... may just be better off activating BTN when
-// both home position thumb buttons are held, like ADJ in the default layout.   
+// TODO do we need the BTN layer, or is it just unnecessary complexity?
+// TODO what can we use FUN for? would a tapdance on SHIFTY for eg. capsword make sense?
+
 
 /* COLEMAK-DH
  * ,-----------------------------------------------------------------------------------.
@@ -304,7 +307,7 @@ combo_t key_combos[COMBO_COUNT] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|  MED |      |      |      |      |      |      |      |      |      | Shift|                                               
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |  NUM |  FUN | Shift|  NAV |      |      |      |      |
+ * |      |      |      |  Cmd |  NUM |  FUN | Shift|  NAV |  Cmd |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 
@@ -316,7 +319,7 @@ combo_t key_combos[COMBO_COUNT] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Caps |CapWd | En – | Em — |   -  |   =  |  :   |  1   |  2   |  3   |  \   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |  ##  |      |  .   |  0   |      |      |      |      |
+ * |      |      |      |      |  ##  |      |  .   |  0   |  +   |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 
@@ -401,14 +404,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   GRV_MEH, Q_HYP,   W_MEH,   F_FUN,   P_PTR,    KC_B,   KC_J,    KC_L,    KC_U,    Y_MEH,   SCLN_HYP,DEL_HYP,
   ESC_CMD, A_CTRL,  R_OPT,   S_CMD,   T_SHIFT,  KC_G,   KC_M,    N_SHIFT, E_CMD,   I_OPT,   O_CTRL,  CMD_QOT,
   KC_LSPO, Z_MED,   KC_X,    KC_C,    KC_D,     KC_V,   KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
-  _______, _______, _______, KC_TAB,  SPC_NUM,  L_FUN,  SHIFTY,  BS_NAV,  KC_ENTER,_______, _______, _______
+  _______, _______, _______, TAB_CMD, SPC_NUM,  L_FUN,  SHIFTY,  BS_NAV,  ENT_CMD,_______, _______, _______
 ),
 
 [_NUM] = LAYOUT_planck_grid(
   KC_RPRN, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
   FN,      KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_UNDS, KC_LBRC, KC_4,    KC_5,    KC_6,    KC_RBRC, _______,
   KC_CAPS, CAP_WRD, EN_DASH, EM_DASH, KC_MINS, KC_EQL,  KC_COLN, KC_1,    KC_2,    KC_3,    KC_BSLS, _______,
-  _______, _______, _______, XXXXXXX, _______, XXXXXXX, KC_PDOT, KC_0,    XXXXXXX, _______, _______, _______
+  _______, _______, _______, XXXXXXX, _______, XXXXXXX, KC_PDOT, KC_0,    KC_PLUS, _______, _______, _______
 ),
 
 [_NAV] = LAYOUT_planck_grid(
