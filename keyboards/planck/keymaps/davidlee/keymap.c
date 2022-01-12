@@ -6,13 +6,13 @@
 
 enum planck_layers {
   _CMK,  // Colemak-DH
-  _NUM,  // Numbers
+  _GAM,  // Gaming / QWERTY
+  _NUM,  // Numbers (and symbols)
   _NAV,  // Navigation
   _MED,  // Media
   _FUN,  // Functions
   _PTR,  // Pointer
-  _BTN,  // Buttons
-  _GAM,  // Gaming / QWERTY
+  _BTN,  // Buttons (arguably surplus)
 };
 
 enum planck_keycodes {
@@ -21,8 +21,9 @@ enum planck_keycodes {
   EXT_PTR,
   EXT_GAM,
   L_GAM,
-  // SHIFTY,
   BACKSPACE_WORD,
+  G_FN,
+  M_FN,
 };
 
 //
@@ -92,6 +93,9 @@ enum planck_keycodes {
 
 #define FN       KC_F24 // requires karabiner
 #define XXXXXXX  KC_NO
+// #define G_FN     LT(0, KC_CRSL) // useless placeholder, intercepted
+// #define M_FN     LT(0, KC_EXSEL) // useless placeholder, intercepted
+
 
 //
 
@@ -188,6 +192,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return true;
 
+    // special haxx for mod-tap Fn key
+    case G_FN:
+      if (record->tap.count && record->event.pressed) {
+        tap_code(KC_G); 
+      } else if (record->event.pressed) {
+        register_code(KC_F24);
+      } else {
+        unregister_code(KC_F24);
+      }
+      return false;
+
+    // special haxx for mod-tap Fn key
+    case M_FN:
+      if (record->tap.count && record->event.pressed) {
+        tap_code(KC_M); 
+      } else if (record->event.pressed) {
+        register_code(KC_F24);
+      } else {
+        unregister_code(KC_F24);
+      }
+      return false;
+
     case L_GAM: 
       layer_on(_GAM);
       return false;
@@ -274,7 +300,7 @@ combo_t key_combos[COMBO_COUNT] = {
  * ,-----------------------------------------------------------------------------------.
  * |      | Hyper|  Meh |  FUN |  PTR |      |      |      |      |  Meh | Hyper|      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |  Cmd | Ctrl |  Opt |  Cmd | Shift|      |      | Shift|  Cmd |  Opt | Ctrl |  Cmd |
+ * |  Cmd | Ctrl |  Opt |  Cmd | Shift|  Fn  |  Fn  | Shift|  Cmd |  Opt | Ctrl |  Cmd |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|  MED |      |      |      |      |      |      |      |      |      | Shift|                                               
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -394,7 +420,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_FUN] = LAYOUT_planck_grid(
   RESET,   KC_SLCK, KC_PAUS, _______, PTR_LCK, XXXXXXX, XXXXXXX, KC_F7,   KC_F8,   KC_F9,   KC_F12,  _______, 
-  L_BTN,  KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, L_GAM,   XXXXXXX, KC_F4,   KC_F5,   KC_F6,   KC_F11,  _______, 
+  L_BTN,   KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, L_GAM,   XXXXXXX, KC_F4,   KC_F5,   KC_F6,   KC_F11,  _______, 
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F10,  _______, 
   _______, _______, _______, KC_TAB,  KC_SPACE,XXXXXXX, XXXXXXX, KC_BSPC, _______, _______, _______, _______
 
@@ -425,7 +451,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,  KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
     KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,  KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,  KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT ,
-    _______, KC_LCTL, KC_LALT, KC_LGUI, KC_SPC,EXT_GAM, EXT_GAM, KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+    _______, KC_LCTL, KC_LALT, KC_LGUI, KC_SPC,_______, EXT_GAM, KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
 };
