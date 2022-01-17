@@ -35,10 +35,10 @@ enum planck_keycodes {
 #define A_CTRL   LCTL_T(KC_A)
 #define R_OPT    LALT_T(KC_R)
 #define S_CMD    LGUI_T(KC_S)
-#define T_SHIFT  LSFT_T(KC_T) // UNUSED
+#define T_SHIFT  LSFT_T(KC_T)
 
 // Right-hand home row mods
-#define N_SHIFT  RSFT_T(KC_N) // UNUSED
+#define N_SHIFT  RSFT_T(KC_N)
 #define E_CMD    RGUI_T(KC_E)
 #define I_OPT    LALT_T(KC_I)
 #define O_CTRL   RCTL_T(KC_O)
@@ -56,12 +56,12 @@ enum planck_keycodes {
 #define Z_MED    LT(_MED, KC_Z)
 
 // left side mods
-#define ESC_CMD  RCMD_T(KC_ESCAPE) // use RCMD here so that Cmd-T works
+#define ESC_CMD  RCMD_T(KC_ESCAPE)
 
 // bottom row mods
-#define TAB_CMD  MT(MOD_LGUI, KC_TAB)
+#define TAB_CMD  RCMD_T(KC_TAB)
 #define SPC_NUM  LT(_NUM, KC_SPC)
-#define L_FUN    MO(_FUN)
+#define TAB_FUN  LT(_FUN, KC_TAB)
 
 #define SHIFTY   OSM(MOD_LSFT)
 #define BS_NAV   LT(_NAV, KC_BSPC)
@@ -135,7 +135,7 @@ combo_t key_combos[COMBO_COUNT] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |  (   |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  | Enter|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      | Tab  | Spc  |  FUN | Shift| BkSp | Enter|      |      |      | 
+ * |      |      |      | Tab  | Spc  |      | Shift| BkSp | Enter|      |      |      | 
  * `-----------------------------------------------------------------------------------'
  *
  * Home Row Mods / Layers (hold behaviours)
@@ -232,7 +232,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRV,  Q_HYP,   W_MEH,   F_FUN,   P_PTR,    KC_B,   KC_J,    KC_L,    KC_U,    Y_MEH,   SCLN_HYP,KC_DEL,
   ESC_CMD, A_CTRL,  R_OPT,   S_CMD,   T_SHIFT,  KC_G,   KC_M,    N_SHIFT, E_CMD,   I_OPT,   O_CTRL,  CMD_QOT,
   KC_LSPO, Z_MED,   KC_X,    KC_C,    KC_D,     KC_V,   KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
-  _______, _______, KC_LOPT, TAB_CMD, SPC_NUM,  L_FUN,  SHIFTY,  BS_NAV,  ENT_CMD, KC_ROPT, _______, _______
+  _______, _______, KC_LOPT, TAB_CMD, SPC_NUM,  TAB_FUN,SHIFTY,  BS_NAV,  ENT_CMD, KC_ROPT, _______, _______
 ),
 
 [_NUM] = LAYOUT_planck_grid(
