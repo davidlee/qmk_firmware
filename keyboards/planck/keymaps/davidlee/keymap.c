@@ -2,28 +2,29 @@
 #include "davidlee.h"
 #include "features/casemodes.h"
 
+#ifdef TAP_DANCE_ENABLE
+#    include "tap_dances.h"
+#endif
+
 // set_unicode_input_mode(UC_OSX);
 
 enum planck_layers {
   _CMK,  // Colemak-DH
   _GAM,  // Gaming / QWERTY
-  _NUM,  // Numbers (and symbols)
+  _NUM,  // Numbers & symbols
   _NAV,  // Navigation
   _MED,  // Media
   _FUN,  // Functions
   _PTR,  // Pointer
-  _BTN,  // Buttons (arguably surplus)
 };
 
 enum planck_keycodes {
   CAP_WRD = SAFE_RANGE,
   PTR_LCK,
+  L_GAM,
   EXT_PTR,
   EXT_GAM,
-  L_GAM,
   BACKSPACE_WORD,
-  G_FN,
-  M_FN,
 };
 
 //
@@ -34,10 +35,10 @@ enum planck_keycodes {
 #define A_CTRL   LCTL_T(KC_A)
 #define R_OPT    LALT_T(KC_R)
 #define S_CMD    LGUI_T(KC_S)
-#define T_SHIFT  LSFT_T(KC_T)
+#define T_SHIFT  LSFT_T(KC_T) // UNUSED
 
 // Right-hand home row mods
-#define N_SHIFT  RSFT_T(KC_N)
+#define N_SHIFT  RSFT_T(KC_N) // UNUSED
 #define E_CMD    RGUI_T(KC_E)
 #define I_OPT    LALT_T(KC_I)
 #define O_CTRL   RCTL_T(KC_O)
@@ -54,29 +55,20 @@ enum planck_keycodes {
 // other mod-tap keys
 #define Z_MED    LT(_MED, KC_Z)
 
-// hold for mouse layer
-#define W_PTR     LT(_PTR, KC_W)
-#define QUO_PTR   LT(_PTR, KC_QUOTE)
-
 // left side mods
-#define GRV_MEH  MT(MOD_MEH, KC_GRAVE)
 #define ESC_CMD  RCMD_T(KC_ESCAPE) // use RCMD here so that Cmd-T works
-#define TAB_MEH  MT(MOD_MEH, KC_TAB)
 
 // bottom row mods
 #define TAB_CMD  MT(MOD_LGUI, KC_TAB)
 #define SPC_NUM  LT(_NUM, KC_SPC)
 #define L_FUN    MO(_FUN)
-#define L_BTN    MO(_BTN) // on FUN layer
 
 #define SHIFTY   OSM(MOD_LSFT)
 #define BS_NAV   LT(_NAV, KC_BSPC)
 #define ENT_CMD  MT(MOD_RGUI, KC_ENTER)
 
-
 // right side mods
-#define DEL_HYP  MT(MOD_HYPR, KC_DEL)
-#define CMD_QOT  MT(MOD_LGUI, KC_QUOTE) // use LCMD here so that Cmd-N works
+#define CMD_QOT  MT(MOD_RGUI, KC_QUOTE)
 
 // clipboard
 #define UNDO   LCMD(KC_Z)
@@ -96,165 +88,10 @@ enum planck_keycodes {
 
 #define FN       KC_F24 // requires karabiner
 #define XXXXXXX  KC_NO
-// #define G_FN     LT(0, KC_CRSL) // useless placeholder, intercepted
-// #define M_FN     LT(0, KC_EXSEL) // useless placeholder, intercepted
 
 
 //
-
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    case R_OPT: 
-      return TAPPING_TERM + 20;
-    case I_OPT:
-      return TAPPING_TERM + 20;
-    case SPC_NUM:
-      return TAPPING_TERM - 20;
-    case BS_NAV:
-      return TAPPING_TERM - 20;
-    default:
-      return TAPPING_TERM;
-  }
-}
-
-layer_state_t layer_state_set_user(layer_state_t state) {
-  // state = update_tri_layer_state(state, _NUM, _NAV, _BTN);
-
-  switch (get_highest_layer(state)) {
-    case _GAM:
-      rgblight_enable();
-      rgblight_setrgb (0x00,  0x55, 0x90);
-      break;
-    case _NUM:
-      rgblight_enable();
-      rgblight_setrgb (0xFF,  0x7A, 0x00);
-      break;
-    case _NAV:
-      rgblight_enable();
-      rgblight_setrgb (0x00,  0xFF, 0x00);
-      break;
-    case _MED:
-      rgblight_enable();
-      rgblight_setrgb (0xFF,  0x00, 0x00);
-      break;
-    case _FUN:
-      rgblight_enable();
-      rgblight_setrgb (0x7A,  0x55, 0x00);
-      break;
-    case _PTR:
-      rgblight_enable();
-      rgblight_setrgb (0x00,  0xFF, 0x7A);
-      break;
-    case _BTN:
-      rgblight_enable();
-      rgblight_setrgb (0xC0,  0xFF, 0xFF);
-      break;                          
-    default: 
-      rgblight_disable();
-      break;      
-    }
-
-  if (caps_is_active()) { 
-    rgblight_enable();
-    rgblight_setrgb (0xFF, 0xFF, 0xFF);
-  }
-
-  return state;
-}
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (!process_case_modes(keycode, record)) {
-    return false;
-  }
-
-  switch (keycode) {
-    // prevent rolls from interfering with home row mods
-    // adapted from https://precondition.github.io/home-row-mods#rolled-modifiers-cancellation   
-
-    case RSFT_T(KC_N): 
-      if (record->tap.count == 1 && record->event.pressed) {
-        if (get_mods() & MOD_BIT(KC_RCMD)) {
-          unregister_mods(MOD_BIT(KC_RCMD));
-          tap_code(KC_E);
-          tap_code(KC_N);
-          add_mods(MOD_BIT(KC_RCMD));
-          return false;
-        }
-      }
-      return true;
-
-    case LSFT_T(KC_T): 
-      if (record->tap.count == 1 && record->event.pressed) {
-        if (get_mods() & MOD_BIT(KC_LCMD)) {
-          unregister_mods(MOD_BIT(KC_LCMD));
-          tap_code(KC_S);
-          tap_code(KC_T);
-          add_mods(MOD_BIT(KC_LCMD));
-          return false;
-        }       
-      }
-      return true;
-
-    // special haxx for mod-tap Fn key
-    case G_FN:
-      if (record->tap.count && record->event.pressed) {
-        tap_code(KC_G); 
-      } else if (record->event.pressed) {
-        register_code(KC_F24);
-      } else {
-        unregister_code(KC_F24);
-      }
-      return false;
-
-    // special haxx for mod-tap Fn key
-    case M_FN:
-      if (record->tap.count && record->event.pressed) {
-        tap_code(KC_M); 
-      } else if (record->event.pressed) {
-        register_code(KC_F24);
-      } else {
-        unregister_code(KC_F24);
-      }
-      return false;
-
-    case L_GAM: 
-      layer_on(_GAM);
-      return false;
-
-    case PTR_LCK:
-      layer_on(_PTR);
-      return false;
-
-    case EXT_PTR:
-      layer_off(_PTR);
-      return false;
-
-    case EXT_GAM:
-      layer_off(_GAM);
-      return false;
-
-    case CAP_WRD:        
-      if (record->event.pressed) {
-       enable_caps_word();
-      }
-      return false;    
-
-    case BACKSPACE_WORD:        
-      if (record->event.pressed) {
-        register_code(KC_LOPT);
-        tap_code(KC_BSPC);
-        unregister_code(KC_LOPT);
-      }
-      return false;
-
-    default:
-      return true; /* Process all other keycodes normally */
-
-  }
-}
-
-//
-// COMBOS
+// Combos
 //
 
 // N,U,I combo turns on PTR layer
@@ -263,29 +100,32 @@ const uint16_t PROGMEM ptr_combo[] = {N_SHIFT, KC_U, I_OPT, COMBO_END};
 // backspace whole word on N,E
 const uint16_t PROGMEM bspc_combo[] = {N_SHIFT, E_CMD, COMBO_END};
 
+// L,U combo → [
+const uint16_t PROGMEM lbrc_combo[] = {KC_L, KC_U, COMBO_END};
+
+// U,Y combo → ]
+const uint16_t PROGMEM rbrc_combo[] = {KC_U, Y_MEH, COMBO_END};
+
+// S,T combo → -
+const uint16_t PROGMEM mins_combo[] = {S_CMD, T_SHIFT, COMBO_END};
+
+// R,S combo → _
+const uint16_t PROGMEM unds_combo[] = {R_OPT, S_CMD, COMBO_END};
+
+
 combo_t key_combos[COMBO_COUNT] = {
-    COMBO(ptr_combo, PTR_LCK),
+    COMBO(ptr_combo,  PTR_LCK),
     COMBO(bspc_combo, BACKSPACE_WORD),
+    COMBO(lbrc_combo, KC_LBRC),
+    COMBO(rbrc_combo, KC_RBRC),
+    COMBO(mins_combo, KC_MINUS),
+    COMBO(unds_combo, KC_UNDERSCORE),
 };
 
 
-/* BLANK 
- * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-
+//
 // Keymap
-
-// TODO do we need the BTN layer, or is it just unnecessary complexity?
-// TODO what can we use FUN for? would a tapdance on SHIFTY for eg. capsword make sense?
-
+//
 
 /* COLEMAK-DH
  * ,-----------------------------------------------------------------------------------.
@@ -303,11 +143,11 @@ combo_t key_combos[COMBO_COUNT] = {
  * ,-----------------------------------------------------------------------------------.
  * |      | Hyper|  Meh |  FUN |  PTR |      |      |      |      |  Meh | Hyper|      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |  Cmd | Ctrl |  Opt |  Cmd | Shift|  Fn  |  Fn  | Shift|  Cmd |  Opt | Ctrl |  Cmd |
+ * |  Cmd | Ctrl |  Opt |  Cmd | Shift|      |      | Shift|  Cmd |  Opt | Ctrl |  Cmd |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|  MED |      |      |      |      |      |      |      |      |      | Shift|                                               
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |  Cmd |  NUM |  FUN | Shift|  NAV |  Cmd |      |      |      |
+ * |      |      |  Opt |  Cmd |  NUM |  FUN | Shift|  NAV |  Cmd |  Opt |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 
@@ -351,11 +191,11 @@ combo_t key_combos[COMBO_COUNT] = {
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |      |      |      |      |      |      |     
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Ctrl |  Opt |  Cmd | Shift|      |      | Prev | Vol- | Vol+ | Next |      |
+ * |      |      |      |      |      |      |      | Prev | Vol- | Vol+ | Next |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |  ##  |  Cut |  Copy| Paste|      | Power|      |      |      |      |      | 
+ * |      |  ##  |      |      |      |      | Power|      |      |      |      |      | 
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |  Tab |  Spc |      | Stop | Play | Mute |      |      |      |
+ * |      |      |      |      |      |      | Stop | Play | Mute |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 
@@ -368,18 +208,6 @@ combo_t key_combos[COMBO_COUNT] = {
  * | Shift|      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |  b2  |  b1  |  b3  |      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-
-/* BTN 
- * ,-----------------------------------------------------------------------------------.
- * |      | Hyper|  Meh |  Cmd | Shift|      |      | Shift|  Cmd |  Meh | Hyper|      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |  Cmd | Ctrl |  Opt |  Cmd | Shift|  Fn  |  Fn  | Shift|  Cmd |  Opt | Ctrl |  Cmd |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Ctrl |  Opt |  Cmd | Shift|      |      | Shift|  Cmd |  Opt | Ctrl |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |  Tab | Spc  |  ##  |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 
@@ -401,10 +229,10 @@ combo_t key_combos[COMBO_COUNT] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_CMK] = LAYOUT_planck_grid(
-  GRV_MEH, Q_HYP,   W_MEH,   F_FUN,   P_PTR,    KC_B,   KC_J,    KC_L,    KC_U,    Y_MEH,   SCLN_HYP,DEL_HYP,
+  KC_GRV,  Q_HYP,   W_MEH,   F_FUN,   P_PTR,    KC_B,   KC_J,    KC_L,    KC_U,    Y_MEH,   SCLN_HYP,KC_DEL,
   ESC_CMD, A_CTRL,  R_OPT,   S_CMD,   T_SHIFT,  KC_G,   KC_M,    N_SHIFT, E_CMD,   I_OPT,   O_CTRL,  CMD_QOT,
   KC_LSPO, Z_MED,   KC_X,    KC_C,    KC_D,     KC_V,   KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
-  _______, _______, _______, TAB_CMD, SPC_NUM,  L_FUN,  SHIFTY,  BS_NAV,  ENT_CMD,_______, _______, _______
+  _______, _______, KC_LOPT, TAB_CMD, SPC_NUM,  L_FUN,  SHIFTY,  BS_NAV,  ENT_CMD, KC_ROPT, _______, _______
 ),
 
 [_NUM] = LAYOUT_planck_grid(
@@ -423,7 +251,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_FUN] = LAYOUT_planck_grid(
   RESET,   KC_SLCK, KC_PAUS, _______, PTR_LCK, XXXXXXX, XXXXXXX, KC_F7,   KC_F8,   KC_F9,   KC_F12,  _______, 
-  L_BTN,   KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, L_GAM,   XXXXXXX, KC_F4,   KC_F5,   KC_F6,   KC_F11,  _______, 
+  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, L_GAM,   XXXXXXX, KC_F4,   KC_F5,   KC_F6,   KC_F11,  _______, 
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F10,  _______, 
   _______, _______, _______, KC_TAB,  KC_SPACE,XXXXXXX, XXXXXXX, KC_BSPC, _______, _______, _______, _______
 
@@ -431,8 +259,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_MED] = LAYOUT_planck_grid(
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, 
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, XXXXXXX, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, _______,
-  _______, _______, CUT,     COPY,    PASTE,   XXXXXXX, KC_PWR,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, _______,
+  _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PWR,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   _______, _______, _______, KC_TAB,  KC_SPACE,XXXXXXX, KC_STOP, KC_MPLY, KC_MUTE, _______, _______, _______ 
 ),
 
@@ -443,13 +271,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, KC_TAB,  KC_SPACE,XXXXXXX, KC_BTN2, KC_BTN1, KC_BTN3, _______, _______, _______
 ),
 
-[_BTN] = LAYOUT_planck_grid(
-  _______, KC_HYPR, KC_MEH,  KC_LCMD, KC_LSFT, XXXXXXX, XXXXXXX, KC_RSFT, KC_RCMD, KC_MEH,  KC_HYPR, _______,
-  KC_LCMD, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, FN,      FN,      KC_RSFT, KC_RCMD, KC_ROPT, KC_RCTL, KC_RCMD,
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, XXXXXXX, KC_RSFT, KC_RCMD, KC_ROPT, KC_RCTL, _______,
-  _______, _______, _______, KC_TAB,  KC_SPACE,_______, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______
-),
-
 [_GAM] = LAYOUT_planck_grid(
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,  KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
     KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,  KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
@@ -458,3 +279,124 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 };
+
+//
+// Function Overrides
+//
+
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case T_SHIFT:
+    case N_SHIFT:
+      return true;
+    default:
+     return false;
+  }
+}
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case R_OPT: 
+      return TAPPING_TERM + 20;
+    case I_OPT:
+      return TAPPING_TERM + 20;
+    case S_CMD: 
+      return TAPPING_TERM + 10;
+    case E_CMD:
+      return TAPPING_TERM + 10;
+    case T_SHIFT: 
+      return TAPPING_TERM - 10;
+    case N_SHIFT:
+      return TAPPING_TERM - 10;
+    case SPC_NUM:
+      return TAPPING_TERM - 40;
+    case BS_NAV:
+      return TAPPING_TERM - 30;
+    default:
+      return TAPPING_TERM;
+  }
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+  // state = update_tri_layer_state(state, _NUM, _NAV, _BTN);
+
+  switch (get_highest_layer(state)) {
+    case _GAM:
+      rgblight_enable();
+      rgblight_setrgb (0x00,  0x55, 0x90);
+      break;
+    case _NUM:
+      rgblight_enable();
+      rgblight_setrgb (0xFF,  0x7A, 0x00);
+      break;
+    case _NAV:
+      rgblight_enable();
+      rgblight_setrgb (0x00,  0xFF, 0x00);
+      break;
+    case _MED:
+      rgblight_enable();
+      rgblight_setrgb (0xFF,  0x00, 0x00);
+      break;
+    case _FUN:
+      rgblight_enable();
+      rgblight_setrgb (0x7A,  0x55, 0x00);
+      break;
+    case _PTR:
+      rgblight_enable();
+      rgblight_setrgb (0x00,  0xFF, 0x7A);
+      break;                          
+    default: 
+      rgblight_disable();
+      break;      
+    }
+
+  if (caps_is_active()) { 
+    rgblight_enable();
+    rgblight_setrgb (0xFF, 0xFF, 0xFF);
+  }
+
+  return state;
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  if (!process_case_modes(keycode, record)) {
+    return false;
+  }
+
+  switch (keycode) {
+
+    case L_GAM:
+      layer_on(_GAM);
+      return false;
+
+    case PTR_LCK:
+      layer_on(_PTR);
+      return false;
+
+    case EXT_PTR:
+      layer_off(_PTR);
+      return false;
+
+    case EXT_GAM:
+      layer_off(_GAM);
+      return false;
+
+    case CAP_WRD:        
+      if (record->event.pressed) {
+       enable_caps_word();
+      }
+      return false;    
+
+    case BACKSPACE_WORD:        
+      if (record->event.pressed) {
+        register_code(KC_LOPT);
+        tap_code(KC_BSPC);
+        unregister_code(KC_LOPT);
+      }
+      return false;
+
+    default:
+      return true; /* Process all other keycodes normally */
+
+  }
+}

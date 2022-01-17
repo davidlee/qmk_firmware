@@ -16,21 +16,17 @@
     #define MUSIC_MASK (keycode != KC_NO)
 #endif
 
-#define COMBO_COUNT 2
+#define COMBO_COUNT 6
 
 #define TAPPING_TERM 170
 #define TAPPING_TERM_PER_KEY 1
 #define IGNORE_MOD_TAP_INTERRUPT 1
+#define TAPPING_FORCE_HOLD 1                                
 #define TAP_CODE_DELAY 5      // 100
-// #define TAP_HOLD_CAPS_DELAY 0 // 200
-
-#define NO_AUTO_SHIFT_ALPHA
-#define AUTO_SHIFT_TIMEOUT 120
-#define AUTO_SHIFT_NO_SETUP
+#define PERMISSIVE_HOLD_PER_KEY 1
 
 #define COMBO_ALLOW_ACTION_KEYS
 #define COMBO_STRICT_TIMER
-// #define EXTRA_SHORT_COMBOS
 #define COMBO_TERM (TAPPING_TERM/5) // time to get all combo keys down
 #define COMBO_HOLD (COMBO_TERM*4)   // time to hold to trigger delayed combo
 // #define ADAPTIVE_TERM COMBO_HOLD    // use COMBO_HOLD time as a standard threshold (same recation time)
