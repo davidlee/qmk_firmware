@@ -6,8 +6,6 @@
 #    include "tap_dances.h"
 #endif
 
-// set_unicode_input_mode(UC_OSX);
-
 enum planck_layers {
   _CMK,  // Colemak-DH
   _GAM,  // Gaming / QWERTY
@@ -89,7 +87,6 @@ enum planck_keycodes {
 #define FN       KC_F24 // requires karabiner
 #define XXXXXXX  KC_NO
 
-
 //
 // Combos
 //
@@ -153,11 +150,11 @@ combo_t key_combos[COMBO_COUNT] = {
 
 /* NUM 
  * ,-----------------------------------------------------------------------------------.
- * |   )  |  1   |   2  |   3  |   4  |   5  |  6   |  7   |  8   |  9   |  0   |      |
+ * |   )  |  1   |   2  |   3  |   4  |   5  |  6   |  7   |  8   |  9   |  0   | Bspc |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |  Fn  | Ctrl |  Opt |  Cmd | Shift|   _  |  [   |  4   |  5   |  6   |  ]   |      |
+ * |  Fn  | Ctrl |  Opt |  Cmd | Shift|   _  |  [   |  4   |  5   |  6   |  ]   | Spc  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Caps |CapWd | En – | Em — |   -  |   =  |  :   |  1   |  2   |  3   |  \   |      |
+ * | Caps |CapWd | En – | Em — |   -  |   =  |  :   |  1   |  2   |  3   |  \   | Enter|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |  ##  |      |  .   |  0   |  +   |      |      |      |
  * `-----------------------------------------------------------------------------------'
@@ -165,9 +162,9 @@ combo_t key_combos[COMBO_COUNT] = {
 
 /* NAV
  * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      | Back | Cmd -| Cmd =| Fwd  |      |
+ * |      |      |      |      |      |      |      | Back | Cmd -| Cmd =| Fwd  | Bspc |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Ctrl |  Opt |  Cmd | Shift|      |      | Left | Down | Up   | Right|      |
+ * |      | Ctrl |  Opt |  Cmd | Shift|      |      | Left | Down | Up   | Right| Spc  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Caps | Undo |  Cut |  Copy| Paste| Paste|      | Home | PGDN | PGUP | End  | Enter|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -217,7 +214,7 @@ combo_t key_combos[COMBO_COUNT] = {
  * ,-----------------------------------------------------------------------------------.
  * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  "   |
+ * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  '   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -236,15 +233,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_NUM] = LAYOUT_planck_grid(
-  KC_RPRN, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
-  FN,      KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_UNDS, KC_LBRC, KC_4,    KC_5,    KC_6,    KC_RBRC, _______,
-  KC_CAPS, CAP_WRD, EN_DASH, EM_DASH, KC_MINS, KC_EQL,  KC_COLN, KC_1,    KC_2,    KC_3,    KC_BSLS, _______,
+  KC_RPRN, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
+  FN,      KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_UNDS, KC_LBRC, KC_4,    KC_5,    KC_6,    KC_RBRC, KC_SPACE,
+  KC_CAPS, CAP_WRD, EN_DASH, EM_DASH, KC_MINS, KC_EQL,  KC_COLN, KC_1,    KC_2,    KC_3,    KC_BSLS, KC_ENTER,
   _______, _______, _______, XXXXXXX, _______, XXXXXXX, KC_PDOT, KC_0,    KC_PLUS, _______, _______, _______
 ),
 
 [_NAV] = LAYOUT_planck_grid(
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, CMD_LBRC,CMD_MINS,CMD_EQL ,CMD_RBRC,XXXXXXX,
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX,
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, CMD_LBRC,CMD_MINS,CMD_EQL ,CMD_RBRC,KC_BSPC,
+  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_SPACE,
   KC_CAPS, UNDO,    CUT,     COPY,    PASTE,   PASTE,   XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_ENTER,
   _______, _______, _______, KC_TAB,  KC_SPACE,XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, _______
 ),
