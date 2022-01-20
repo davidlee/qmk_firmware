@@ -3,13 +3,15 @@
 #include "features/casemodes.h"
 
 #ifdef TAP_DANCE_ENABLE
-#    include "tap_dances.h"
+#  include "tap_dances.h"
 #endif
 
 enum planck_layers {
   _CMK,  // Colemak-DH
   _GAM,  // Gaming / QWERTY
-  _NUM,  // Numbers & symbols
+  _NUM,  // Numbers 
+  _SYM,  // Symbols
+  _PAD,  // Number Pad
   _NAV,  // Navigation
   _MED,  // Media
   _FUN,  // Functions
@@ -45,7 +47,7 @@ enum planck_keycodes {
 #define Q_HYP    MT(MOD_HYPR, KC_Q)
 #define W_MEH    MT(MOD_MEH, KC_W)
 #define F_FUN    LT(_FUN, KC_F)
-#define P_PTR    LT(_PTR, KC_P)
+#define P_PAD    LT(_PAD, KC_P)
 
 #define Y_MEH    MT(MOD_MEH, KC_Y)
 #define SCLN_HYP MT(MOD_HYPR, KC_SCOLON)
@@ -61,9 +63,11 @@ enum planck_keycodes {
 #define SPC_NUM  LT(_NUM, KC_SPC)
 #define TAB_FUN  LT(_FUN, KC_TAB)
 
-#define SHIFTY   OSM(MOD_LSFT)
+// #define SHIFTY   OSM(MOD_LSFT)
+#define E_SYM    LT(_SYM, KC_E)
 #define BS_NAV   LT(_NAV, KC_BSPC)
 #define ENT_CMD  MT(MOD_RGUI, KC_ENTER)
+#define ENT_SFT  KC_SFTENT
 
 // right side mods
 #define CMD_QOT  MT(MOD_RGUI, KC_QUOTE)
@@ -87,6 +91,7 @@ enum planck_keycodes {
 #define FN       KC_F24 // requires karabiner
 #define XXXXXXX  KC_NO
 
+#define MICMUTE SCMD(KC_M)
 //
 // Combos
 //
@@ -111,12 +116,12 @@ const uint16_t PROGMEM unds_combo[] = {R_OPT, S_CMD, COMBO_END};
 
 
 combo_t key_combos[COMBO_COUNT] = {
-    COMBO(ptr_combo,  PTR_LCK),
-    COMBO(bspc_combo, BACKSPACE_WORD),
-    COMBO(lbrc_combo, KC_LBRC),
-    COMBO(rbrc_combo, KC_RBRC),
-    COMBO(mins_combo, KC_MINUS),
-    COMBO(unds_combo, KC_UNDERSCORE),
+  COMBO(ptr_combo,  PTR_LCK),
+  COMBO(bspc_combo, BACKSPACE_WORD),
+  COMBO(lbrc_combo, KC_LBRC),
+  COMBO(rbrc_combo, KC_RBRC),
+  COMBO(mins_combo, KC_MINUS),
+  COMBO(unds_combo, KC_UNDERSCORE),
 };
 
 
@@ -132,39 +137,61 @@ combo_t key_combos[COMBO_COUNT] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |  (   |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  | Enter|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      | Tab  | Spc  |      | Shift| BkSp | Enter|      |      |      | 
+ * |      |      |      | Tab  | Spc  |      |   E  | BkSp | Enter|      |      |      | 
  * `-----------------------------------------------------------------------------------'
  *
  * Home Row Mods / Layers (hold behaviours)
  *
  * ,-----------------------------------------------------------------------------------.
- * |      | Hyper|  Meh |  FUN |  PTR |      |      |      |      |  Meh | Hyper|      |
+ * |      | Hyper|  Meh |  FUN |  PAD |      |      |      |      |  Meh | Hyper|      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |  Cmd | Ctrl |  Opt |  Cmd | Shift|      |      | Shift|  Cmd |  Opt | Ctrl |  Cmd |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|  MED |      |      |      |      |      |      |      |      |      | Shift|                                               
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |  Opt |  Cmd |  NUM |  FUN | Shift|  NAV |  Cmd |  Opt |      |      |
+ * |      |      |  Opt |  Cmd |  NUM |  SYM | Shift|  NAV | Shift|      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 
 /* NUM 
  * ,-----------------------------------------------------------------------------------.
- * |   )  |  1   |   2  |   3  |   4  |   5  |  6   |  7   |  8   |  9   |  0   | Bspc |
+ * |  Fn  |      |      |      |      |      |      |   -  |   =  |   +  |   :  | Del  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |  Fn  | Ctrl |  Opt |  Cmd | Shift|   _  |  [   |  4   |  5   |  6   |  ]   | Spc  |
+ * |   0  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bspc |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Caps |CapWd | En – | Em — |   -  |   =  |  :   |  1   |  2   |  3   |  \   | Enter|
+ * |CapWrd| Caps |      |      |      |      |      |   _  |   ,  |   .  |   /  | Enter|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |  ##  |      |  .   |  0   |  +   |      |      |      |
+ * |      |      |      |  Esc |  ##  |      |  Spc | Bspc | Enter|      |      |      |
+ * `-----------------------------------------------------------------------------------'
+
+/* FUN 
+ * ,-----------------------------------------------------------------------------------.
+ * | RESET| ScrLk| Pause|  ##  |  PTR |      |      |  F7  |  F8  |  F9  |  F12 |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      | Ctrl |  Opt |  Cmd | Shift|  GAM |      |  F4  |  F5  |  F6  |  F11 |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |  F1  |  F2  |  F3  |  F10 |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |  Tab | Spc  |      |      | Bspc |  Cmd |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 
+/* SYM
+ * ,-----------------------------------------------------------------------------------.
+ * | Tab  |   !  |   @  |   #  |   $  |      |      |  -   |   =  |   +  |   :  | Bspc |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Esc  |   <  |   {  |   [  |   (  |      |      |  )   |   ]  |   }  |   >  |  |   |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Shift|   %  |   ^  |   &  |   *  |      |      |  _   | Em — | En – |   \  | Enter|
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |  ##  |      |      |      |      |      |      |
+ * `-----------------------------------------------------------------------------------'
+
 /* NAV
  * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      | Back | Cmd -| Cmd =| Fwd  | Bspc |
+ * |      |      |      |      |CapWrd|      |      | Back | Cmd -| Cmd =| Fwd  | Bspc |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Ctrl |  Opt |  Cmd | Shift|      |      | Left | Down | Up   | Right| Spc  |
+ * |      | Ctrl |  Opt |  Cmd | Shift| CAPS |      | Left | Down | Up   | Right| Spc  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Caps | Undo |  Cut |  Copy| Paste| Paste|      | Home | PGDN | PGUP | End  | Enter|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -172,15 +199,15 @@ combo_t key_combos[COMBO_COUNT] = {
  * `-----------------------------------------------------------------------------------'
  */
 
-/* FUN 
+/* PAD 
  * ,-----------------------------------------------------------------------------------.
- * | RESET| ScrLk| Pause|  ##  |  PTR |      |      |  F7  |  F8  |  F9  |  F12 |      |
+ * |      |      |      |      |  ##  |      |      |  7   |  8   |  9   |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | BTN  | Ctrl |  Opt |  Cmd | Shift|  GAM |      |  F4  |  F5  |  F6  |  F11 |      |
+ * |      |      |      |      |      |      |      |  4   |  5   |  6   |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |  F1  |  F2  |  F3  |  F10 |      |
+ * |      |      |      |      |      |      |      |  1   |  2   |  3   |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |  Tab |  Spc |  ##  |      | Bspc |      |      |      |      |
+ * |      |      |      |      |      |      |      |  0   |  .   |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 
@@ -188,7 +215,7 @@ combo_t key_combos[COMBO_COUNT] = {
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |      |      |      |      |      |      |     
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      | Prev | Vol- | Vol+ | Next |      |
+ * |      |      |      |      |      |      |MicMut| Prev | Vol- | Vol+ | Next |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |  ##  |      |      |      |      | Power|      |      |      |      |      | 
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -226,18 +253,33 @@ combo_t key_combos[COMBO_COUNT] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_CMK] = LAYOUT_planck_grid(
-  KC_GRV,  Q_HYP,   W_MEH,   F_FUN,   P_PTR,    KC_B,   KC_J,    KC_L,    KC_U,    Y_MEH,   SCLN_HYP,KC_DEL,
+  KC_GRV,  Q_HYP,   W_MEH,   F_FUN,   P_PAD,    KC_B,   KC_J,    KC_L,    KC_U,    Y_MEH,   SCLN_HYP,KC_DEL,
   ESC_CMD, A_CTRL,  R_OPT,   S_CMD,   T_SHIFT,  KC_G,   KC_M,    N_SHIFT, E_CMD,   I_OPT,   O_CTRL,  CMD_QOT,
-  KC_LSPO, Z_MED,   KC_X,    KC_C,    KC_D,     KC_V,   KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
-  _______, _______, KC_LOPT, TAB_CMD, SPC_NUM,  TAB_FUN,SHIFTY,  BS_NAV,  ENT_CMD, KC_ROPT, _______, _______
+  KC_LSPO, Z_MED,   KC_X,    KC_C,    KC_D,     KC_V,   KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, ENT_SFT,
+  _______, _______, KC_LOPT, TAB_CMD, SPC_NUM,  TAB_FUN,E_SYM,   BS_NAV,  ENT_SFT, _______, _______, _______
 ),
 
 [_NUM] = LAYOUT_planck_grid(
-  KC_RPRN, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
-  FN,      KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_UNDS, KC_LBRC, KC_4,    KC_5,    KC_6,    KC_RBRC, KC_SPACE,
-  KC_CAPS, CAP_WRD, EN_DASH, EM_DASH, KC_MINS, KC_EQL,  KC_COLN, KC_1,    KC_2,    KC_3,    KC_BSLS, KC_ENTER,
-  _______, _______, _______, XXXXXXX, _______, XXXXXXX, KC_PDOT, KC_0,    KC_PLUS, _______, _______, _______
+  FN,      _______, _______, _______, _______, _______, _______, KC_MINS, KC_EQL,  KC_PLUS, KC_COLN, _______,
+  KC_0,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
+  CAP_WRD, KC_CAPS, _______, _______, _______, _______, _______, KC_UNDS, KC_COMM, KC_DOT,  KC_BSLS, KC_ENTER,
+  _______, _______, _______, KC_ESC,  _______, XXXXXXX, KC_SPC,  _______, _______, _______, _______, _______
 ),
+
+[_SYM] = LAYOUT_planck_grid(
+  KC_TAB,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  _______, _______, KC_MINS, KC_EQL,  KC_PLUS, KC_COLN, KC_BSPC,
+  ESC_CMD, KC_LT,   KC_LCBR, KC_LBRC, KC_LPRN, _______, _______, KC_RPRN, KC_RBRC, KC_RCBR, KC_GT,   KC_PIPE,
+  KC_LSFT, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, _______, _______, KC_UNDS, EM_DASH, EN_DASH, KC_BSLS, ENT_SFT,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+),
+
+[_PAD] = LAYOUT_planck_grid(
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_4,    KC_5,    KC_6,    KC_RBRC, KC_SPACE,
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_1,    KC_2,    KC_3,    KC_BSLS, KC_ENTER,
+  _______, _______, _______, _______, _______, _______, _______, KC_1,    KC_DOT,  _______, _______, _______
+),
+
 
 [_NAV] = LAYOUT_planck_grid(
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, CMD_LBRC,CMD_MINS,CMD_EQL ,CMD_RBRC,KC_BSPC,
@@ -250,14 +292,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   RESET,   KC_SLCK, KC_PAUS, _______, PTR_LCK, XXXXXXX, XXXXXXX, KC_F7,   KC_F8,   KC_F9,   KC_F12,  _______, 
   _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, L_GAM,   XXXXXXX, KC_F4,   KC_F5,   KC_F6,   KC_F11,  _______, 
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F10,  _______, 
-  _______, _______, _______, KC_TAB,  KC_SPACE,XXXXXXX, XXXXXXX, KC_BSPC, _______, _______, _______, _______
+  _______, _______, _______, TAB_CMD, KC_SPACE,XXXXXXX, XXXXXXX, KC_BSPC, _______, _______, _______, _______
 
 ),
 
 [_MED] = LAYOUT_planck_grid(
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, 
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, _______,
-  _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PWR,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, MICMUTE, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, _______,
+  _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_SLEP, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   _______, _______, _______, KC_TAB,  KC_SPACE,XXXXXXX, KC_STOP, KC_MPLY, KC_MUTE, _______, _______, _______ 
 ),
 
