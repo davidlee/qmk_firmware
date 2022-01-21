@@ -11,7 +11,7 @@ https://stevep99.github.io/seniply/
 https://github.com/baetheus/qmk_firmware/blob/master/keyboards/planck/keymaps/baetheus-rgb/keymap.c
 https://esinc.net/happyfamily/keymap.c
 https://github.com/qmk/qmk_firmware/blob/master/keyboards/planck/keymaps/smt/readme.md#raise
-
+http://thedarnedestthing.com/planck%20reduxed
 
 ``` 
 /* BLANK 
@@ -25,7 +25,7 @@ https://github.com/qmk/qmk_firmware/blob/master/keyboards/planck/keymaps/smt/rea
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
 
- /* SYM - OSL
+ /* SYM
  * ,-----------------------------------------------------------------------------------.
  * | Tab  |   !  |   @  |   #  |   $  |      |      |  -   |   =  |   +  |   :  | Bspc |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -48,5 +48,3 @@ https://github.com/qmk/qmk_firmware/blob/master/keyboards/planck/keymaps/smt/rea
  * `-----------------------------------------------------------------------------------'
 
 ```
-
-
