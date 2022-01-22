@@ -14,6 +14,7 @@ enum planck_layers {
   _SYM,  // Symbols 
   _PAD,  // Number Pad
   _MED,  // Media
+  _EDT,  // Edit / Clipboard
   _FUN,  // Functions
   _PTR,  // Pointer
 };
@@ -25,6 +26,8 @@ enum planck_keycodes {
   EXT_PTR,
   EXT_GAM,
   BACKSPACE_WORD,
+  ZERO_PT,
+  EDT,
 };
 
 //
@@ -57,10 +60,11 @@ enum planck_keycodes {
 
 // other mod-tap keys
 #define Z_MED    LT(_MED, KC_Z)
+#define ESC_CMD  LCMD_T(KC_ESCAPE)
 
 // left side mods
-#define ESC_CMD  RCMD_T(KC_ESCAPE)
 #define FN_SFT   LSFT_T(FN)
+#define ESC_EDT  LT(_EDT, KC_ESC)
 
 // bottom row mods
 #define ESC_OPT  LOPT_T(KC_ESC)
@@ -94,6 +98,8 @@ enum planck_keycodes {
 #define CMD_EQL  LCMD(KC_EQL)
 
 #define MICMUTE SCMD(KC_M)
+
+#define EDT MO(_EDT)
 
 //
 // Combos
@@ -140,7 +146,7 @@ combo_t key_combos[COMBO_COUNT] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |Shift |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  | Enter|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |  Esc | Tab  | Spc  |   -  |   E  | BkSp | Enter|      |      |      | 
+ * |  f16 |  f17 |  f18 | Tab  | Spc  |   -  |   E  | BkSp | Enter|  f19 |ZEROPT|  EDT | 
  * `-----------------------------------------------------------------------------------'
  *
  * Home Row Mods / Layers (hold behaviours)
@@ -148,7 +154,7 @@ combo_t key_combos[COMBO_COUNT] = {
  * ,-----------------------------------------------------------------------------------.
  * |      | Hyper|  Meh |  FUN |  PAD |      |      |      |      |  Meh | Hyper|      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |  Cmd | Ctrl |  Opt |  Cmd | Shift|      |      | Shift|  Cmd |  Opt | Ctrl |  Cmd |
+ * |  EDT | Ctrl |  Opt |  Cmd | Shift|      |      | Shift|  Cmd |  Opt | Ctrl |  Cmd |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|  MED |      |      |      |      |      |      |      |      |      | Shift|                                               
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -240,6 +246,18 @@ combo_t key_combos[COMBO_COUNT] = {
  * `-----------------------------------------------------------------------------------'
  */
 
+/* EDT 
+ * ,-----------------------------------------------------------------------------------.
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      | Undo |  Cut |  Copy| Paste| Redo |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |      |      |      |      |  ##  |
+ * `-----------------------------------------------------------------------------------'
+ */
+
 //======================================================================================
 
 /* GAM (Qwerty)
@@ -258,9 +276,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_CMK] = LAYOUT_planck_grid(
   KC_GRV,  Q_HYP,   W_MEH,   F_FUN,   P_PAD,   KC_B,    KC_J,    KC_L,    KC_U,    Y_MEH,   SCLN_HYP,KC_DEL,
-  ESC_CMD, A_CTRL,  R_OPT,   S_CMD,   T_SHIFT, KC_G,    KC_M,    N_SHIFT, E_CMD,   I_OPT,   O_CTRL,  CMD_QOT,
+  ESC_EDT, A_CTRL,  R_OPT,   S_CMD,   T_SHIFT, KC_G,    KC_M,    N_SHIFT, E_CMD,   I_OPT,   O_CTRL,  CMD_QOT,
   FN_SFT,  Z_MED,   KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, ENT_SFT,
-  _______, _______, ESC_OPT, TAB_CMD, SPC_NUM, MIN_FUN, E_SFT,   BS_NAV,  ENT_MED, _______, _______, _______
+  KC_F16 , KC_F17,  KC_F18,  TAB_CMD, SPC_NUM, MIN_FUN, E_SFT,   BS_NAV,  ENT_MED, KC_F19,  ZERO_PT, EDT
 ),
 
 [_NAV] = LAYOUT_planck_grid(
@@ -303,6 +321,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, 
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, _______,
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MPLY, KC_STOP, MICMUTE, MICMUTE, _______,
+  _______, _______, _______, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______, _______ 
+),
+
+[_EDT] = LAYOUT_planck_grid(
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, 
+  _______, UNDO,    CUT,     COPY,    PASTE,   REDO,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   _______, _______, _______, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______, _______ 
 ),
 
@@ -441,6 +466,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
 
+    case ZERO_PT:        
+      if (record->event.pressed) {
+        // RESTORE TO "ZERO POINT" — uncluttered rest point
+        tap_code16(MEH(KC_N)); // Noteplan
+        wait_ms(250);
+        tap_code16(LSG(KC_0)); // show main window
+        tap_code16(LCA(KC_BSPC)); // Restore position
+        tap_code16(LCA(KC_W)); // Position midscreen
+        tap_code16(LCA(KC_W)); // But, make it bigger
+        tap_code16(LAG(KC_H)); // hide others, beep if you like.
+      }
+      return false;
     default:
       return true; /* Process all other keycodes normally */
 
