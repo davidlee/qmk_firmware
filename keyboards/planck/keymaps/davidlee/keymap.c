@@ -11,7 +11,6 @@ enum planck_layers {
   _GAM,  // Gaming / QWERTY
   _NAV,  // Navigation
   _NUM,  // Numbers 
-  _SYM,  // Symbols 
   _PAD,  // Number Pad
   _MED,  // Media
   _EDT,  // Edit / Clipboard
@@ -73,8 +72,9 @@ enum planck_keycodes {
 #define SYM      MO(_SYM)
 #define MIN_FUN  LT(_FUN, KC_MINS)
 
-#define E_SFT    MT(MOD_LSFT, KC_E)
-#define BS_NAV   LT(_NAV, KC_BSPC)
+#define E_NAV    LT(_NAV, KC_E)
+#define BS_SFT   MT(MOD_LSFT, KC_BSPC)
+
 #define ENT_MED  LT(_MED, KC_ENTER)
 
 // right side mods
@@ -164,7 +164,7 @@ combo_t key_combos[COMBO_COUNT] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|  MED |      |      |      |      |      |      |      |      |      | Shift|                                               
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |  Opt |  Cmd |  NUM |  FUN | Shift|  NAV |  MED |      |      |      |
+ * |      |      |  Opt |  Cmd |  NUM |  FUN |  NAV | Shift|  MED |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 
@@ -180,7 +180,7 @@ combo_t key_combos[COMBO_COUNT] = {
  * `-----------------------------------------------------------------------------------'
  */
 
-/* SYM 
+/* SYM = Shift + NUM
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -212,7 +212,7 @@ combo_t key_combos[COMBO_COUNT] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Caps | Undo |  Cut |  Copy| Paste| Paste|      | Home | PGDN | PGUP | End  | Enter|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |  Tab | Spc  |      |      |  ##  |      |      |      |      |
+ * |      |      |      |  Tab | Spc  |      |  ##  |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 
@@ -284,7 +284,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRV,  Q_HYP,   W_MEH,   F_FUN,   P_PAD,   KC_B,    KC_J,    KC_L,    KC_U,    Y_MEH,   SCLN_HYP,KC_DEL,
   ESC_EDT, A_CTRL,  R_OPT,   S_CMD,   T_SHIFT, KC_G,    KC_M,    N_SHIFT, E_CMD,   I_OPT,   O_CTRL,  CMD_QOT,
   FN_SFT,  Z_MED,   KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, ENT_SFT,
-  KC_F16 , PRV_DTP, NXT_DTP, TAB_CMD, SPC_NUM, MIN_FUN, E_SFT,   BS_NAV,  ENT_MED, ZERO_PT, APP_CTL, MSN_CTL
+  KC_F16,  PRV_DTP, NXT_DTP, TAB_CMD, SPC_NUM, MIN_FUN, E_NAV,   BS_SFT,  ENT_MED, ZERO_PT, APP_CTL, MSN_CTL
 ),
 
 [_NAV] = LAYOUT_planck_grid(
@@ -297,15 +297,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_NUM] = LAYOUT_planck_grid(
   FN,      XXXXXXX, XXXXXXX, KC_LBRC, KC_RBRC, XXXXXXX, XXXXXXX, KC_LCBR, KC_RCBR, KC_PLUS, KC_COLN, KC_BSPC,
   CAP_WRD, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_SPC,
-  KC_CAPS, _______, EN_DASH, EM_DASH, KC_MINS, KC_EQL,  XXXXXXX, KC_UNDS, KC_COMM, KC_DOT,  KC_BSLS, _______,
+  KC_CAPS, XXXXXXX, EN_DASH, EM_DASH, KC_MINS, KC_EQL,  XXXXXXX, KC_UNDS, KC_COMM, KC_DOT,  KC_BSLS, _______,
   _______, _______, _______, ESC_CMD, _______, XXXXXXX, _______, _______, _______, _______, _______, _______
-),
-
-[_SYM] = LAYOUT_planck_grid(
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_COLN, KC_BSPC,
-  ESC_CMD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_SPC,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_PIPE, _______,
-  _______, XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX, _______
 ),
 
 [_FUN] = LAYOUT_planck_grid(
@@ -383,7 +376,9 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
       return TAPPING_TERM - 50;
     case SPC_NUM:
       return TAPPING_TERM - 40;
-    case BS_NAV:
+    case BS_SFT:
+      return TAPPING_TERM - 30;
+    case E_NAV:
       return TAPPING_TERM - 30;
     default:
       return TAPPING_TERM;
@@ -391,7 +386,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-  state = update_tri_layer_state(state, _NUM, _NAV, _SYM);
+  // state = update_tri_layer_state(state, _NUM, _NAV, _SYM);
 
   switch (get_highest_layer(state)) {
     case _GAM:
@@ -405,10 +400,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     case _NAV:
       rgblight_enable();
       rgblight_setrgb (0x00,  0xFF, 0x00);
-      break;
-    case _SYM:
-      rgblight_enable();
-      rgblight_setrgb (0x00,  0x00, 0xFF);
       break;
     case _MED:
       rgblight_enable();
