@@ -99,6 +99,12 @@ enum planck_keycodes {
 
 #define MICMUTE SCMD(KC_M)
 
+#define PRV_DTP LCTL(KC_LEFT)
+#define NXT_DTP LCTL(KC_RIGHT)
+#define MSN_CTL LCTL(KC_UP)
+#define APP_CTL LCTL(KC_DOWN)
+
+
 #define EDT MO(_EDT)
 
 //
@@ -146,7 +152,7 @@ combo_t key_combos[COMBO_COUNT] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |Shift |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  | Enter|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |  f16 |  f17 |  f18 | Tab  | Spc  |   -  |   E  | BkSp | Enter|  f19 |ZEROPT|  EDT | 
+ * |PshTlk|DskTp-|DskTp+| Tab  | Spc  |   -  |   E  | BkSp | Enter|ZeroPt|AppCtl|MsnCtl| 
  * `-----------------------------------------------------------------------------------'
  *
  * Home Row Mods / Layers (hold behaviours)
@@ -278,7 +284,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRV,  Q_HYP,   W_MEH,   F_FUN,   P_PAD,   KC_B,    KC_J,    KC_L,    KC_U,    Y_MEH,   SCLN_HYP,KC_DEL,
   ESC_EDT, A_CTRL,  R_OPT,   S_CMD,   T_SHIFT, KC_G,    KC_M,    N_SHIFT, E_CMD,   I_OPT,   O_CTRL,  CMD_QOT,
   FN_SFT,  Z_MED,   KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, ENT_SFT,
-  KC_F16 , KC_F17,  KC_F18,  TAB_CMD, SPC_NUM, MIN_FUN, E_SFT,   BS_NAV,  ENT_MED, KC_F19,  ZERO_PT, EDT
+  KC_F16 , PRV_DTP, NXT_DTP, TAB_CMD, SPC_NUM, MIN_FUN, E_SFT,   BS_NAV,  ENT_MED, ZERO_PT, APP_CTL, MSN_CTL
 ),
 
 [_NAV] = LAYOUT_planck_grid(
