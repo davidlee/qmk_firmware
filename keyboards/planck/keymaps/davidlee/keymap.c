@@ -112,31 +112,14 @@ enum planck_keycodes {
 //
 
 // N,U,I combo turns on PTR layer
-const uint16_t PROGMEM ptr_combo[] = {N_SHIFT, KC_U, I_OPT, COMBO_END};
+const uint16_t PROGMEM ptr_combo[] = {KC_N, KC_U, I_OPT, COMBO_END};
 
-// backspace whole word on N,E
-const uint16_t PROGMEM bspc_combo[] = {N_SHIFT, E_CMD, COMBO_END};
-
-// L,U combo → [
-const uint16_t PROGMEM lbrc_combo[] = {KC_L, KC_U, COMBO_END};
-
-// U,Y combo → ]
-const uint16_t PROGMEM rbrc_combo[] = {KC_U, Y_MEH, COMBO_END};
-
-// S,T combo → -
-const uint16_t PROGMEM mins_combo[] = {S_CMD, T_SHIFT, COMBO_END};
-
-// R,S combo → _
-const uint16_t PROGMEM unds_combo[] = {R_OPT, S_CMD, COMBO_END};
-
+// backspace whole word on O,I
+const uint16_t PROGMEM bspc_combo[] = {O_CTRL, I_OPT, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
   COMBO(ptr_combo,  PTR_LCK),
   COMBO(bspc_combo, BACKSPACE_WORD),
-  COMBO(lbrc_combo, KC_LBRC),
-  COMBO(rbrc_combo, KC_RBRC),
-  COMBO(mins_combo, KC_MINUS),
-  COMBO(unds_combo, KC_UNDERSCORE),
 };
 
 
@@ -159,7 +142,7 @@ combo_t key_combos[COMBO_COUNT] = {
  * ,-----------------------------------------------------------------------------------.
  * |      | Hyper|  Meh |  FUN |  PAD |      |      |      |      |  Meh | Hyper|      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |  EDT | Ctrl |  Opt |  Cmd | Shift|      |      | Shift|  Cmd |  Opt | Ctrl |  Cmd |
+ * |  EDT | Ctrl |  Opt |  Cmd |      |      |      |      |  Cmd |  Opt | Ctrl |  Cmd |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|  MED |      |      |      |      |      |      |      |      |      | Shift|                                               
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -281,7 +264,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_CMK] = LAYOUT_planck_grid(
   KC_GRV,  Q_HYP,   W_MEH,   F_FUN,   P_PAD,   KC_B,    KC_J,    KC_L,    KC_U,    Y_MEH,   SCLN_HYP,KC_DEL,
-  ESC_EDT, A_CTRL,  R_OPT,   S_CMD,   T_SHIFT, KC_G,    KC_M,    N_SHIFT, E_CMD,   I_OPT,   O_CTRL,  CMD_QOT,
+  ESC_EDT, A_CTRL,  R_OPT,   S_CMD,   KC_T,    KC_G,    KC_M,    KC_N, E_CMD,   I_OPT,   O_CTRL,  CMD_QOT,
   FN_SFT,  Z_MED,   KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, ENT_SFT,
   KC_F16,  PRV_DTP, NXT_DTP, TAB_CMD, SPC_NUM, MIN_FUN, E_NAV,   BS_SFT,  ENT_MED, ZERO_PT, APP_CTL, MSN_CTL
 ),
@@ -370,13 +353,13 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     case E_CMD:
       return TAPPING_TERM + 10;
     case T_SHIFT: 
-      return TAPPING_TERM - 50;
+      return TAPPING_TERM - 40;
     case N_SHIFT:
-      return TAPPING_TERM - 50;
+      return TAPPING_TERM - 40;
     case SPC_NUM:
       return TAPPING_TERM - 40;
     case BS_SFT:
-      return TAPPING_TERM - 30;
+      return TAPPING_TERM - 40;
     case E_NAV:
       return TAPPING_TERM - 30;
     default:
