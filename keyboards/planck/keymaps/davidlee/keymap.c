@@ -139,7 +139,7 @@ combo_t key_combos[COMBO_COUNT] = {
  * ,-----------------------------------------------------------------------------------.
  * |      | Hyper|  Meh |  FUN |  PAD |      |      |      |      |  Meh | Hyper|      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |  Cmd | Ctrl |  Opt |  Cmd |      |      |      |      |  Cmd |  Opt | Ctrl |  Cmd |
+ * |  Cmd | Ctrl |  Opt |  Cmd | Shift|      |      |Shift |  Cmd |  Opt | Ctrl |  Cmd |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|      |      |      |      |      |      |      |      |      |      | Shift|                                               
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -261,7 +261,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_CMK] = LAYOUT_planck_grid(
   KC_GRV,  Q_HYP,   W_MEH,   F_FUN,   P_PAD,   KC_B,    KC_J,    KC_L,    KC_U,    Y_MEH,   SCLN_HYP,KC_DEL,
-  ESC_CMD, A_CTRL,  R_OPT,   S_CMD,   KC_T,    KC_G,    KC_M,    KC_N, E_CMD,   I_OPT,   O_CTRL,  CMD_QOT,
+  ESC_CMD, A_CTRL,  R_OPT,   S_CMD,   T_SHIFT, KC_G,    KC_M,    N_SHIFT, E_CMD,   I_OPT,   O_CTRL,  CMD_QOT,
   FN_SFT,  KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, ENT_SFT,
   KC_F16,  PRV_DTP, NXT_DTP, TAB_EDT, SPC_NUM, MIN_FUN, E_NAV,   BS_SFT,  ENT_MED, ZERO_PT, APP_CTL, MSN_CTL
 ),
@@ -350,9 +350,9 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     case E_CMD:
       return TAPPING_TERM + 10;
     case T_SHIFT: 
-      return TAPPING_TERM - 40;
-    case N_SHIFT:
-      return TAPPING_TERM - 40;
+      return TAPPING_TERM + 40; // Don't use these for shifting alphas, just as mods
+    case N_SHIFT:               // so set them for minimum interruptions when typing
+      return TAPPING_TERM + 40;
     case SPC_NUM:
       return TAPPING_TERM - 40;
     case BS_SFT:
