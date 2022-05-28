@@ -24,7 +24,7 @@ enum planck_keycodes {
   L_GAM,
   EXT_PTR,
   EXT_GAM,
-  BACKSPACE_WORD,
+  BS_WORD,
   ZERO_PT,
   EDT,
 };
@@ -113,7 +113,7 @@ enum planck_keycodes {
 //
 
 // N,U,I combo turns on PTR layer
-const uint16_t PROGMEM ptr_combo[] = {KC_N, KC_U, I_OPT, COMBO_END};
+const uint16_t PROGMEM ptr_combo[] = {N_SHIFT, KC_U, I_OPT, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
   COMBO(ptr_combo,  PTR_LCK),
@@ -132,7 +132,7 @@ combo_t key_combos[COMBO_COUNT] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |Shift |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  | Enter|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |PshTlk|DskTp-|DskTp+| Tab  | Spc  |   -  |   E  | BkSp | Enter|ZeroPt|AppCtl|MsnCtl| 
+ * |MicMut|DskTp-|DskTp+| Tab  | Spc  |   -  |   E  | BkSp | Enter|ZeroPt|AppCtl|MsnCtl| 
  * `-----------------------------------------------------------------------------------'
  *
  * Home Row Mods / Layers (hold behaviours)
@@ -141,9 +141,9 @@ combo_t key_combos[COMBO_COUNT] = {
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |  Cmd | Ctrl |  Opt |  Cmd | Shift|      |      |Shift |  Cmd |  Opt | Ctrl |  Cmd |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | Shift|      |      |      |      |      |      |      |      |      |      | Shift|                                               
+ * | Shift|      |      |      |      |      |      |      |      |      |      | Shift|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |PshTlk|      |      |  EDT |  NUM |  FUN |  NAV | Shift|  MED |      |      |      |
+ * |MicMut|      |      |  EDT |  NUM |  FUN |  NAV | Shift|  MED |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 
@@ -235,9 +235,9 @@ combo_t key_combos[COMBO_COUNT] = {
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |  ##  | Undo |  Cut |  Copy| Paste| Redo |      |      |      |      |      |      |
+ * |      | Undo |  Cut |  Copy| Paste| Redo |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |      | Undo |  Cut |  Copy| Paste| Redo |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
@@ -298,14 +298,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_MED] = LAYOUT_planck_grid(
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, 
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, _______,
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MPLY, KC_STOP, MICMUTE, MICMUTE, _______,
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MPLY, KC_STOP, KC_F16,  KC_F16,  _______,
   _______, _______, _______, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______, _______ 
 ),
 
 [_EDT] = LAYOUT_planck_grid(
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, 
   _______, UNDO,    CUT,     COPY,    PASTE,   REDO,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+  _______, UNDO,    CUT,     COPY,    PASTE,   REDO,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   _______, _______, _______, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______, _______ 
 ),
 
@@ -329,15 +329,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Function Overrides
 //
 
-bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    case T_SHIFT:
-    case N_SHIFT:
-      return true;
-    default:
-     return false;
-  }
-}
+// bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
+//   switch (keycode) {
+//     case T_SHIFT:
+//     case N_SHIFT:
+//       return true;
+//     default:
+//      return false;
+//   }
+// }
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -434,25 +434,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;    
 
-    case BACKSPACE_WORD:        
+    case BS_WORD:        
       if (record->event.pressed) {
-        register_code(KC_LOPT);
-        tap_code(KC_BSPC);
-        unregister_code(KC_LOPT);
+        tap_code16(LOPT(KC_BSPC));
       }
       return false;
 
+    // RESTORE TO "ZERO POINT" — uncluttered rest point
+
+    // wait_ms(20); // time to swap
+    // tap_code16(LSG(KC_0)); // show main window
+    // tap_code16(LCA(KC_BSPC)); // Restore position
+        
     case ZERO_PT:        
       if (record->event.pressed) {
-        // RESTORE TO "ZERO POINT" — uncluttered rest point
-        tap_code16(MEH(KC_N)); // Noteplan
-        wait_ms(250);
-        tap_code16(LSG(KC_0)); // show main window
-        tap_code16(LCA(KC_BSPC)); // Restore position
-        tap_code16(LCA(KC_W)); // Position midscreen
-        tap_code16(LCA(KC_W)); // But, make it bigger
+        tap_code16(MEH(KC_T)); // Things
         tap_code16(LAG(KC_H)); // hide others, beep if you like.
-      }
+        // tap_code16(LCA(KC_ENTER)); 
+        tap_code16(LCA(KC_P)); // right 1/3rd
+
+        tap_code16(MEH(KC_O)); // Obsidian
+        // tap_code16(LCA(KC_ENTER)); // so the next command is starting fresh
+        tap_code16(LCA(KC_D)); // left 3/4ths 
+       }
       return false;
     default:
       return true; /* Process all other keycodes normally */
