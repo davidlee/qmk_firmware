@@ -132,7 +132,7 @@ combo_t key_combos[COMBO_COUNT] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |Shift |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  | Enter|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |MicMut|DskTp-|DskTp+| Tab  | Spc  |   -  |   E  | BkSp | Enter|ZeroPt|AppCtl|MsnCtl| 
+ * |MicMut|DskTp-|DskTp+| Tab  | Spc  |   -  |   E  | BkSp | Enter|ZeroPt|MsnCtl|  Fn  | 
  * `-----------------------------------------------------------------------------------'
  *
  * Home Row Mods / Layers (hold behaviours)
@@ -263,7 +263,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRV,  Q_HYP,   W_MEH,   F_FUN,   P_PAD,   KC_B,    KC_J,    KC_L,    KC_U,    Y_MEH,   SCLN_HYP,KC_DEL,
   ESC_CMD, A_CTRL,  R_OPT,   S_CMD,   T_SHIFT, KC_G,    KC_M,    N_SHIFT, E_CMD,   I_OPT,   O_CTRL,  CMD_QOT,
   FN_SFT,  KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, ENT_SFT,
-  KC_F16,  PRV_DTP, NXT_DTP, TAB_EDT, SPC_NUM, MIN_FUN, E_NAV,   BS_SFT,  ENT_MED, ZERO_PT, APP_CTL, MSN_CTL
+  KC_F16,  PRV_DTP, NXT_DTP, TAB_EDT, SPC_NUM, MIN_FUN, E_NAV,   BS_SFT,  ENT_MED, ZERO_PT, MSN_CTL, FN
 ),
 
 [_NAV] = LAYOUT_planck_grid(
@@ -374,24 +374,28 @@ layer_state_t layer_state_set_user(layer_state_t state) {
       break;
     case _NUM:
       rgblight_enable();
-      rgblight_setrgb (0xFF,  0x7A, 0x00);
+      rgblight_setrgb (0x55,  0x7A, 0xFF);
       break;
     case _NAV:
       rgblight_enable();
-      rgblight_setrgb (0x00,  0xFF, 0x00);
+      rgblight_setrgb (0x33,  0xFF, 0x00);
       break;
     case _MED:
       rgblight_enable();
-      rgblight_setrgb (0xFF,  0x00, 0x00);
+      rgblight_setrgb (0x33,  0xAA, 0xFF);
       break;
     case _FUN:
       rgblight_enable();
-      rgblight_setrgb (0x7A,  0x55, 0x00);
+      rgblight_setrgb (0x3A,  0x9A, 0x3A);
       break;
     case _PTR:
       rgblight_enable();
       rgblight_setrgb (0x00,  0xFF, 0x7A);
       break;                          
+    case _EDT:
+      rgblight_enable();
+      rgblight_setrgb (0xFF,  0xFF, 0x3A);
+      break;  
     default: 
       rgblight_disable();
       break;      
@@ -450,11 +454,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         tap_code16(MEH(KC_T)); // Things
         tap_code16(LAG(KC_H)); // hide others, beep if you like.
-        // tap_code16(LCA(KC_ENTER)); 
+        tap_code16(LCA(KC_ENTER)); // so the next command is starting fresh
         tap_code16(LCA(KC_P)); // right 1/3rd
 
         tap_code16(MEH(KC_O)); // Obsidian
-        // tap_code16(LCA(KC_ENTER)); // so the next command is starting fresh
+        tap_code16(LCA(KC_ENTER)); // so the next command is starting fresh
         tap_code16(LCA(KC_D)); // left 3/4ths 
        }
       return false;
