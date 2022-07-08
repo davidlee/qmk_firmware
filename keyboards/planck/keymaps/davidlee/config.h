@@ -1,9 +1,7 @@
-// #include "config_common.h"
-
 #pragma once
 
 #ifndef USB_MAX_POWER_CONSUMPTION
-#  define USB_MAX_POWER_CONSUMPTION 100
+#  define USB_MAX_POWER_CONSUMPTION 250
 #endif
 
 
@@ -16,7 +14,7 @@
     #define MUSIC_MASK (keycode != KC_NO)
 #endif
 
-#define COMBO_COUNT 1
+#define COMBO_COUNT 1 // mouse layer
 
 #define TAPPING_TERM 170
 #define TAPPING_TERM_PER_KEY 1
@@ -29,7 +27,7 @@
 #define COMBO_STRICT_TIMER
 #define COMBO_TERM (TAPPING_TERM/5) // time to get all combo keys down
 #define COMBO_HOLD (COMBO_TERM*4)   // time to hold to trigger delayed combo
-// #define ADAPTIVE_TERM COMBO_HOLD    // use COMBO_HOLD time as a standard threshold (same recation time)
+// #define ADAPTIVE_TERM COMBO_HOLD    // use COMBO_HOLD time as a standard threshold (same reaction time)
 
 #define CAPSWORD_USE_SHIFT 1
 
