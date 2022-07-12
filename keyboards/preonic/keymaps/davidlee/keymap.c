@@ -32,8 +32,8 @@ enum preonic_keycodes {
 // custom keycodes
 //
 
-#define FN       KC_F24 // requires karabiner
-#define MICMUTE  KC_F16 // 
+#define FN       PB_20
+#define MICMUTE  KC_F24
 #define XXXXXXX  KC_NO
 
 // Left-hand home row mods 
@@ -95,8 +95,8 @@ enum preonic_keycodes {
 #define CMD_MINS LCMD(KC_MINS)
 #define CMD_EQL  LCMD(KC_EQL)
 
-#define PRV_DTP LCTL(KC_LEFT)
-#define NXT_DTP LCTL(KC_RIGHT)
+#define PREV_DT LCTL(KC_LEFT)
+#define NEXT_DT LCTL(KC_RIGHT)
 #define MSN_CTL LCTL(KC_UP)
 #define APP_CTL LCTL(KC_DOWN)
 
@@ -115,10 +115,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_CMK] = LAYOUT_preonic_grid(
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC, 
-  KC_TAB,  Q_HYP,   W_MEH,   KC_F,   P_PAD,   KC_B,    KC_J,    KC_L,    KC_U,    Y_MEH,   SCLN_HYP,KC_DEL,
+  KC_TAB,  Q_HYP,   W_MEH,   KC_F,    P_PAD,   KC_B,    KC_J,    KC_L,    KC_U,    Y_MEH,   SCLN_HYP,KC_DEL,
   ESC_CMD, A_CTRL,  R_OPT,   S_CMD,   T_SHIFT, KC_G,    KC_M,    N_SHIFT, E_CMD,   I_OPT,   O_CTRL,  CMD_QOT,
   FN_SFT,  KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, ENT_SFT,
-  FN,      KC_F17,  KC_F18,  KC_TAB,  SPC_NUM, MIN_FUN, E_NAV,   BS_SFT,  KC_ENT,  PRV_DTP, NXT_DTP, MSN_CTL
+  FN,      PB_1,    PB_2,    KC_TAB,  SPC_NUM, MIN_FUN, E_NAV,   BS_SFT,  KC_ENT,  PREV_DT, NEXT_DT, MSN_CTL
 ),
 
 [_NAV] = LAYOUT_preonic_grid(
@@ -131,9 +131,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_NUM] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  FN,      XXXXXXX, XXXXXXX, KC_LBRC, KC_RBRC, XXXXXXX, XXXXXXX, KC_LCBR, KC_RCBR, KC_PLUS, KC_COLN, KC_BSPC,
+  KC_GRV,  KC_LPRN, KC_RPRN, KC_LBRC, KC_RBRC, XXXXXXX, XXXXXXX, KC_LCBR, KC_RCBR, KC_PLUS, KC_COLN, KC_BSPC,
   CAP_WRD, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_SPC,
-  KC_CAPS, XXXXXXX, EN_DASH, EM_DASH, KC_MINS, KC_EQL,  XXXXXXX, KC_UNDS, KC_COMM, KC_DOT,  KC_BSLS, _______,
+  KC_CAPS, KC_UNDS, EN_DASH, EM_DASH, KC_MINS, KC_EQL,  XXXXXXX, KC_BSLS, KC_COMM, KC_DOT,  KC_SLSH, _______,
   _______, _______, _______, PAD_LCK, _______, KC_SPC,  XXXXXXX, _______, _______, _______, _______, _______
 ),
 
