@@ -13,7 +13,6 @@ enum preonic_layers {
   _NUM,  // Numbers 
   _PAD,  // Number Pad
   _MED,  // Media
-  _EDT,  // Edit / Clipboard
   _FUN,  // Functions
   _PTR,  // Pointer
 };
@@ -21,12 +20,13 @@ enum preonic_layers {
 enum preonic_keycodes {
   CAP_WRD = SAFE_RANGE,
   PTR_LCK,
-  L_GAM,
+  PAD_LCK,
+  GAM_LCK,
   EXT_PTR,
   EXT_GAM,
+  EXT_PAD,
   BS_WORD,
   ZERO_PT,
-  EDT,
 };
 
 //
@@ -34,6 +34,7 @@ enum preonic_keycodes {
 //
 
 #define FN       KC_F24 // requires karabiner
+#define MICMUTE  KC_F16 // 
 #define XXXXXXX  KC_NO
 
 // Left-hand home row mods 
@@ -63,12 +64,10 @@ enum preonic_keycodes {
 
 // left side mods
 #define FN_SFT   LSFT_T(FN)
-#define ESC_EDT  LT(_EDT, KC_ESC)
 
 // bottom row mods
 #define ESC_OPT  LOPT_T(KC_ESC)
-// #define TAB_CMD  RCMD_T(KC_TAB)
-#define TAB_EDT  LT(_EDT, KC_TAB)
+#define TAB_PAD  LT(_PAD, KC_TAB)
 #define SPC_NUM  LT(_NUM, KC_SPC)
 #define SYM      MO(_SYM)
 #define MIN_FUN  LT(_FUN, KC_MINS)
@@ -98,15 +97,10 @@ enum preonic_keycodes {
 #define CMD_MINS LCMD(KC_MINS)
 #define CMD_EQL  LCMD(KC_EQL)
 
-#define MICMUTE SCMD(KC_M)
-
 #define PRV_DTP LCTL(KC_LEFT)
 #define NXT_DTP LCTL(KC_RIGHT)
 #define MSN_CTL LCTL(KC_UP)
 #define APP_CTL LCTL(KC_DOWN)
-
-
-#define EDT MO(_EDT)
 
 //
 // Combos
@@ -119,166 +113,6 @@ combo_t key_combos[COMBO_COUNT] = {
   COMBO(ptr_combo,  PTR_LCK),
 };
 
-
-//
-// Keymap
-//
-
-
-
-/* COLEMAK-DH
- * ,-----------------------------------------------------------------------------------.
- * |  `   |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |  BS  |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Tab  |   Q  |   W  |   F  |   P  |   B  |   J  |   L  |   U  |   Y  |   ;  |  Del |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |  Esc |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  |   '  |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |Shift |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  | Enter|
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |MicMut|DskTp-|DskTp+| Tab  | Spc  |   -  |   E  | BkSp | Enter|   ?? |MsnCtl|  Fn  | 
- * `-----------------------------------------------------------------------------------'
- *
- * Home Row Mods / Layers (hold behaviours)
- * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * ,-----------------------------------------------------------------------------------.
- * |      | Hyper|  Meh |  FUN |  PAD |      |      |      |      |  Meh | Hyper|      |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |  Cmd | Ctrl |  Opt |  Cmd | Shift|      |      |Shift |  Cmd |  Opt | Ctrl |  Cmd |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | Shift|      |      |      |      |      |      |      |      |      |      | Shift|
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |MicMut|      |      |  EDT |  NUM |  FUN |  NAV | Shift|  MED |      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-
-/* NUM 
- * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * ,-----------------------------------------------------------------------------------.
- * |      |      |      |   [  |   ]  |      |      |   {  |   }  |   +  |   :  | Bspc |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |CapsWd|   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Spc  |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Caps |      | En – | Em — |   -  |   =  |      |   _  |   ,  |   .  |   \  |SftEnt|
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |CmdEsc|  ##  |      |      | Shift| Enter|      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-
-/* SYM = Shift + NUM
- * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * ,-----------------------------------------------------------------------------------.
- * |      |      |      |   {  |   }  |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |   _  |   +  |      |      |   <  |   >  |   |  |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |  ##  |      |      |  ##  |      |      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-
-/* FUN 
- * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * ,-----------------------------------------------------------------------------------.
- * | RESET|      |  Cut |  Copy| Paste|      |      |  F7  |  F8  |  F9  |  F12 |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Ctrl |  Opt |  Cmd | Shift|  GAM |      |  F4  |  F5  |  F6  |  F11 |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Brt- |  Brt+|      |      |      |      |  F1  |  F2  |  F3  |  F10 |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |  Tab | Spc  |  ##  |      | Bspc | Enter|      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-
-/* NAV
- * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * ,-----------------------------------------------------------------------------------.
- * |      | Undo |  Cut |  Copy| Paste| Paste|      | Back | Cmd -| Cmd =| Fwd  | Bspc |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Ctrl |  Opt |  Cmd | Shift|      |      | Left | Down | Up   | Right| Spc  |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Caps | Undo |  Cut |  Copy| Paste| Paste|      | Home | PGDN | PGUP | End  | Enter|
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |  Tab | Spc  |      |  ##  |      |      |      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-
-/* PAD 
- * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |  ##  |      |   /  |  7   |  8   |  9   |  0   | Del  |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Esc  | Ctrl |  Opt |  Cmd |      |      |   *  |  4   |  5   |  6   |  -   | Bspc |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Shift|      |      |      |      |      |   ,  |  1   |  2   |  3   |  +   | Enter|
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |  Tab |  Spc |      |   .  | Bspc |  0   |  =   |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-
-/* MED
- * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |      |      |      |      |      |     
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      | Prev | Vol- | Vol+ | Next |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      | Play | Stop | Mute |MicMut|      | 
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |  ##  |      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-
-/* PTR (chord NUI)
- * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      | whL  |  mU  |  whR |  whU |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Exit | Ctrl |  Opt |  Cmd | Shift|      | Exit | mL   |  mD  |  mR  |  whD | Exit |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Shift|      |      |      |      |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |  b2  |  b1  |  b3  |      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-
-/* EDT 
- * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Undo |  Cut |  Copy| Paste| Redo |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Undo |  Cut |  Copy| Paste| Redo |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-
-//======================================================================================
-
-/* GAM (Qwerty)
- * ,-----------------------------------------------------------------------------------.
- * |  `   |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |  BS  |
- * ,-----------------------------------------------------------------------------------.
- * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  '   |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Ctrl | Alt  | GUI  |  Spc |  EXIT| EXIT | Bspc | Left | Down |  Up  |Right |
- * `-----------------------------------------------------------------------------------'
- */
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_CMK] = LAYOUT_preonic_grid(
@@ -286,13 +120,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,  Q_HYP,   W_MEH,   F_FUN,   P_PAD,   KC_B,    KC_J,    KC_L,    KC_U,    Y_MEH,   SCLN_HYP,KC_DEL,
   ESC_CMD, A_CTRL,  R_OPT,   S_CMD,   T_SHIFT, KC_G,    KC_M,    N_SHIFT, E_CMD,   I_OPT,   O_CTRL,  CMD_QOT,
   FN_SFT,  KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, ENT_SFT,
-  KC_F16,  PRV_DTP, NXT_DTP, TAB_EDT, SPC_NUM, MIN_FUN, E_NAV,   BS_SFT,  ENT_MED, ZERO_PT, MSN_CTL, FN
+  FN,      KC_F17,  KC_F18,  KC_TAB,  SPC_NUM, MIN_FUN, E_NAV,   BS_SFT,  ENT_MED, PRV_DTP, NXT_DTP, MSN_CTL
 ),
 
 [_NAV] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, UNDO,    CUT,     COPY,    PASTE,   PASTE,   XXXXXXX, CMD_LBRC,CMD_MINS,CMD_EQL ,CMD_RBRC,KC_BSPC,
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_SPC,
+  _______, _______, _______, REDO,    _______, _______, XXXXXXX, CMD_LBRC,CMD_MINS,CMD_EQL ,CMD_RBRC,KC_BSPC,
+  CAP_WRD, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_SPC,
   KC_CAPS, UNDO,    CUT,     COPY,    PASTE,   PASTE,   XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______,
   _______, _______, _______, KC_TAB,  _______, XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, _______
 ),
@@ -300,26 +134,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_NUM] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   FN,      XXXXXXX, XXXXXXX, KC_LBRC, KC_RBRC, XXXXXXX, XXXXXXX, KC_LCBR, KC_RCBR, KC_PLUS, KC_COLN, KC_BSPC,
-  _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_SPC,
+  CAP_WRD, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_SPC,
   KC_CAPS, XXXXXXX, EN_DASH, EM_DASH, KC_MINS, KC_EQL,  XXXXXXX, KC_UNDS, KC_COMM, KC_DOT,  KC_BSLS, _______,
-  _______, _______, _______, KC_TAB,  _______, XXXXXXX, XXXXXXX, _______, _______, _______, _______, _______
-),
-
-[_FUN] = LAYOUT_preonic_grid(
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  RESET,   _______, CUT,     COPY,    PASTE,   XXXXXXX, XXXXXXX, KC_F7,   KC_F8,   KC_F9,   KC_F12,  XXXXXXX, 
-  ESC_CMD, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, L_GAM,   XXXXXXX, KC_F4,   KC_F5,   KC_F6,   KC_F11,  XXXXXXX, 
-  XXXXXXX, KC_SLCK, KC_PAUS, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F10,  XXXXXXX, 
-  XXXXXXX, XXXXXXX, XXXXXXX, KC_TAB,  KC_SPACE,_______, XXXXXXX, KC_BSPC, KC_ENT,  XXXXXXX, XXXXXXX, XXXXXXX
-
+  _______, _______, _______, PAD_LCK, _______, KC_SPC,  XXXXXXX, _______, _______, _______, _______, _______
 ),
 
 [_PAD] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX, KC_SLSH, KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL,
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, XXXXXXX, XXXXXXX, KC_ASTR, KC_4,    KC_5,    KC_6,    KC_MINS, KC_BSPC,
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_COMM, KC_1,    KC_2,    KC_3,    KC_PLUS, _______,
-  _______, _______, _______, _______,  KC_SPC,  _______, KC_DOT,  KC_BSPC, KC_0,    KC_EQL,  _______, _______
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, EXT_PAD, XXXXXXX, KC_SLSH, KC_7,    KC_8,    KC_9,    KC_0,    _______,
+  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, KC_ASTR, KC_4,    KC_5,    KC_6,    KC_PLUS, KC_EQL,
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_COMM, KC_1,    KC_2,    KC_3,    KC_MINS, _______,
+  _______, EXT_PAD, EXT_PAD, EXT_PAD, KC_SPC,  _______, KC_DOT,  KC_BSPC, KC_0,    _______, _______, _______
+),
+
+[_FUN] = LAYOUT_preonic_grid(
+  _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_F7,   KC_F8,   KC_F9,   KC_F12,  RESET, 
+  ESC_CMD, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, GAM_LCK, XXXXXXX, KC_F4,   KC_F5,   KC_F6,   KC_F11,  XXXXXXX, 
+  _______, KC_SLCK, KC_PAUS, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F10,  _______, 
+  XXXXXXX, XXXXXXX, XXXXXXX, KC_TAB,  KC_SPACE,_______, XXXXXXX, KC_BSPC, KC_ENT,  XXXXXXX, XXXXXXX, XXXXXXX
+
 ),
 
 [_MED] = LAYOUT_preonic_grid(
@@ -327,14 +161,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, 
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, _______,
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MPLY, KC_STOP, KC_F16,  KC_F16,  _______,
-  _______, _______, _______, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______, _______ 
-),
-
-[_EDT] = LAYOUT_preonic_grid(
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, 
-  _______, UNDO,    CUT,     COPY,    PASTE,   REDO,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-  _______, UNDO,    CUT,     COPY,    PASTE,   REDO,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   _______, _______, _______, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, _______, _______ 
 ),
 
@@ -412,10 +238,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
       rgblight_enable();
       rgblight_setrgb (0x00,  0xFF, 0x7A);
       break;                          
-    case _EDT:
-      rgblight_enable();
-      rgblight_setrgb (0xFF,  0xFF, 0x3A);
-      break;  
     default: 
       rgblight_disable();
       break;      
@@ -436,7 +258,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
   switch (keycode) {
 
-    case L_GAM:
+    // LOCK LAYERS
+
+    case GAM_LCK:
       layer_on(_GAM);
       return false;
 
@@ -444,13 +268,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       layer_on(_PTR);
       return false;
 
+    case PAD_LCK:
+      layer_on(_PAD);
+      return false;
+
+    // EXIT LAYERS
+
+    case EXT_GAM:
+      layer_off(_GAM);
+      return false;    
+
     case EXT_PTR:
       layer_off(_PTR);
       return false;
 
-    case EXT_GAM:
-      layer_off(_GAM);
+    case EXT_PAD:
+      layer_off(_PAD);
       return false;
+
+    // 
 
     case CAP_WRD:        
       if (record->event.pressed) {
@@ -464,11 +300,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
 
-    case ZERO_PT:        
-      if (record->event.pressed) {
-       // ...
-       }
-      return false;
     default:
       return true; /* Process all other keycodes normally */
   }
