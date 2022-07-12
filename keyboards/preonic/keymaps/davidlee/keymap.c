@@ -32,8 +32,11 @@ enum preonic_keycodes {
 // custom keycodes
 //
 
-#define FN       PB_20
-#define MICMUTE  KC_F24
+#define FN       KC_F24
+#define MICMUTE  KC_F23
+#define KX_1     KC_F22
+#define KX_2     KC_F21
+
 #define XXXXXXX  KC_NO
 
 // Left-hand home row mods 
@@ -118,7 +121,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,  Q_HYP,   W_MEH,   KC_F,    P_PAD,   KC_B,    KC_J,    KC_L,    KC_U,    Y_MEH,   SCLN_HYP,KC_DEL,
   ESC_CMD, A_CTRL,  R_OPT,   S_CMD,   T_SHIFT, KC_G,    KC_M,    N_SHIFT, E_CMD,   I_OPT,   O_CTRL,  CMD_QOT,
   FN_SFT,  KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, ENT_SFT,
-  FN,      PB_1,    PB_2,    KC_TAB,  SPC_NUM, MIN_FUN, E_NAV,   BS_SFT,  KC_ENT,  PREV_DT, NEXT_DT, MSN_CTL
+  FN,      KX_1,    KX_2,    KC_TAB,  SPC_NUM, MIN_FUN, E_NAV,   BS_SFT,  KC_ENT,  PREV_DT, NEXT_DT, MSN_CTL
 ),
 
 [_NAV] = LAYOUT_preonic_grid(

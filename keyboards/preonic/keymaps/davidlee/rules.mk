@@ -3,7 +3,7 @@ SRC += features/casemodes.c
 
 MOUSEKEY_ENABLE      = yes
 KEY_LOCK_ENABLE      = yes
-PROGRAMMABLE_BUTTON_ENABLE = yes
+PROGRAMMABLE_BUTTON_ENABLE = no
 DYNAMIC_TAPPING_TERM_ENABLE = yes
 COMBO_ENABLE         = yes
 
