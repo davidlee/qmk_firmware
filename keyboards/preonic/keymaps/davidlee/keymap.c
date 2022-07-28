@@ -8,6 +8,7 @@
 
 enum preonic_layers {
   _CMK,  // Colemak-DH
+  _TYP,  // Typing, no home row mods
   _GAM,  // Gaming / QWERTY
   _NAV,  // Navigation
   _NUM,  // Numbers 
@@ -18,12 +19,14 @@ enum preonic_layers {
 
 enum preonic_keycodes {
   CAP_WRD = SAFE_RANGE,
+  TYP_LCK,
   PTR_LCK,
   PAD_LCK,
   GAM_LCK,
   EXT_PTR,
   EXT_GAM,
   EXT_PAD,
+  EXT_TYP,
   BS_WORD,
   ZERO_PT,
 };
@@ -70,7 +73,8 @@ enum preonic_keycodes {
 
 // bottom row mods
 #define ESC_OPT  LOPT_T(KC_ESC)
-#define TAB_PAD  LT(_PAD, KC_TAB)
+#define CMD_TAB  MT(MOD_LGUI, KC_TAB)
+
 #define SPC_NUM  LT(_NUM, KC_SPC)
 #define MIN_FUN  LT(_FUN, KC_MINS)
 
@@ -120,7 +124,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,  Q_HYP,   W_MEH,   KC_F,    P_PAD,   KC_B,    KC_J,    KC_L,    KC_U,    Y_MEH,   SCLN_HYP,KC_DEL,
   ESC_CMD, A_CTRL,  R_OPT,   S_CMD,   T_SHIFT, KC_G,    KC_M,    N_SHIFT, E_CMD,   I_OPT,   O_CTRL,  CMD_QOT,
   FN_SFT,  KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, ENT_SFT,
-  PTR,     FN,      KC_F21,  KC_TAB,  SPC_NUM, MIN_FUN, E_NAV,   BS_SFT,  KC_ENT,  PREV_DT, NEXT_DT, MSN_CTL
+  PTR,     KC_LCTL, KC_LOPT, CMD_TAB, SPC_NUM, MIN_FUN, E_NAV,   BS_SFT,  KC_ENT,  FN,      KC_F21,  MSN_CTL // PREV_DT, NEXT_DT, MSN_CTL
+),
+
+[_TYP] = LAYOUT_preonic_grid(
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  _______, KC_Q,   KC_W,     _______, _______, _______, _______, _______, _______, KC_Y,    KC_SCLN, _______,
+  _______, KC_A,   KC_R,     KC_S,    KC_T,    _______, _______, KC_N,    KC_E,    KC_I,    KC_O,    _______,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
 [_NAV] = LAYOUT_preonic_grid(
@@ -152,7 +164,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, KC_MSEL, KC_MUTE, KC_MSTP, KC_MPLY, XXXXXXX, XXXXXXX, KC_F7,   KC_F8,   KC_F9,   KC_F12,  RESET, 
   KC_SLEP, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, GAM_LCK, XXXXXXX, KC_F4,   KC_F5,   KC_F6,   KC_F11,  XXXXXXX, 
   _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, XXXXXXX, XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F10,  _______, 
-  XXXXXXX, XXXXXXX, XXXXXXX, KC_TAB,  KC_SPACE,_______, XXXXXXX, KC_BSPC, KC_ENT,  XXXXXXX, XXXXXXX, XXXXXXX
+  EXT_TYP, XXXXXXX, XXXXXXX, KC_TAB,  KC_SPACE,_______, XXXXXXX, KC_BSPC, KC_ENT,  XXXXXXX, XXXXXXX, TYP_LCK
 
 ),
 
@@ -247,6 +259,10 @@ layer_state_t layer_state_set_user(layer_state_t state) {
       rgblight_enable();
       rgblight_setrgb (0xFF,  0x00, 0x00);
       break;
+    case _TYP:
+      rgblight_enable();
+      rgblight_setrgb (0xFF,  0x33, 0xFF);
+      break;
     default: 
       rgblight_disable();
       break;      
@@ -281,6 +297,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       layer_on(_PAD);
       return false;
 
+    case TYP_LCK:
+      layer_on(_TYP);
+      return false;
+
     // EXIT LAYERS
 
     case EXT_GAM:
@@ -293,6 +313,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     case EXT_PAD:
       layer_off(_PAD);
+      return false;
+
+    case EXT_TYP:
+      layer_off(_TYP);
       return false;
 
     // other functions
