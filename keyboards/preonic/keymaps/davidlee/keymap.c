@@ -47,7 +47,7 @@ enum preonic_keycodes {
 #define SCLN_HYP MT(MOD_HYPR, KC_SCOLON)
 
 // left side mods
-#define ESC_CMD  LCMD_T(KC_ESCAPE)
+#define ESC_CTL  LCTL_T(KC_ESCAPE)
 #define FN_SFT   LSFT_T(FN)
 
 // bottom row mods
@@ -58,9 +58,10 @@ enum preonic_keycodes {
 #define E_NAV    LT(_NAV, KC_E)
 #define BS_SFT   MT(MOD_LSFT, KC_BSPC)
 #define ENT_MOD  LT(_MOD, KC_ENTER)
+#define MOD      MO(_MOD)
 
 // right side mods
-#define CMD_QOT  MT(MOD_RGUI, KC_QUOTE)
+#define OPT_QOT  MT(MOD_LALT, KC_QUOTE)
 #define ENT_SFT  KC_SFTENT
 
 // clipboard
@@ -110,22 +111,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_CMK] = LAYOUT_preonic_grid(
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC, 
   KC_TAB,  Q_HYP,   W_MEH,   KC_F,    P_PAD,   KC_B,    KC_J,    KC_L,    KC_U,    Y_MEH,   SCLN_HYP,KC_DEL,
-  ESC_CMD, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    CMD_QOT,
+  ESC_CTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    OPT_QOT,
   FN_SFT,  KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, ENT_SFT,
-  PTR,     KC_LCTL, KC_LOPT, CMD_TAB, SPC_NUM, MIN_MOD, E_NAV,   BS_SFT,  ENT_MOD, KC_F20,  SIRI,    FN
+  FN,      KC_LCTL, KC_LOPT, CMD_TAB, SPC_NUM, PTR,     E_NAV,   BS_SFT,  ENT_MOD, _______, _______, SIRI
 ),
 
 [_NAV] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, KC_MUTE, XXXXXXX, CMD_LBRC,CMD_MINS,CMD_EQL ,CMD_RBRC,KC_BSPC,
-  CAP_WRD, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_SPC,
+  _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, KC_MUTE, XXXXXXX, CMD_LBRC,CMD_MINS,CMD_EQL ,CMD_RBRC,_______,
+  CAP_WRD, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,
   KC_CAPS, UNDO,    CUT,     COPY,    KC_MPLY, PASTE,   XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______,
   _______, _______, _______, KC_TAB,  _______, XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, _______
 ),
 
 [_NUM] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
+  _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
   CAP_WRD, KC_GRV,  KC_LBRC, KC_RBRC, KC_HASH, KC_LPRN, KC_RPRN, KC_RSFT, KC_RCMD, KC_LOPT, KC_RCTL, _______,
   KC_CAPS, KC_EXLM, KC_MINS, KC_EQL,  KC_UNDS, KC_PERC, KC_DLR,  KC_AMPR, KC_ASTR, KC_AT,   KC_BSLS, _______,
   _______, _______, _______, PAD_LCK, _______, KC_SPC,  XXXXXXX, _______, _______, _______, _______, _______
@@ -152,14 +153,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC, 
   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
   KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT ,
+  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
   _______, KC_LCTL, KC_LALT, KC_LGUI, KC_SPC,  _______, EXT_GAM, KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
 [_MOD] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, A_CTRL,  R_OPT,   S_CMD,   T_SHIFT, _______, _______, N_SHIFT, E_CMD,   I_OPT,   O_CTRL,  CMD_QOT,
+  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _______, _______, KC_RSFT, KC_RCMD, KC_LOPT, KC_RCTL, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
@@ -205,14 +206,16 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     case O_CTRL:
       return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
 
-    
     case SPC_NUM:
-      return TAPPING_TERM - THUMB_KEY_TAP_ADJUSTMENT;
+      return TAPPING_TERM + THUMB_KEY_TAP_ADJUSTMENT;
+
     case BS_SFT:
       return TAPPING_TERM - THUMB_KEY_TAP_ADJUSTMENT;
     case E_NAV:
       return TAPPING_TERM - THUMB_KEY_TAP_ADJUSTMENT;
-    
+    case ENT_MOD:
+      return TAPPING_TERM - THUMB_KEY_TAP_ADJUSTMENT;
+
     default:
       return TAPPING_TERM;
   }
@@ -220,16 +223,17 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case ESC_CMD:
+        case ESC_CTL:
         case FN_SFT:
         case ENT_SFT:
         case E_NAV:
+        case ENT_MOD:
+        case MOD:
         case SPC_NUM:
         case BS_SFT:
         case MIN_MOD:
-        case ENT_MOD:
         case CMD_TAB:
-        case CMD_QOT:
+        case OPT_QOT:
           // Immediately select the hold action when another key is tapped.
           return true;
         default:
