@@ -39,16 +39,18 @@ enum preonic_keycodes {
 
 #define XXXXXXX  KC_NO
 
-// top row mod / layer-taps
-#define Q_HYP    MT(MOD_HYPR, KC_Q)
-#define W_MEH    MT(MOD_MEH, KC_W)
+#define OS_MOD   OSL(_MOD)
+
+// alpha mod / layer taps
 #define P_PAD    LT(_PAD, KC_P)
-#define Y_MEH    MT(MOD_MEH, KC_Y)
-#define SCLN_HYP MT(MOD_HYPR, KC_SCOLON)
+
+#define Z_MEH   MT(MOD_MEH, KC_Z)
+#define SLS_MEH MT(MOD_MEH, KC_SLSH)
 
 // left side mods
 #define ESC_CTL  LCTL_T(KC_ESCAPE)
 #define FN_SFT   LSFT_T(FN)
+#define TAB_MEH MT(MOD_MEH, KC_TAB)
 
 // bottom row mods
 #define CMD_TAB  MT(MOD_LGUI, KC_TAB)
@@ -63,6 +65,7 @@ enum preonic_keycodes {
 // right side mods
 #define OPT_QOT  MT(MOD_LALT, KC_QUOTE)
 #define ENT_SFT  KC_SFTENT
+#define DEL_HYP  MT(MOD_HYPR, KC_DEL)
 
 // clipboard
 #define UNDO   LCMD(KC_Z)
@@ -71,17 +74,17 @@ enum preonic_keycodes {
 #define COPY   LCMD(KC_C)
 #define PASTE  LCMD(KC_V)
 
-// Left-hand home row mods
-#define A_CTRL   LCTL_T(KC_A)
-#define R_OPT    LALT_T(KC_R)
-#define S_CMD    LGUI_T(KC_S)
-#define T_SHIFT  LSFT_T(KC_T)
+// // Left-hand home row mods
+// #define A_CTRL   LCTL_T(KC_A)
+// #define R_OPT    LALT_T(KC_R)
+// #define S_CMD    LGUI_T(KC_S)
+// #define T_SHIFT  LSFT_T(KC_T)
 
-// Right-hand home row mods
-#define N_SHIFT  RSFT_T(KC_N)
-#define E_CMD    RGUI_T(KC_E)
-#define I_OPT    LALT_T(KC_I)
-#define O_CTRL   RCTL_T(KC_O)
+// // Right-hand home row mods
+// #define N_SHIFT  RSFT_T(KC_N)
+// #define E_CMD    RGUI_T(KC_E)
+// #define I_OPT    LALT_T(KC_I)
+// #define O_CTRL   RCTL_T(KC_O)
 
 // misc
 #define EN_DASH LOPT(KC_MINUS)
@@ -100,7 +103,7 @@ enum preonic_keycodes {
 //
 
 // N,U,I combo turns on PTR layer
-const uint16_t PROGMEM ptr_combo[] = {N_SHIFT, KC_U, I_OPT, COMBO_END};
+const uint16_t PROGMEM ptr_combo[] = {KC_N, KC_U, KC_I, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
   COMBO(ptr_combo,  PTR_LCK),
@@ -109,10 +112,10 @@ combo_t key_combos[COMBO_COUNT] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_CMK] = LAYOUT_preonic_grid(
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC, 
-  KC_TAB,  Q_HYP,   W_MEH,   KC_F,    P_PAD,   KC_B,    KC_J,    KC_L,    KC_U,    Y_MEH,   SCLN_HYP,KC_DEL,
+  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, 
+  TAB_MEH, KC_Q,    KC_W,    KC_F,    P_PAD,   KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, DEL_HYP,
   ESC_CTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    OPT_QOT,
-  FN_SFT,  KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, ENT_SFT,
+  MOD,     Z_MEH,   KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  SLS_MEH, ENT_MOD,
   FN,      KC_LCTL, KC_LOPT, CMD_TAB, SPC_NUM, PTR,     E_NAV,   BS_SFT,  ENT_MOD, _______, _______, SIRI
 ),
 
@@ -178,33 +181,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case Q_HYP:
+    case Q_HYPR:
       return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
-    case W_MEH:
-      return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
-    
-    case Y_MEH:
-      return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
-    case SCLN_HYP:
+    case SC_HYPR:
       return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
     
-    case A_CTRL:
+    case Z_MEH:
       return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
-    case R_OPT: 
+    case SLS_MEH:
       return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
-    case S_CMD: 
-      return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
-    case T_SHIFT: 
-      return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT; 
+    
+    // case A_CTRL:
+    //   return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
+    // case R_OPT: 
+    //   return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
+    // case S_CMD: 
+    //   return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
+    // case T_SHIFT: 
+    //   return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT; 
 
-    case N_SHIFT:               
-      return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
-    case E_CMD:
-      return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
-    case I_OPT:
-      return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
-    case O_CTRL:
-      return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
+    // case N_SHIFT:               
+    //   return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
+    // case E_CMD:
+    //   return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
+    // case I_OPT:
+    //   return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
+    // case O_CTRL:
+    //   return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
 
     case SPC_NUM:
       return TAPPING_TERM + THUMB_KEY_TAP_ADJUSTMENT;
