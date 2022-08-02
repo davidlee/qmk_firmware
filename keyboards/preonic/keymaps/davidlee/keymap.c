@@ -12,17 +12,14 @@ enum preonic_layers {
   _GAM,  // Gaming / QWERTY
   _NAV,  // Navigation
   _NUM,  // Numbers 
-  _PAD,  // Number Pad
   _PTR,  // Pointer
 };
 
 enum preonic_keycodes {
   CAP_WRD = SAFE_RANGE,
   PTR_LCK,
-  PAD_LCK,
   GAM_LCK,
   EXT_PTR,
-  EXT_PAD,
   EXT_GAM,
   BS_WORD,
 };
@@ -42,8 +39,6 @@ enum preonic_keycodes {
 #define OS_MOD   OSL(_MOD)
 
 // alpha mod / layer taps
-#define P_PAD    LT(_PAD, KC_P)
-
 #define Z_MEH   MT(MOD_MEH, KC_Z)
 #define SLS_MEH MT(MOD_MEH, KC_SLSH)
 
@@ -101,7 +96,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_CMK] = LAYOUT_preonic_grid(
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, 
-  TAB_MEH, KC_Q,    KC_W,    KC_F,    P_PAD,   KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, DEL_HYP,
+  TAB_MEH, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, DEL_HYP,
   ESC_CTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    OPT_QOT,
   MOD,     Z_MEH,   KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  SLS_MEH, ENT_MOD,
   FN,      KC_LCTL, KC_LOPT, CMD_TAB, SPC_NUM, PTR,     E_NAV,   BS_SFT,  ENT_MOD, _______, _______, SIRI
@@ -117,20 +112,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_NUM] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  KC_TAB,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
-  CAP_WRD, KC_GRV,  KC_LBRC, KC_RBRC, KC_HASH, KC_LPRN, KC_RPRN, KC_RSFT, KC_RCMD, KC_LOPT, KC_RCTL, _______,
-  KC_CAPS, KC_EXLM, KC_MINS, KC_EQL,  KC_UNDS, KC_PERC, KC_DLR,  KC_AMPR, KC_ASTR, KC_AT,   KC_BSLS, _______,
-  _______, _______, _______, PAD_LCK, _______, KC_SPC,  XXXXXXX, _______, _______, _______, _______, _______
+  KC_GRV,  KC_CIRC, KC_LBRC, KC_RBRC, KC_AMPR, KC_BSLS, KC_SLSH, KC_7,    KC_8,    KC_9,    KC_0,    KC_ASTR,
+  CAP_WRD, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_LPRN, KC_RPRN, KC_4,    KC_5,    KC_6,    KC_MINS, KC_PLUS,
+  KC_CAPS, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_COMM, KC_1,    KC_2,    KC_3,    KC_EQL,  _______,
+  _______, _______, _______, KC_UNDS, _______, XXXXXXX, KC_DOT,  _______, KC_0,    XXXXXXX, XXXXXXX, XXXXXXX
 ),
-
-[_PAD] = LAYOUT_preonic_grid(
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  KC_TAB,  XXXXXXX, XXXXXXX, XXXXXXX, EXT_PAD, XXXXXXX, KC_SLSH, KC_7,    KC_8,    KC_9,    KC_0,    _______,
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, KC_ASTR, KC_4,    KC_5,    KC_6,    KC_PLUS, KC_EQL,
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_COMM, KC_1,    KC_2,    KC_3,    KC_MINS, _______,
-  _______, EXT_PAD, EXT_PAD, EXT_PAD, KC_SPC,  _______, KC_DOT,  KC_BSPC, KC_0,    _______, _______, _______
-),
-
 
 [_PTR] = LAYOUT_preonic_grid(
   _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
@@ -162,37 +148,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Function Overrides
 //
 
-#define ALPHA_MOD_TAP_ADJUSTMENT 20;
-#define THUMB_KEY_TAP_ADJUSTMENT 40;
-
-
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    case Q_HYPR:
-      return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
-    case SC_HYPR:
-      return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
-    
-    case Z_MEH:
-      return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
-    case SLS_MEH:
-      return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
-
-    case SPC_NUM:
-      return TAPPING_TERM + THUMB_KEY_TAP_ADJUSTMENT;
-
-    case BS_SFT:
-      return TAPPING_TERM - THUMB_KEY_TAP_ADJUSTMENT;
-    case E_NAV:
-      return TAPPING_TERM - THUMB_KEY_TAP_ADJUSTMENT;
-    case ENT_MOD:
-      return TAPPING_TERM - THUMB_KEY_TAP_ADJUSTMENT;
-
-    default:
-      return TAPPING_TERM;
-  }
-}
-
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case ESC_CTL:
@@ -223,10 +178,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     case _NAV:
       rgblight_enable();
       rgblight_setrgb (0x99,  0xFF, 0x00);
-      break;
-    case _PAD:
-      rgblight_enable();
-      rgblight_setrgb (0xFF,  0xAA, 0xFF);
       break;
     case _PTR:
       rgblight_enable();
@@ -270,10 +221,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       layer_on(_PTR);
       return false;
 
-    case PAD_LCK:
-      layer_on(_PAD);
-      return false;
-
     // EXIT LAYERS
 
     case EXT_GAM:
@@ -282,10 +229,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     case EXT_PTR:
       layer_off(_PTR);
-      return false;
-
-    case EXT_PAD:
-      layer_off(_PAD);
       return false;
 
     // other functions
