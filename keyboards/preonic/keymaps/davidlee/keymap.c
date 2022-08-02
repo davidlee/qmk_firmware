@@ -74,18 +74,6 @@ enum preonic_keycodes {
 #define COPY   LCMD(KC_C)
 #define PASTE  LCMD(KC_V)
 
-// // Left-hand home row mods
-// #define A_CTRL   LCTL_T(KC_A)
-// #define R_OPT    LALT_T(KC_R)
-// #define S_CMD    LGUI_T(KC_S)
-// #define T_SHIFT  LSFT_T(KC_T)
-
-// // Right-hand home row mods
-// #define N_SHIFT  RSFT_T(KC_N)
-// #define E_CMD    RGUI_T(KC_E)
-// #define I_OPT    LALT_T(KC_I)
-// #define O_CTRL   RCTL_T(KC_O)
-
 // misc
 #define EN_DASH LOPT(KC_MINUS)
 #define EM_DASH LOPT(KC_UNDERSCORE)
@@ -121,7 +109,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_NAV] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, KC_MUTE, XXXXXXX, CMD_LBRC,CMD_MINS,CMD_EQL ,CMD_RBRC,_______,
+  KC_TAB,  KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, KC_MUTE, XXXXXXX, CMD_LBRC,CMD_MINS,CMD_EQL ,CMD_RBRC,_______,
   CAP_WRD, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,
   KC_CAPS, UNDO,    CUT,     COPY,    KC_MPLY, PASTE,   XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______,
   _______, _______, _______, KC_TAB,  _______, XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, _______
@@ -129,7 +117,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_NUM] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
+  KC_TAB,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
   CAP_WRD, KC_GRV,  KC_LBRC, KC_RBRC, KC_HASH, KC_LPRN, KC_RPRN, KC_RSFT, KC_RCMD, KC_LOPT, KC_RCTL, _______,
   KC_CAPS, KC_EXLM, KC_MINS, KC_EQL,  KC_UNDS, KC_PERC, KC_DLR,  KC_AMPR, KC_ASTR, KC_AT,   KC_BSLS, _______,
   _______, _______, _______, PAD_LCK, _______, KC_SPC,  XXXXXXX, _______, _______, _______, _______, _______
@@ -137,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_PAD] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, EXT_PAD, XXXXXXX, KC_SLSH, KC_7,    KC_8,    KC_9,    KC_0,    _______,
+  KC_TAB,  XXXXXXX, XXXXXXX, XXXXXXX, EXT_PAD, XXXXXXX, KC_SLSH, KC_7,    KC_8,    KC_9,    KC_0,    _______,
   _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, KC_ASTR, KC_4,    KC_5,    KC_6,    KC_PLUS, KC_EQL,
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_COMM, KC_1,    KC_2,    KC_3,    KC_MINS, _______,
   _______, EXT_PAD, EXT_PAD, EXT_PAD, KC_SPC,  _______, KC_DOT,  KC_BSPC, KC_0,    _______, _______, _______
@@ -168,7 +156,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
-
 };
 
 //
@@ -190,24 +177,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
       return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
     case SLS_MEH:
       return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
-    
-    // case A_CTRL:
-    //   return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
-    // case R_OPT: 
-    //   return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
-    // case S_CMD: 
-    //   return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
-    // case T_SHIFT: 
-    //   return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT; 
-
-    // case N_SHIFT:               
-    //   return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
-    // case E_CMD:
-    //   return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
-    // case I_OPT:
-    //   return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
-    // case O_CTRL:
-    //   return TAPPING_TERM + ALPHA_MOD_TAP_ADJUSTMENT;
 
     case SPC_NUM:
       return TAPPING_TERM + THUMB_KEY_TAP_ADJUSTMENT;
