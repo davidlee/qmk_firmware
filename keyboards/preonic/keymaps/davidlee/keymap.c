@@ -29,10 +29,9 @@ enum preonic_keycodes {
 //
 
 #define FN       KC_F24
-#define MICMUTE  KC_F23
 #define SIRI     KC_F21
 
-#define PTR      LT(_PTR, KC_F20)
+#define MIN_PTR  LT(_PTR, KC_MINUS)
 
 #define XXXXXXX  KC_NO
 
@@ -41,6 +40,7 @@ enum preonic_keycodes {
 // alpha mod / layer taps
 #define Z_MEH   MT(MOD_MEH, KC_Z)
 #define SLS_MEH MT(MOD_MEH, KC_SLSH)
+#define SCN_OPT MT(MOD_LALT, KC_SCOLON)
 
 // left side mods
 #define ESC_CTL  LCTL_T(KC_ESCAPE)
@@ -55,10 +55,11 @@ enum preonic_keycodes {
 #define E_NAV    LT(_NAV, KC_E)
 #define BS_SFT   MT(MOD_LSFT, KC_BSPC)
 #define ENT_MOD  LT(_MOD, KC_ENTER)
+#define ENT_OPT  MT(MOD_LALT, KC_ENTER)
 #define MOD      MO(_MOD)
 
 // right side mods
-#define OPT_QOT  MT(MOD_LALT, KC_QUOTE)
+#define CMD_QOT  MT(MOD_RGUI, KC_QUOTE)
 #define ENT_SFT  KC_SFTENT
 #define DEL_HYP  MT(MOD_HYPR, KC_DEL)
 
@@ -81,41 +82,56 @@ enum preonic_keycodes {
 #define MSN_CTL LCTL(KC_UP)
 #define APP_CTL LCTL(KC_DOWN)
 
+
+#ifdef AUDIO_ENABLE
+  #define BLIP  SD_NOTE(_C0), SD_NOTE(_C1), TD_NOTE(_C3)
+
+  float layer_song[][2] = SONG(BLIP);
+#endif
+
 //
 // Combos
 //
 
 // N,U,I combo turns on PTR layer
 const uint16_t PROGMEM ptr_combo[] = {KC_N, KC_U, KC_I, COMBO_END};
+// N,S is backspace word
+const uint16_t PROGMEM bs_word_combo[] = {KC_N, KC_E, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
   COMBO(ptr_combo,  PTR_LCK),
+  COMBO(bs_word_combo,  BS_WORD),
 };
+
+
+//
+// the actual KEYMAP
+//
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_CMK] = LAYOUT_preonic_grid(
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, 
-  TAB_MEH, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, DEL_HYP,
-  ESC_CTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    OPT_QOT,
-  MOD,     Z_MEH,   KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  SLS_MEH, ENT_MOD,
-  FN,      KC_LCTL, KC_LOPT, CMD_TAB, SPC_NUM, PTR,     E_NAV,   BS_SFT,  ENT_MOD, _______, _______, SIRI
+  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    BS_WORD, 
+  TAB_MEH, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCN_OPT, DEL_HYP,
+  ESC_CTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    CMD_QOT,
+  CAP_WRD, Z_MEH,   KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  SLS_MEH, ENT_OPT,
+  FN,      KC_LCTL, KC_LOPT, CMD_TAB, SPC_NUM, MIN_PTR, E_NAV,   BS_SFT,  ENT_MOD, _______, _______, SIRI
 ),
 
 [_NAV] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   KC_TAB,  KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, KC_MUTE, XXXXXXX, CMD_LBRC,CMD_MINS,CMD_EQL ,CMD_RBRC,_______,
-  CAP_WRD, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,
-  KC_CAPS, UNDO,    CUT,     COPY,    KC_MPLY, PASTE,   XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______,
+  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,
+  _______, UNDO,    CUT,     COPY,    KC_MPLY, PASTE,   XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______,
   _______, _______, _______, KC_TAB,  _______, XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, _______
 ),
 
 [_NUM] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  KC_GRV,  KC_CIRC, KC_LBRC, KC_RBRC, KC_AMPR, KC_BSLS, KC_SLSH, KC_7,    KC_8,    KC_9,    KC_0,    KC_ASTR,
-  CAP_WRD, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_LPRN, KC_RPRN, KC_4,    KC_5,    KC_6,    KC_MINS, KC_PLUS,
-  KC_CAPS, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_COMM, KC_1,    KC_2,    KC_3,    KC_EQL,  _______,
-  _______, _______, _______, KC_UNDS, _______, KC_COLN, KC_DOT,  _______, KC_0,    XXXXXXX, XXXXXXX, XXXXXXX
+  KC_GRV,  KC_COLN, KC_LBRC, KC_RBRC, KC_UNDS, KC_BSLS, KC_SLSH, KC_7,    KC_8,    KC_9,    KC_PERC, KC_ASTR,
+  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_LPRN, KC_RPRN, KC_4,    KC_5,    KC_6,    KC_0,    KC_PLUS,
+  KC_CAPS, KC_EXLM, KC_AT,   KC_HASH, KC_MINS, KC_EQL,  KC_COMM, KC_1,    KC_2,    KC_3,    KC_AMPR, _______,
+  _______, _______, _______, KC_DLR,  _______, KC_CIRC, KC_DOT,  _______, KC_EQL,  XXXXXXX, XXXXXXX, XXXXXXX
 ),
 
 [_PTR] = LAYOUT_preonic_grid(
@@ -135,10 +151,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_MOD] = LAYOUT_preonic_grid(
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _______, _______, KC_RSFT, KC_RCMD, KC_LOPT, KC_RCTL, _______,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, XXXXXXX, KC_RSFT, KC_RCMD, KC_LOPT, KC_RCTL, _______,
+  _______, UNDO,    CUT,     COPY,    XXXXXXX, PASTE,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
@@ -155,12 +171,14 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
         case ENT_SFT:
         case E_NAV:
         case ENT_MOD:
+        case ENT_OPT:
         case MOD:
         case SPC_NUM:
         case BS_SFT:
         case MIN_MOD:
+        case MIN_PTR:
         case CMD_TAB:
-        case OPT_QOT:
+        case CMD_QOT:
           // Immediately select the hold action when another key is tapped.
           return true;
         default:
@@ -171,6 +189,14 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
   switch (get_highest_layer(state)) {
+    case _CMK:
+      rgblight_enable();
+      rgblight_setrgb (0x00,  0x33, 0x00);
+
+      #ifdef AUDIO_ENABLE
+        // PLAY_SONG(layer_song);
+      #endif
+      
     case _NUM:
       rgblight_enable();
       rgblight_setrgb (0x55,  0x7A, 0xFF);
@@ -186,10 +212,20 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     case _GAM:
       rgblight_enable();
       rgblight_setrgb (0xFF,  0x00, 0x00);
+      
+      #ifdef AUDIO_ENABLE
+        PLAY_SONG(layer_song);
+      #endif
+      
       break;
     case _MOD:
       rgblight_enable();
       rgblight_setrgb (0xFF,  0x33, 0xFF);
+
+      #ifdef AUDIO_ENABLE
+        PLAY_SONG(layer_song);
+      #endif
+      
       break;
     default: 
       rgblight_disable();

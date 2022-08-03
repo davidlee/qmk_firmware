@@ -1,7 +1,7 @@
 #include QMK_KEYBOARD_H
 #include "davidlee.h"
 #include "features/casemodes.h"
-
+#include "musical_notes.h"
 #ifdef TAP_DANCE_ENABLE
 #  include "tap_dances.h"
 #endif

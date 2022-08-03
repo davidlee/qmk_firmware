@@ -1,7 +1,7 @@
 #pragma once
 
 #ifdef AUDIO_ENABLE
-    #define STARTUP_SONG SONG(NO_SOUND)
+    #define STARTUP_SONG SONG(COLEMAK_SOUND)
 
     #define DEFAULT_LAYER_SONGS { SONG(QWERTY_SOUND), \
                                   SONG(COLEMAK_SOUND) \
@@ -9,7 +9,7 @@
     #define MUSIC_MASK (keycode != KC_NO)
 #endif
 
-#define COMBO_COUNT 1 // mouse layer
+#define COMBO_COUNT 2
 
 #define TAPPING_TERM 150
 // #define TAPPING_TERM_PER_KEY 1
