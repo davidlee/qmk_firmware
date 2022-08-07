@@ -131,7 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_NUM] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   KC_GRV,  KC_COLN, KC_LBRC, KC_RBRC, KC_UNDS, KC_BSLS, KC_SLSH, KC_7,    KC_8,    KC_9,    KC_ASTR, KC_PERC, 
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_LPRN, KC_RPRN, KC_4,    KC_5,    KC_6,    KC_0,    KC_PLUS,
+  SIRI,    KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_LPRN, KC_RPRN, KC_4,    KC_5,    KC_6,    KC_0,    KC_PLUS,
   KC_CAPS, KC_EXLM, KC_AT,   KC_HASH, KC_MINS, KC_EQL,  KC_COMM, KC_1,    KC_2,    KC_3,    KC_AMPR, _______,
   _______, _______, _______, KC_DLR,  _______, KC_CIRC, KC_DOT,  _______, KC_EQL,  XXXXXXX, XXXXXXX, XXXXXXX
 ),
@@ -155,7 +155,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_MOD] = LAYOUT_preonic_grid(
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, XXXXXXX, KC_RSFT, KC_RCMD, KC_LOPT, KC_RCTL, _______,
+  FN,      KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, XXXXXXX, KC_RSFT, KC_RCMD, KC_LOPT, KC_RCTL, FN,
   _______, UNDO,    CUT,     COPY,    XXXXXXX, PASTE,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
