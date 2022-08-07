@@ -49,11 +49,11 @@ enum preonic_keycodes {
 // bottom row mods
 #define CMD_TAB  MT(MOD_LGUI, KC_TAB)
 #define SPC_NUM  LT(_NUM, KC_SPC)
-#define MIN_MOD  LT(_MOD, KC_MINS)
+#define E_MOD    LT(_MOD, KC_E)
 
 #define E_NAV    LT(_NAV, KC_E)
 #define BS_SFT   MT(MOD_LSFT, KC_BSPC)
-#define ENT_MOD  LT(_MOD, KC_ENTER)
+#define ENT_PTR  LT(_PTR, KC_ENTER)
 #define ENT_OPT  MT(MOD_LALT, KC_ENTER)
 #define MOD      MO(_MOD)
 
@@ -117,7 +117,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   TAB_MEH, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCN_OPT, DEL_HYP,
   ESC_CTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    CMD_QOT,
   KC_LSFT, Z_MEH,   KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  SLS_MEH, ENT_OPT,
-  FN,      KC_LCTL, KC_LOPT, CMD_TAB, SPC_NUM, MIN_PTR, E_NAV,   BS_SFT,  ENT_MOD, _______, _______, SIRI
+  FN,      KC_LCTL, KC_LOPT, CMD_TAB, SPC_NUM, E_MOD,   E_NAV,   BS_SFT,  ENT_PTR, _______, _______, SIRI
 ),
 
 [_NAV] = LAYOUT_preonic_grid(
@@ -139,9 +139,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_PTR] = LAYOUT_preonic_grid(
   _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
   XXXXXXX, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, RESET,
-  EXT_PTR, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, GAM_LCK, EXT_PTR, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, EXT_PTR,
-  KC_LSFT, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  XXXXXXX,
-  _______, _______, _______, KC_TAB,  KC_SPACE,XXXXXXX, KC_BTN2, KC_BTN1, KC_BTN3, _______, _______, _______
+  EXT_PTR, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, GAM_LCK, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, KC_BTN2,
+  KC_LSFT, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_BTN3,
+  _______, _______, KC_BTN2, KC_BTN1, KC_BTN3, XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX
 ),
 
 [_GAM] = LAYOUT_preonic_grid(
