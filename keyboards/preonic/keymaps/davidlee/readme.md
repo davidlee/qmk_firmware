@@ -1,4 +1,12 @@
 # David's Preonic Layout
+
+TODO:
+- [ ] caps word key to function as CAPSWORD / Shift mod-tap
+- [ ] caps lock LED with RGBLIGHT working
+
+
+
+
 ```
 CMK (Colemak-DH)
 ,-----------------------------------------------------------------------------------.

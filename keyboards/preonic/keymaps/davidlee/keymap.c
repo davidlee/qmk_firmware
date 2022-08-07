@@ -1,6 +1,5 @@
 #include QMK_KEYBOARD_H
 #include "davidlee.h"
-#include "features/casemodes.h"
 
 #ifdef TAP_DANCE_ENABLE
 #  include "tap_dances.h"
@@ -188,29 +187,22 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-  switch (get_highest_layer(state)) {
-    case _CMK:
-      rgblight_enable();
-      rgblight_setrgb (0x00,  0x33, 0x00);
+  rgblight_enable();
 
-      #ifdef AUDIO_ENABLE
-        // PLAY_SONG(layer_song);
-      #endif
-      
+  switch (get_highest_layer(state)) {
     case _NUM:
-      rgblight_enable();
       rgblight_setrgb (0x55,  0x7A, 0xFF);
       break;
+
     case _NAV:
-      rgblight_enable();
       rgblight_setrgb (0x99,  0xFF, 0x00);
       break;
+
     case _PTR:
-      rgblight_enable();
       rgblight_setrgb (0x99,  0xFF, 0xAA);
-      break;                          
+      break;
+
     case _GAM:
-      rgblight_enable();
       rgblight_setrgb (0xFF,  0x00, 0x00);
       
       #ifdef AUDIO_ENABLE
@@ -218,22 +210,21 @@ layer_state_t layer_state_set_user(layer_state_t state) {
       #endif
       
       break;
-    case _MOD:
-      rgblight_enable();
-      rgblight_setrgb (0xFF,  0x33, 0xFF);
 
+    case _MOD:
+      rgblight_setrgb (0xFF,  0x33, 0xFF);
       #ifdef AUDIO_ENABLE
         PLAY_SONG(layer_song);
       #endif
-      
       break;
+
+    case _CMK:
     default: 
-      rgblight_disable();
+      rgblight_setrgb (0x00,  0x00, 0x00);      
       break;      
     }
 
   if (caps_is_active()) { 
-    rgblight_enable();
     rgblight_setrgb (0xFF, 0xFF, 0xFF);
   }
 
@@ -241,9 +232,9 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (!process_case_modes(keycode, record)) {
-    return false;
-  }
+  // if (!process_case_modes(keycode, record)) {
+  //   return false;
+  // }
 
   switch (keycode) {
 
@@ -271,7 +262,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     case CAP_WRD:        
       if (record->event.pressed) {
-       enable_caps_word();
+        caps_word_on();
+        #ifdef AUDIO_ENABLE
+          PLAY_SONG(layer_song);
+        #endif
       }
       return false;    
 
