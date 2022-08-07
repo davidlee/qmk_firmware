@@ -1,9 +1,9 @@
 #include QMK_KEYBOARD_H
 #include "davidlee.h"
 
-#ifdef TAP_DANCE_ENABLE
-#  include "tap_dances.h"
-#endif
+// #ifdef TAP_DANCE_ENABLE
+// #  include "tap_dances.h"
+// #endif
 
 enum preonic_layers {
   _CMK,  // Colemak-DH
@@ -96,12 +96,15 @@ enum preonic_keycodes {
 const uint16_t PROGMEM ptr_combo[] = {KC_N, KC_U, KC_I, COMBO_END};
 // N,S is backspace word
 const uint16_t PROGMEM bs_word_combo[] = {KC_N, KC_E, COMBO_END};
+// A,R is caps word
+const uint16_t PROGMEM caps_word_combo[] = {KC_A, KC_R, COMBO_END};
+
 
 combo_t key_combos[COMBO_COUNT] = {
-  COMBO(ptr_combo,  PTR_LCK),
-  COMBO(bs_word_combo,  BS_WORD),
+  COMBO(ptr_combo,        PTR_LCK),
+  COMBO(bs_word_combo,    BS_WORD),
+  COMBO(caps_word_combo,  CAP_WRD),
 };
-
 
 //
 // the actual KEYMAP
@@ -113,7 +116,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    BS_WORD, 
   TAB_MEH, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCN_OPT, DEL_HYP,
   ESC_CTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    CMD_QOT,
-  CAP_WRD, Z_MEH,   KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  SLS_MEH, ENT_OPT,
+  KC_LSFT, Z_MEH,   KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  SLS_MEH, ENT_OPT,
   FN,      KC_LCTL, KC_LOPT, CMD_TAB, SPC_NUM, MIN_PTR, E_NAV,   BS_SFT,  ENT_MOD, _______, _______, SIRI
 ),
 
@@ -127,7 +130,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_NUM] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  KC_GRV,  KC_COLN, KC_LBRC, KC_RBRC, KC_UNDS, KC_BSLS, KC_SLSH, KC_7,    KC_8,    KC_9,    KC_PERC, KC_ASTR,
+  KC_GRV,  KC_COLN, KC_LBRC, KC_RBRC, KC_UNDS, KC_BSLS, KC_SLSH, KC_7,    KC_8,    KC_9,    KC_ASTR, KC_PERC, 
   _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_LPRN, KC_RPRN, KC_4,    KC_5,    KC_6,    KC_0,    KC_PLUS,
   KC_CAPS, KC_EXLM, KC_AT,   KC_HASH, KC_MINS, KC_EQL,  KC_COMM, KC_1,    KC_2,    KC_3,    KC_AMPR, _______,
   _______, _______, _______, KC_DLR,  _______, KC_CIRC, KC_DOT,  _______, KC_EQL,  XXXXXXX, XXXXXXX, XXXXXXX
@@ -211,10 +214,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
       rgblight_setrgb (0x00,  0x00, 0x00);      
       break;      
     }
-
-  if (caps_is_active()) { 
-    rgblight_setrgb (0xFF, 0xFF, 0xFF);
-  }
 
   return state;
 }
