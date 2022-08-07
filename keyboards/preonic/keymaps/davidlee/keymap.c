@@ -165,25 +165,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case ESC_CTL:
-        case FN_SFT:
-        case ENT_SFT:
-        case E_NAV:
-        case ENT_MOD:
-        case ENT_OPT:
-        case MOD:
-        case SPC_NUM:
-        case BS_SFT:
-        case MIN_MOD:
-        case MIN_PTR:
-        case CMD_TAB:
-        case CMD_QOT:
-          // Immediately select the hold action when another key is tapped.
-          return true;
+        case Z_MEH:
+        case SCN_OPT:
+        case SLS_MEH:
+          return false; // Do not select the hold action when another key is tapped.
         default:
-          // Do not select the hold action when another key is tapped.
-         return false;
-    }
+          return true; // Immediately select the hold action when another key is tapped.
+        }
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
@@ -232,10 +220,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  // if (!process_case_modes(keycode, record)) {
-  //   return false;
-  // }
-
   switch (keycode) {
 
     // LOCK LAYERS
