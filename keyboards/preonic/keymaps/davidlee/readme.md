@@ -1,5 +1,27 @@
 # David's Preonic Layout
 
+inspiration taken from many sources (miryoku, callum, seniply, etc).
+
+features & design considerations:
+- optimised for mac os x, Colemak-DH, typing English / programming, US layout.
+- aims to strike a pragmatic balance between consistency, minimalism and flexibility
+- a number pad layer also provides access to symbols
+- mouse emulation, caps word & backspace word available via combos
+- supports number pad, pointer emulation, navigation, media controls, and function keys
+- a QWERTY layer for gaming
+- just as useful (except for gaming) w/ only 3x6 + 3 thumb keys per hand (i.e. Planck, Corne compatible)
+
+- home row mods 
+  - available on a momentary thumb-activated layer, rather than mod-tap
+  - so no weird timing issues to interfere with typ˜g; retains the ergonomic benefits of home row mods
+  - NAV, PTR and NUM layers all include left hand home row mods
+  - all mods are usable via alternative locations
+
+- best with:
+  - Raycast, in combination with custom `Meh+alpha` shortcuts, for launching applications
+  - Karabiner, for Fn key support and mapping F keys to functionality like dictation & mission control  
+
+
 ```
 BspWrd —— backspace entire word
 CapsWd –– CAPS word
@@ -38,9 +60,9 @@ NUM
 |------+------+------+------+------+------+------+------+------+------+------+------|
 |  🎙  |   ⌃  |   ⌥  |   ⌘  |   ⇧  |   (  |   )  |   4  |   5  |   6  |   0  |   +  |
 |------+------+------+------+------+------+------+------+------+------+------+------|
-|   ⇪  |   !  |   @  |   #  |   -  |   =  |   ,  |   1  |   2  |   3  |   &  |   ⏎  | 
+|      |   !  |   @  |   #  |   -  |   =  |   ,  |   1  |   2  |   3  |   &  |   ⏎  | 
 |------+------+------+------+------+------+------+------+------+------+------+------|
-|      |      |      |   $  |  ✳️  |   ^  |   .  |   ⌫  |   0  |      |      |      |
+|      |      |      |      |  ✳️  |   ^  |   .  |   ⌫  |   0  |   $  |      |      |
 `-----------------------------------------------------------------------------------'
 
 MOD  
@@ -64,7 +86,7 @@ NAV
 |------+------+------+------+------+------+------+------+------+------+------+------|
 |      |   ⌃  |   ⌥  |   ⌘  |   ⇧  |      |  BS  |  ⬅️  |  ⬇️  |  ⬆️  |  ➡️  | Del  |
 |------+------+------+------+------+------+------+------+------+------+------+------|
-|      | Undo | Cut  | Copy |  ⏯  | Paste|      | Home | PGDN | PGUP | End  |      |
+|   ⇪  | Undo | Cut  | Copy |  ⏯  | Paste|      | Home | PGDN | PGUP | End  |      |
 |------+------+------+------+------+------+------+------+------+------+------+------|
 |      |      |      |      | Spc  |      |  ✳️  |      |      |      |      |      |
 `-----------------------------------------------------------------------------------'
