@@ -1,13 +1,17 @@
-SRC += davidlee.c
-SRC += features/casemodes.c
+#SRC += davidlee.c
 
 MOUSEKEY_ENABLE      = yes
-AUDIO_ENABLE         = yes
 KEY_LOCK_ENABLE      = yes
-DYNAMIC_TAPPING_TERM_ENABLE = yes
-TAP_DANCE_ENABLE     = no
+PROGRAMMABLE_BUTTON_ENABLE = no
+DYNAMIC_TAPPING_TERM_ENABLE = no
 COMBO_ENABLE         = yes
-AUTO_SHIFT_ENABLE    = no
+AUDIO_ENABLE         = yes
+CAPS_WORD_ENABLE     = yes
+COMMAND_ENABLE       = no
 DYNAMIC_MACRO_ENABLE = no
 LEADER_ENABLE        = no
+AUTO_SHIFT_ENABLE    = no
 UNICODE_ENABLE       = no
+TAP_DANCE_ENABLE     = no
+
+

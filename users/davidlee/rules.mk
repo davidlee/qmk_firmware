@@ -1,5 +1,5 @@
-SRC += davidlee.c
-# # SRC += features/casemodes.c
+# SRC += davidlee.c
+# SRC += features/casemodes.c
 
 # DYNAMIC_MACRO_ENABLE = yes
 # TAP_DANCE_ENABLE     = yes

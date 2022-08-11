@@ -1,4 +1,4 @@
-SRC += davidlee.c
+#SRC += davidlee.c
 
 MOUSEKEY_ENABLE      = yes
 KEY_LOCK_ENABLE      = yes

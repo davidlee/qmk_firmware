@@ -1,4 +1,4 @@
-# David's Preonic Layout
+# David's Planck / Preonic Layout
 
 inspiration taken from many sources (miryoku, callum, seniply, etc).
 
