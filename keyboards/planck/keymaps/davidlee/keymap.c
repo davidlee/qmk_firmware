@@ -36,22 +36,24 @@ enum planck_keycodes {
 #define H_MOD   LT(_MOD_R, KC_H)
 
 // left side 
-#define ESC_CTL  LCTL_T(KC_ESCAPE)
 #define TAB_MEH MT(MOD_MEH, KC_TAB)
+#define ESC_CTL  LCTL_T(KC_ESCAPE)
+#define ENT_SFT  KC_SFTENT
 
 // bottom row 
 #define CMD_TAB  MT(MOD_LGUI, KC_TAB)
 #define SPC_NUM  LT(_NUM, KC_SPC)
+#define E_FUN    LT(_FUN, KC_E)
 
 #define NAV      MO(_NAV) 
 #define BS_SFT   MT(MOD_LSFT, KC_BSPC)
 #define ENT_PTR  LT(_PTR, KC_ENTER)
-#define ENT_OPT  MT(MOD_LALT, KC_ENTER)
+
 
 // right side 
-#define QOT_CTL  MT(MOD_RCTL, KC_QUOTE)
-#define ENT_SFT  KC_SFTENT
 #define DEL_HYP  MT(MOD_HYPR, KC_DEL)
+#define QOT_CTL  MT(MOD_RCTL, KC_QUOTE)
+#define ENT_OPT  MT(MOD_LALT, KC_ENTER)
 
 // clipboard
 #define UNDO   LCMD(KC_Z)
@@ -67,10 +69,6 @@ enum planck_keycodes {
 #define CMD_RBRC LCMD(KC_RBRC)
 #define CMD_MINS LCMD(KC_MINS)
 #define CMD_EQL  LCMD(KC_EQL)
-
-#define MSN_CTL LCTL(KC_UP)
-#define APP_CTL LCTL(KC_DOWN)
-
 
 #ifdef AUDIO_ENABLE
   #define BLIP  SD_NOTE(_C0), SD_NOTE(_C1), TD_NOTE(_C3)
@@ -99,7 +97,7 @@ combo_t key_combos[COMBO_COUNT] = {
 };
 
 //
-// the actual KEYMAP
+// KEYMAP
 //
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -109,7 +107,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   TAB_MEH, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    Y_CMD,   SCN_OPT, DEL_HYP,
   ESC_CTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    QOT_CTL,
   KC_LSFT, Z_MEH,   KC_X,    KC_C,    D_MOD,   KC_V,    KC_K,    H_MOD,   KC_COMM, KC_DOT,  SLS_MEH, ENT_OPT,
-  FN,      KC_LCTL, KC_LOPT, CMD_TAB, SPC_NUM, CMD_TAB, NAV,     BS_SFT,  ENT_PTR, _______, _______, _______
+  FN,      KC_LCTL, KC_LOPT, CMD_TAB, SPC_NUM, E_FUN,   NAV,     BS_SFT,  ENT_PTR, _______, _______, _______
 ),
 
 [_NAV] = LAYOUT_planck_grid(
@@ -200,6 +198,10 @@ layer_state_t layer_state_set_user(layer_state_t state) {
       rgblight_setrgb (0x99,  0xFF, 0xAA);
       break;
 
+    case _FUN:
+      rgblight_setrgb (0xFF,  0x00, 0xEE);
+      break;
+
     case _GAM:
       rgblight_setrgb (0xFF,  0x00, 0x00);
       
@@ -237,7 +239,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     case PTR_LCK:
       layer_on(_PTR);
-      return false;
+      return false; 
 
     // EXIT LAYERS
 
