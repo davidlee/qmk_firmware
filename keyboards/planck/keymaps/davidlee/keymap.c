@@ -28,15 +28,22 @@ enum planck_keycodes {
 #define SIRI     KC_F21
 
 // alpha mod / layer taps
+#define Q_CTL   MT(MOD_LCTL, KC_Q)
+#define W_OPT   MT(MOD_LALT, KC_W)
+#define F_CMD   MT(MOD_LGUI, KC_F)
+
+#define U_CMD   MT(MOD_RGUI, KC_U)
+#define Y_OPT   MT(MOD_LALT, KC_Y)
+#define SCN_CTL MT(MOD_RCTL, KC_SCOLON)
+
 #define Z_MEH   MT(MOD_MEH, KC_Z)
-#define SLS_MEH MT(MOD_MEH, KC_SLSH)
-#define SCN_OPT MT(MOD_LALT, KC_SCOLON)
-#define Y_CMD   MT(MOD_RGUI, KC_Y)
 #define D_MOD   LT(_MOD_L, KC_D)
+
 #define H_MOD   LT(_MOD_R, KC_H)
+#define SLS_MEH MT(MOD_MEH, KC_SLSH)
 
 // left side 
-#define TAB_MEH MT(MOD_MEH, KC_TAB)
+#define TAB_HYP  MT(MOD_HYPR, KC_TAB)
 #define ESC_CTL  LCTL_T(KC_ESCAPE)
 #define ENT_SFT  KC_SFTENT
 
@@ -53,7 +60,7 @@ enum planck_keycodes {
 // right side 
 #define DEL_HYP  MT(MOD_HYPR, KC_DEL)
 #define QOT_CTL  MT(MOD_RCTL, KC_QUOTE)
-#define ENT_OPT  MT(MOD_LALT, KC_ENTER)
+// #define ENT_OPT  MT(MOD_LALT, KC_ENTER)
 
 // clipboard
 #define UNDO   LCMD(KC_Z)
@@ -81,7 +88,7 @@ enum planck_keycodes {
 //
 
 // N,O combo turns on PTR layer
-const uint16_t PROGMEM ptr_combo[] = {KC_N, KC_O, COMBO_END};
+const uint16_t PROGMEM ptr_combo[] = {SLS_MEH, KC_I, COMBO_END};
 // N,S is backspace word
 const uint16_t PROGMEM bs_word_combo[] = {KC_N, KC_E, COMBO_END};
 // A,R is caps word
@@ -104,9 +111,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_CMK] = LAYOUT_planck_grid(
   // KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    BS_WORD, 
-  TAB_MEH, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    Y_CMD,   SCN_OPT, DEL_HYP,
+  TAB_HYP, Q_CTL,   W_OPT,   F_CMD,   KC_P,    KC_B,    KC_J,    KC_L,    U_CMD,   Y_OPT,   SCN_CTL, DEL_HYP,
   ESC_CTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    QOT_CTL,
-  KC_LSFT, Z_MEH,   KC_X,    KC_C,    D_MOD,   KC_V,    KC_K,    H_MOD,   KC_COMM, KC_DOT,  SLS_MEH, ENT_OPT,
+  KC_LSFT, Z_MEH,   KC_X,    KC_C,    D_MOD,   KC_V,    KC_K,    H_MOD,   KC_COMM, KC_DOT,  SLS_MEH, ENT_SFT,
   FN,      KC_LCTL, KC_LOPT, CMD_TAB, SPC_NUM, E_FUN,   NAV,     BS_SFT,  ENT_PTR, _______, _______, _______
 ),
 
@@ -145,7 +152,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
   KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-  _______, KC_LCTL, KC_LALT, KC_LGUI, KC_SPC,  _______, EXT_GAM, KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+  _______, KC_LCTL, KC_LALT, KC_LGUI, KC_SPC,  EXT_GAM, EXT_GAM, KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
 [_MOD_L] = LAYOUT_planck_grid(
@@ -169,12 +176,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+      case Q_CTL:
+      case W_OPT:
+      case F_CMD:
+
+      case U_CMD:
+      case Y_OPT:
+      case SCN_CTL:
+
       case Z_MEH:
-      case SCN_OPT:
-      case Y_CMD:
-      case SLS_MEH:
       case D_MOD:
+
       case H_MOD:
+      case SLS_MEH:
         return false; // Do not select the hold action when another key is tapped.
       default:
         return true; // Immediately select the hold action when another key is tapped.
@@ -191,15 +205,15 @@ layer_state_t layer_state_set_user(layer_state_t state) {
       break;
 
     case _NAV:
-      rgblight_setrgb (0x99,  0xFF, 0x00);
+      rgblight_setrgb (0x77,  0xFF, 0x00);
       break;
 
     case _PTR:
-      rgblight_setrgb (0x99,  0xFF, 0xAA);
+      rgblight_setrgb (0x33,  0xFF, 0xAA);
       break;
 
     case _FUN:
-      rgblight_setrgb (0xFF,  0x00, 0xEE);
+      rgblight_setrgb (0x00,  0x00, 0xEE);
       break;
 
     case _GAM:
@@ -213,7 +227,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
     case _MOD_L:
     case _MOD_R:
-      rgblight_setrgb (0xFF,  0x33, 0xFF);
+      rgblight_setrgb (0x33,  0x9A, 0xFF);
       #ifdef AUDIO_ENABLE
         PLAY_SONG(layer_song);
       #endif
