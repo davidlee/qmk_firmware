@@ -28,19 +28,21 @@ enum planck_keycodes {
 #define SIRI     KC_F21
 
 // alpha mod / layer taps
-#define Q_CTL   MT(MOD_LCTL, KC_Q)
-#define W_OPT   MT(MOD_LALT, KC_W)
-#define F_CMD   MT(MOD_LGUI, KC_F)
-
-#define U_CMD   MT(MOD_RGUI, KC_U)
-#define Y_OPT   MT(MOD_LALT, KC_Y)
-#define SCN_CTL MT(MOD_RCTL, KC_SCOLON)
-
 #define Z_MEH   MT(MOD_MEH, KC_Z)
 #define D_MOD   LT(_MOD_L, KC_D)
 
 #define H_MOD   LT(_MOD_R, KC_H)
 #define SLS_MEH MT(MOD_MEH, KC_SLSH)
+
+// home row mods 
+#define A_CTL  MT(MOD_LCTL, KC_A)
+#define R_OPT  MT(MOD_LALT, KC_R)
+#define S_CMD  MT(MOD_LGUI, KC_S)
+#define T_SFT  MT(MOD_LSFT, KC_T)
+#define N_SFT  MT(MOD_RSFT, KC_N)
+#define E_CMD  MT(MOD_RGUI, KC_E)
+#define I_OPT  MT(MOD_LALT, KC_I)
+#define O_CTL  MT(MOD_RCTL, KC_O)
 
 // left side 
 #define TAB_HYP  MT(MOD_HYPR, KC_TAB)
@@ -88,13 +90,13 @@ enum planck_keycodes {
 //
 
 // N,O combo turns on PTR layer
-const uint16_t PROGMEM ptr_combo[] = {SLS_MEH, KC_I, COMBO_END};
+const uint16_t PROGMEM ptr_combo[]       = {SLS_MEH, I_OPT, COMBO_END};
 // N,S is backspace word
-const uint16_t PROGMEM bs_word_combo[] = {KC_N, KC_E, COMBO_END};
+const uint16_t PROGMEM bs_word_combo[]   = {N_SFT, E_CMD, COMBO_END};
 // A,R is caps word
-const uint16_t PROGMEM caps_word_combo[] = {KC_A, KC_R, COMBO_END};
+const uint16_t PROGMEM caps_word_combo[] = {A_CTL, R_OPT, COMBO_END};
 // ESC, DEL is RESET
-const uint16_t PROGMEM reset_combo[] = {ESC_CTL, DEL_HYP, COMBO_END};
+const uint16_t PROGMEM reset_combo[]     = {ESC_CTL, DEL_HYP, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
   COMBO(ptr_combo,        PTR_LCK),
@@ -111,8 +113,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_CMK] = LAYOUT_planck_grid(
   // KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    BS_WORD, 
-  TAB_HYP, Q_CTL,   W_OPT,   F_CMD,   KC_P,    KC_B,    KC_J,    KC_L,    U_CMD,   Y_OPT,   SCN_CTL, DEL_HYP,
-  ESC_CTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    QOT_CTL,
+  TAB_HYP, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, DEL_HYP,
+  ESC_CTL, A_CTL,   R_OPT,   S_CMD,   T_SFT,   KC_G,    KC_M,    N_SFT,   E_CMD,   I_OPT,   O_CTL,   QOT_CTL,
   KC_LSFT, Z_MEH,   KC_X,    KC_C,    D_MOD,   KC_V,    KC_K,    H_MOD,   KC_COMM, KC_DOT,  SLS_MEH, ENT_SFT,
   FN,      KC_LCTL, KC_LOPT, CMD_TAB, SPC_NUM, E_FUN,   NAV,     BS_SFT,  ENT_PTR, _______, _______, _______
 ),
@@ -176,23 +178,52 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-      case Q_CTL:
-      case W_OPT:
-      case F_CMD:
-
-      case U_CMD:
-      case Y_OPT:
-      case SCN_CTL:
-
-      case Z_MEH:
       case D_MOD:
-
       case H_MOD:
+
+      case A_CTL:
+      case R_OPT:
+      case S_CMD:
+      case T_SFT:
+      
+      case N_SFT:
+      case E_CMD:
+      case I_OPT:
+      case O_CTL:
+
       case SLS_MEH:
+      case Z_MEH:
         return false; // Do not select the hold action when another key is tapped.
       default:
         return true; // Immediately select the hold action when another key is tapped.
       }
+}
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+
+      case A_CTL:
+      case O_CTL:
+        return TAPPING_TERM + 40;
+      case R_OPT:
+      case I_OPT:
+        return TAPPING_TERM + 80;   
+      case S_CMD:
+      case E_CMD:
+        return TAPPING_TERM + 0;
+      case T_SFT:
+      case N_SFT:
+        return TAPPING_TERM + 40;
+      
+      case D_MOD:
+      case H_MOD:
+      case SLS_MEH:
+      case Z_MEH:
+        return TAPPING_TERM + 0;
+
+      default:
+        return TAPPING_TERM;
+    }
 }
 
 
