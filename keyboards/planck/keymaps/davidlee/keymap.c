@@ -1,6 +1,6 @@
 #include QMK_KEYBOARD_H
 
-enum planck_layers {
+enum my_layers {
   _CMK,   // Colemak-DH
   _NAV,   // Navigation
   _NUM,   // Numbers 
@@ -10,7 +10,7 @@ enum planck_layers {
 
 };
 
-enum planck_keycodes {
+enum my_keycodes {
   CAP_WRD = SAFE_RANGE,
   PTR_LCK,
   GAM_LCK,
@@ -134,14 +134,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_PTR] = LAYOUT_planck_grid(
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, EXT_PTR,
   _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, KC_BTN2,
-  _______, UNDO,    CUT,     COPY,    PASTE,   XXXXXXX, XXXXXXX, KC_BTN1, KC_BTN2, KC_BTN3, XXXXXXX, _______,
+  _______, UNDO,    CUT,     COPY,    PASTE,   PASTE,   XXXXXXX, KC_BTN1, KC_BTN2, KC_BTN3, XXXXXXX, _______,
   _______, _______, _______, _______, KC_SPC,  _______, KC_BTN2, KC_BTN1, KC_BTN3, _______, _______, _______
 ),
 
 [_FUN] = LAYOUT_planck_grid(
   _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
   FN,      KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  FN,
-  _______, UNDO,    CUT,     COPY,    PASTE,   _______, _______, _______, DT_DOWN, DT_UP,   DT_PRNT, _______,
+  _______, UNDO,    CUT,     COPY,    PASTE,   PASTE,   _______, _______, DT_DOWN, DT_UP,   DT_PRNT, _______,
   _______, _______, _______, GAM_LCK, _______, XXXXXXX, _______, _______, _______, _______, _______, _______
 ),
 
