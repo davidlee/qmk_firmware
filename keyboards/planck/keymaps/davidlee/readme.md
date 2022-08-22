@@ -9,12 +9,12 @@ features & design considerations:
 - mouse emulation, caps word & backspace word available via combos
 - supports number pad, pointer emulation, navigation, media controls, and function keys
 - a QWERTY layer for gaming
-- just as useful (except for gaming) w/ only 3x6 + 3 thumb keys per hand (i.e. Planck, Corne compatible)
+- just as useful (except for games where access to numbers is important) w/ only 3x6 + 3 thumb keys per hand 
+  (i.e. Planck, Corne compatible)
 
 - home row mods 
-  - available on a momentary thumb-activated layer, rather than mod-tap
-  - so no weird timing issues to interfere with typ˜g; retains the ergonomic benefits of home row mods
-  - NAV, PTR and NUM layers all include left hand home row mods
+  - after a lot of tuning and a detour of removing them completely, they're actually working for me without interfering with normal typing
+  - NAV, PTR and NUM layers all include left hand home row mods without mod-tap
   - all mods are usable via alternative locations
 
 - best with:
@@ -61,11 +61,11 @@ NUM
 
 FUN  
 ,-----------------------------------------------------------------------------------.
-|      |      |      |      |      |      |      |      |      |      |      |      |
+|      |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |      |
 |------+------+------+------+------+------+------+------+------+------+------+------|
-|  FN  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |  FN  |
+|  FN  |  F11 |  F12 |  F13 |  F14 |  F15 |  F16 |  F17 |  F18 |  F19 |  F20 |  FN  |
 |------+------+------+------+------+------+------+------+------+------+------+------|
-|      |  F11 |  F12 |  F13 |  F14 |  F15 |  F16 |  F17 |  F18 |  F19 |  F20 |      |
+|      | Undo | Cut  | Copy | Paste| Paste|      |      | DT Dn| Dt Up|DT Prn|      | <- dynamic tap term
 |------+------+------+------+------+------+------+------+------+------+------+------|
 |      |      |      |  GAM |      |######|      |      |      |      |      |      |
 `-----------------------------------------------------------------------------------'
@@ -74,11 +74,11 @@ NAV
 ,-----------------------------------------------------------------------------------.
 |      | Prev | VolDn| VolUp| Next | Mute |      | Back | Cmd -| Cmd =| Fwd  |  whU |
 |------+------+------+------+------+------+------+------+------+------+------+------|
-|      |   ⌃  |   ⌥  |   ⌘  |   ⇧  |      |  BS  | Left | Down |  Up  | Right|  Del |
+| Tab  |   ⌃  |   ⌥  |   ⌘  |   ⇧  | Play |  BS  | Left | Down |  Up  | Right|  Del |
 |------+------+------+------+------+------+------+------+------+------+------+------|
-|   ⇪  | Undo | Cut  | Copy | Play | Paste|      | Home | PGDN | PGUP | End  |  whD |
+|   ⇪  | Undo | Cut  | Copy | Paste| Paste|      | Home | PGDN | PGUP | End  |  whD |
 |------+------+------+------+------+------+------+------+------+------+------+------|
-|      |      |      |      | Spc  |      |######|      |      |      |      |      |
+|      |      |      |  Tab | Spc  |      |######|      |      |      |      |      |
 `-----------------------------------------------------------------------------------'
 
 PTR 
@@ -87,22 +87,11 @@ PTR
 |------+------+------+------+------+------+------+------+------+------+------+------|
 |      |   ⌃  |   ⌥  |   ⌘  |   ⇧  |      |  b1  |  msL |  msD |  msU |  msR |  b2  | 
 |------+------+------+------+------+------+------+------+------+------+------+------|
-|      |      |      |      |      |      |      |  b2  |  b3  |      |      |      |
+|      | Undo | Cut  | Copy | Paste| Paste|      |  b1  |  b2  |  b3  |      |      |
 |------+------+------+------+------+------+------+------+------+------+------+------|
-|      |      |      |      |      |      |  b2  |  b1  |######|      |      |      |
+|      |      |      |      | Spc  |      |  b2  |  b1  |######|      |      |      |
 `-----------------------------------------------------------------------------------'
   
-MOD  
-,-----------------------------------------. .-----------------------------------------.
-|      |      | Paste|  Fn  |      |      | |      |      |  Fn  |      |      |      |
-|------+------+------+------+------+------| |------+------+------+------+------+------|
-|      |   ⌃  |   ⌥  |   ⌘  |   ⇧  |      | |      |   ⇧  |   ⌘  |   ⌥  |   ⌃  |      |
-|------+------+------+------+------+------| |------+------+------+------+------+------|
-|      | Undo | Cut  | Copy |######|      | |      |######| DT Dn| Dt Up|DT Prn|      |
-|------+------+------+------+------+------| |------+------+------+------+------+------|
-|      |      |      |      | Paste|      | |      |      |      |      |      |      |
-`-----------------------------------------' '-----------------------------------------'
-
 _____________
 
 GAM
