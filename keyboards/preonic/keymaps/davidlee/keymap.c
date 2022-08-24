@@ -1,21 +1,6 @@
 #include QMK_KEYBOARD_H
 #include "davidlee.c"
 
-combo_t key_combos[COMBO_COUNT] = {
-  COMBO(ptr_combo,        PTR_LCK),
-  COMBO(bs_word_combo,    BS_WORD),
-  COMBO(caps_word_combo,  CAP_WRD),
-  COMBO(reset_combo,      RESET),
-};
-
-#ifdef AUDIO_ENABLE
-  float layer_song[][2] = SONG(BLIP);
-#endif
-
-//
-// KEYMAP
-//
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_CMK] = LAYOUT_preonic_grid(
