@@ -11,10 +11,10 @@ features & design considerations:
 - mouse emulation, available both as a transient and locked layer
 - caps word & backspace word, available via combos in base layer
 - QWERTY layer for gaming
-- Corne compatible 
+- Corne compatible
 
 - best with:
-                  - Raycast, in combination with custom `Meh+alpha` shortcuts, for launching applications
+  - Raycast, in combination with custom `Meh+alpha` shortcuts, for launching applications
   - Karabiner, for Fn key support and mapping F keys to functionality like dictation & mission control  
 
 
