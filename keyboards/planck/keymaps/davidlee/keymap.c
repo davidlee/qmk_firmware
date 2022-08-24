@@ -23,10 +23,11 @@ enum my_keycodes {
 // custom keycodes
 //
 
+// function keys remapped in Karabiner
 #define FN       KC_F24
 #define SIRI     KC_F21
 
-// alpha mod / layer taps
+// meh key for application launch shortcuts, using Raycast
 #define Z_MEH   MT(MOD_MEH, KC_Z)
 #define SLS_MEH MT(MOD_MEH, KC_SLSH)
 
@@ -35,34 +36,32 @@ enum my_keycodes {
 #define R_OPT  MT(MOD_LALT, KC_R)
 #define S_CMD  MT(MOD_LGUI, KC_S)
 #define T_SFT  MT(MOD_LSFT, KC_T)
+
 #define N_SFT  MT(MOD_RSFT, KC_N)
 #define E_CMD  MT(MOD_RGUI, KC_E)
 #define I_OPT  MT(MOD_LALT, KC_I)
 #define O_CTL  MT(MOD_RCTL, KC_O)
 
 // left side 
-#define TAB_HYP  MT(MOD_HYPR, KC_TAB)
+#define TAB_HYP  MT(MOD_HYPR, KC_TAB) // don't do much with HYPER, except a few Raycast shortcuts
 #define ESC_CTL  LCTL_T(KC_ESCAPE)
 #define ENT_SFT  KC_SFTENT
 
 // bottom row 
 #define CMD_TAB  MT(MOD_LGUI, KC_TAB)
 #define SPC_NUM  LT(_NUM, KC_SPC)
-#define E_FUN    LT(_FUN, KC_E)
+#define E_FUN    LT(_FUN, KC_E) // not used to E on thumb yet ...
 
 #define NAV      MO(_NAV) 
 #define BS_SFT   MT(MOD_LSFT, KC_BSPC)
 #define ENT_PTR  LT(_PTR, KC_ENTER)
 
-
 // right side 
 #define DEL_HYP  MT(MOD_HYPR, KC_DEL)
 #define QOT_CTL  MT(MOD_RCTL, KC_QUOTE)
-// #define ENT_OPT  MT(MOD_LALT, KC_ENTER)
 
 // clipboard
 #define UNDO   LCMD(KC_Z)
-#define REDO   SCMD(KC_Z)
 #define CUT    LCMD(KC_X)
 #define COPY   LCMD(KC_C)
 #define PASTE  LCMD(KC_V)
@@ -85,13 +84,13 @@ enum my_keycodes {
 // Combos
 //
 
-// N,O combo turns on PTR layer
+// I + / = turn on PTR layer
 const uint16_t PROGMEM ptr_combo[]       = {SLS_MEH, I_OPT, COMBO_END};
-// N,S is backspace word
+// N + S = backspace word
 const uint16_t PROGMEM bs_word_combo[]   = {N_SFT, E_CMD, COMBO_END};
-// A,R is caps word
+// A + R = caps word
 const uint16_t PROGMEM caps_word_combo[] = {A_CTL, R_OPT, COMBO_END};
-// ESC, DEL is RESET
+// ESC + DEL = RESET
 const uint16_t PROGMEM reset_combo[]     = {ESC_CTL, DEL_HYP, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
@@ -131,14 +130,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, EM_DASH, XXXXXXX, _______, KC_0,    _______, KC_DOT,  _______, _______, _______
 ),
 
-[_PTR] = LAYOUT_planck_grid(
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, EXT_PTR,
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, KC_BTN2,
-  _______, UNDO,    CUT,     COPY,    PASTE,   PASTE,   XXXXXXX, KC_BTN1, KC_BTN2, KC_BTN3, XXXXXXX, _______,
-  _______, _______, _______, _______, KC_SPC,  _______, KC_BTN2, KC_BTN1, KC_BTN3, _______, _______, _______
-),
 
 [_FUN] = LAYOUT_planck_grid(
+  // _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
   FN,      KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  FN,
   _______, UNDO,    CUT,     COPY,    PASTE,   PASTE,   _______, _______, DT_DOWN, DT_UP,   DT_PRNT, _______,
@@ -153,6 +147,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, KC_LCTL, KC_LALT, KC_LGUI, KC_SPC,  EXT_GAM, EXT_GAM, KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
+[_PTR] = LAYOUT_planck_grid(
+  // _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, EXT_PTR,
+  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, KC_BTN2,
+  _______, UNDO,    CUT,     COPY,    PASTE,   PASTE,   XXXXXXX, KC_BTN1, KC_BTN2, KC_BTN3, XXXXXXX, _______,
+  _______, _______, _______, _______, KC_SPC,  _______, KC_BTN2, KC_BTN1, KC_BTN3, _______, _______, _______
+),
 
 };
 

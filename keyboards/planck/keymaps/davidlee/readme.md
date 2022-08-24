@@ -3,22 +3,18 @@
 inspiration taken from many sources (miryoku, callum, seniply, etc).
 
 features & design considerations:
-- optimised for mac os x, Colemak-DH, typing English / programming, US layout.
-- aims to strike a pragmatic balance between consistency, minimalism and flexibility
-- a number pad layer also provides access to symbols
-- mouse emulation, caps word & backspace word available via combos
-- supports number pad, pointer emulation, navigation, media controls, and function keys
-- a QWERTY layer for gaming
-- just as useful (except for games where access to numbers is important) w/ only 3x6 + 3 thumb keys per hand 
-  (i.e. Planck, Corne compatible)
-
-- home row mods 
-  - after a lot of tuning and a detour of removing them completely, they're actually working for me without interfering with normal typing
-  - NAV, PTR and NUM layers all include left hand home row mods without mod-tap
-  - all mods are usable via alternative locations
+- optimised for: Mac OS; Colemak-DH; writing and programming in English.
+- consistent, minimal, powerful. Evolved over months of daily use.
+- intelligent utilisation of thumbs (space, shift, tab, enter, layers) with room to extend
+- number pad layer for numbers and symbols.
+- home row mods, highly tuned to avoid interference with regular typing
+- mouse emulation, available both as a transient and locked layer
+- caps word & backspace word, available via combos in base layer
+- QWERTY layer for gaming
+- Corne compatible 
 
 - best with:
-  - Raycast, in combination with custom `Meh+alpha` shortcuts, for launching applications
+                  - Raycast, in combination with custom `Meh+alpha` shortcuts, for launching applications
   - Karabiner, for Fn key support and mapping F keys to functionality like dictation & mission control  
 
 
@@ -154,9 +150,6 @@ RESET
 |      |      |      |      |      |      |      |      |      |      |      |      |
 `-----------------------------------------------------------------------------------'
 ```
-
-
-qwwfwffffrff
 
 
 TODO:
