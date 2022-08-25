@@ -1,7 +1,8 @@
 #include "davidlee.h"
 
-enum my_layers {
+enum custom_layers {
   _CMK,   // Colemak-DH
+  _HRM,   // Home Row Mods / alpha hold-taps
   _NAV,   // Navigation
   _NUM,   // Numbers 
   _FUN,   // Function keys
@@ -10,13 +11,15 @@ enum my_layers {
 
 };
 
-enum my_keycodes {
-  CAP_WRD = SAFE_RANGE,
+enum custom_keycodes {
+  CAP_WRD = SAFE_RANGE, // NEW_SAFE_RANGE
   PTR_LCK,
   GAM_LCK,
   EXT_PTR,
   EXT_GAM,
   BS_WORD,
+  HRM_ON,
+  HRM_OFF,
 };
 
 //
@@ -82,12 +85,7 @@ enum my_keycodes {
   float layer_song[][2] = SONG(BLIP);
 #endif
 
-//
-// Define keymap chunks for sharing between preonic and planck
-// 
-
-#define ____BLANK____ _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-
+#define LAYER_MASK_DEFAULT (1 << _CMK | 1 << _HRM)
 
 //
 // Combos
@@ -112,6 +110,10 @@ combo_t key_combos[COMBO_COUNT] = {
 //
 // Function Overrides
 //
+
+void keyboard_post_init_user(void) {
+  default_layer_set(LAYER_MASK_DEFAULT); // COLEMAK & HOME ROW MODS
+}
 
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -198,6 +200,11 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   return state;
 }
 
+__attribute__ ((weak))
+bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
+  return true;
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
 
@@ -236,6 +243,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         tap_code16(LOPT(KC_BSPC));
       }
+      return false;
+
+    case HRM_ON:        
+      if (record->event.pressed) {
+        #ifdef AUDIO_ENABLE
+          PLAY_SONG(layer_song);
+        #endif        
+        default_layer_set(LAYER_MASK_DEFAULT); // COLEMAK & HOME ROW MODS
+      }
+
+      return false;
+    case HRM_OFF:        
+      if (record->event.pressed) {
+        #ifdef AUDIO_ENABLE
+          PLAY_SONG(layer_song);
+        #endif        
+        default_layer_set(_CMK); // COLEMAK & HOME ROW MODS
+      }
+
       return false;
 
     default:

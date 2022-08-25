@@ -24,6 +24,14 @@ $ qmk config user.keyboard=preonic/rev3
 $ qmk config user.keyboard=planck/rev6_drop
 
 
+TODO:
+
+- https://github.com/manna-harbour/qmk_firmware/tree/bilateral-combinations
+- (try) combo mods
+- make home row mods toggleable
+- use wrapper for layout sharing, see https://www.reddit.com/r/olkb/comments/b386l2/qmk_layouts_feature_for_multiple_ergo_splits/
+
+
 ```
 BspWrd —— backspace entire word
 CapsWd –– CAPS word
