@@ -1,6 +1,8 @@
 #include QMK_KEYBOARD_H
 #include "davidlee.c"
 
+#define LAYOUT_planck_wrapper(...)    LAYOUT_planck_grid(__VA_ARGS__)
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_CMK] = LAYOUT_planck_wrapper(
