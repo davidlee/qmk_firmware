@@ -5,24 +5,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_CMK] = LAYOUT_preonic_grid(
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    BS_WORD, 
-  TAB_HYP, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, DEL_HYP,
-  ESC_CTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
-  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, ENT_SFT,
-  FN,      KC_LCTL, KC_LOPT, CMD_TAB, SPC_NUM, E_FUN,   NAV,     BS_SFT,  ENT_PTR, _______, _______, _______
+  TAB_MEH, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCN_OPT, DEL_MEH,
+  ESC_CTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    QOT_CTL,
+  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    COM_CMD, DOT_OPT, SLS_CTL, ENT_SFT,
+  FN,      KC_LCTL, KC_LOPT, CMD_TAB, SPC_NUM, E_FUN,   NAV,     BS_SFT,  ENT_MED, _______, _______, _______
 ),
 
-[_HRM] = LAYOUT_preonic_grid(
+[_ATH] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, A_CTL,   R_OPT,   S_CMD,   T_SFT,   _______, _______, N_SFT,   E_CMD,   I_OPT,   O_CTL,   QOT_CTL,
-  _______, Z_MEH,   _______, _______, _______, _______, _______, _______, _______, _______, SLS_MEH, _______,
+  _______, A_CTL,   R_OPT,   S_CMD,   T_SFT,   _______, _______, N_SFT,   E_CMD,   I_OPT,   O_CTL,   _______,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
 [_NAV] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  KC_TAB,  KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, KC_MUTE, XXXXXXX, CMD_LBRC,CMD_MINS,CMD_EQL, CMD_RBRC,KC_WH_U,
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_MPLY, KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_DEL,
+  KC_TAB,  _______, _______, _______, _______, _______, XXXXXXX, CMD_LBRC,CMD_MINS,CMD_EQL, CMD_RBRC,KC_WH_U,
+  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _______, KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_DEL,
   KC_CAPS, UNDO,    CUT,     COPY,    PASTE,   PASTE,   XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_WH_D,
   _______, _______, _______, KC_TAB,  KC_SPC,  XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, _______
 ),
@@ -35,14 +35,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, EM_DASH, XXXXXXX, _______, KC_0,    _______, KC_DOT,  _______, _______, _______
 ),
 
-
 [_FUN] = LAYOUT_preonic_grid(
-  HRM_ON,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  HRM_OFF, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  ATH_OFF, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
   FN,      KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  FN,
-  _______, UNDO,    CUT,     COPY,    PASTE,   PASTE,   _______, _______, DT_DOWN, DT_UP,   DT_PRNT, _______,
+  ATH_ON,  UNDO,    CUT,     COPY,    PASTE,   PASTE,   _______, _______, DT_DOWN, DT_UP,   DT_PRNT, _______,
   _______, _______, _______, GAM_LCK, _______, XXXXXXX, _______, _______, _______, _______, _______, _______
 ),
+
+[_MED] = LAYOUT_preonic_grid(
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, _______, _______, _______, _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, KC_MPLY,
+  FN,      _______, _______, _______, _______, _______, _______, KC_LSFT, KC_RGUI, KC_RALT, KC_RCTL, FN,
+  _______, _______, _______, _______, _______, _______, _______, DM_PLY1, DM_PLY2, DM_REC1, DM_REC2, DM_RSTP,
+  _______, _______, _______, _______, _______, _______, _______, _______, XXXXXXX, _______, _______, _______
+),
+
 
 [_GAM] = LAYOUT_preonic_grid(
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC, 

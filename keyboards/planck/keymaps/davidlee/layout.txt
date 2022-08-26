@@ -1,38 +1,3 @@
-# David's Planck / Preonic Layout
-
-inspiration taken from many sources (miryoku, callum, seniply, etc).
-
-features & design considerations:
-- optimised for: Mac OS; Colemak-DH; writing and programming in English.
-- consistent, minimal, powerful. Evolved over months of daily use.
-- intelligent utilisation of thumbs (space, shift, tab, enter, layers) with room to extend
-- number pad layer for numbers and symbols.
-- home row mods, highly tuned to avoid interference with regular typing
-- mouse emulation, available both as a transient and locked layer
-- caps word & backspace word, available via combos in base layer
-- QWERTY layer for gaming
-- Corne compatible
-
-- best with:
-  - Raycast, in combination with custom `Meh+alpha` shortcuts, for launching applications
-  - Karabiner, for Fn key support and mapping F keys to functionality like dictation & mission control  
-
-
-
-note to self, to set active compile target
-$ qmk config user.keyboard=preonic/rev3
-$ qmk config user.keyboard=planck/rev6_drop
-
-
-TODO:
-
-- https://github.com/manna-harbour/qmk_firmware/tree/bilateral-combinations
-- (try) combo mods
-- make home row mods toggleable
-- use wrapper for layout sharing, see https://www.reddit.com/r/olkb/comments/b386l2/qmk_layouts_feature_for_multiple_ergo_splits/
-
-
-```
 BspWrd —— backspace entire word
 CapsWd –– CAPS word
 ###### –– key held to activate layer
@@ -125,9 +90,3 @@ ar ➡️ CAPS WORD
 ne ➡️ BACKSPACE WORD
 
 esc del ➡️ RESET
-
-```
-
-TODO:
-- [ ] caps lock LED with RGBLIGHT working / implement layer states like keyboards/planck/keymaps/jweickm/keymap.c
-
