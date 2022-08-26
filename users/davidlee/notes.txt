@@ -1,0 +1,10 @@
+$ qmk compile --keyboard planck/rev6_drop
+$ qmk compile --keyboard preonic/rev3
+$ qmk flash --keyboard planck/rev6_drop
+$ qmk flash --keyboard preonic/rev3
+
+TODO:
+- [ ] implement layer states for CAPS LED -- see keyboards/planck/keymaps/jweickm/keymap.c
+- [ ] update planck layout
+- [ ] finish implementing wrappers for shared layouts
+- [ ] TD on ESC - toggle home row mods.
