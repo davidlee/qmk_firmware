@@ -31,6 +31,10 @@ features & design considerations:
   - Raycast, in combination with custom `Meh+alpha` shortcuts, for launching applications
   - Karabiner, for Fn key support and mapping F keys to functionality like dictation & mission control  
 
+$ qmk compile --keyboard planck/rev6_drop
+$ qmk compile --keyboard preonic/rev3
+$ qmk flash --keyboard planck/rev6_drop
+$ qmk flash --keyboard preonic/rev3
 
 TODO:
 - [ ] implement layer states for CAPS LED -- see keyboards/planck/keymaps/jweickm/keymap.c

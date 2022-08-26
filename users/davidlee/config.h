@@ -25,7 +25,6 @@
 #define ADAPTIVE_TERM COMBO_HOLD    // use COMBO_HOLD time as a standard threshold (same reaction time)
 
 #define CAPSWORD_USE_SHIFT 1
-
 #define QMK_KEYS_PER_SCAN 4
 
 #undef MOUSEKEY_DELAY
@@ -44,7 +43,6 @@
 #undef MOUSEKEY_WHEEL_MAX_SPEED
 #define MOUSEKEY_WHEEL_MAX_SPEED 3
 
-                                //
 // custom keycodes
 //
 
