@@ -1,32 +1,59 @@
 //
-// Define keymap chunks for sharing between preonic and planck
+// Define keymap chunks for sharing between keebs
 // 
+#define LAYOUT_preonic_wrapper(...)   LAYOUT_preonic_grid(__VA_ARGS__)
+#define LAYOUT_planck_wrapper(...)    LAYOUT_planck_grid(__VA_ARGS__)
 
 // clang-format off
-#define ______________COLEMAK_MOD_DH_L1____________       KC_Q,    KC_W,    KC_F,    KC_P,    KC_B
-#define ______________COLEMAK_MOD_DH_L2____________       KC_A,    KC_R,    KC_S,    KC_T,    KC_G
-#define ______________COLEMAK_MOD_DH_L3____________       KC_Z,    KC_X,    KC_C,    KC_D,    KC_V
 
-#define ______________COLEMAK_MOD_DH_R1____________       KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN
-#define ______________COLEMAK_MOD_DH_R2____________       KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT
-#define ______________COLEMAK_MOD_DH_R3____________       KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLASH
+#define __BLANKS   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 
-#define _________________QWERTY_L1_________________       KC_Q,    KC_W,    KC_E,    KC_R,    KC_T
-#define _________________QWERTY_L2_________________       KC_A,    KC_S,    KC_D,    KC_F,    KC_G
-#define _________________QWERTY_L3_________________       KC_Z,    KC_X,    KC_C,    KC_V,    KC_B
+#define __CMK_R0   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    BS_WORD
+#define __CMK_R1   TAB_MEH, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCN_OPT, DEL_MEH
+#define __CMK_R2   ESC_CTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    QOT_CTL
+#define __CMK_R3   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    COM_CMD, DOT_OPT, SLS_CTL, ENT_SFT
+#define __CMK_R4   FN,      KC_LCTL, KC_LOPT, CMD_TAB, SPC_NUM, E_FUN,   NAV,     BS_SFT,  ENT_MED, _______, _______, _______
 
-#define _________________QWERTY_R1_________________       KC_Y,    KC_U,    KC_I,    KC_O,    KC_P
-#define _________________QWERTY_R2_________________       KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT
-#define _________________QWERTY_R3_________________       KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH
+#define __HRM_R0 __BLANKS
+#define __HRM_R1 __BLANKS
+#define __HRM_R2   _______, A_CTL,   R_OPT,   S_CMD,   T_SFT,   _______, _______, N_SFT,   E_CMD,   I_OPT,   O_CTL,   _______
+#define __HRM_R3 __BLANKS
+#define __HRM_R4 __BLANKS
 
+#define __NAV_R0 __BLANKS
+#define __NAV_R1   KC_TAB,  _______, _______, _______, _______, _______, XXXXXXX, CMD_LBRC,CMD_MINS,CMD_EQL, CMD_RBRC,KC_WH_U
+#define __NAV_R2   _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _______, KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_DEL
+#define __NAV_R3   KC_CAPS, UNDO,    CUT,     COPY,    PASTE,   PASTE,   XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_WH_D
+#define __NAV_R4   _______, _______, _______, KC_TAB,  KC_SPC,  XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, _______
 
-#define ____BLANK_ROW ____ _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+#define __NUM_R0 __BLANKS
+#define __NUM_R1   KC_GRV,  KC_EXLM, KC_AT,   KC_HASH, KC_UNDS, KC_LPRN, KC_RPRN, KC_7,    KC_8,    KC_9,    KC_ASTR, KC_AMPR 
+#define __NUM_R2   SIRI,    KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_LBRC, KC_RBRC, KC_4,    KC_5,    KC_6,    KC_0,    KC_PLUS
+#define __NUM_R3   _______, KC_BSLS, KC_LBRC, KC_RBRC, KC_MINS, KC_EQL,  KC_COLN, KC_1,    KC_2,    KC_3,    KC_SLSH, KC_ENT
+#define __NUM_R4   _______, _______, _______, EM_DASH, XXXXXXX, _______, KC_0,    _______, KC_DOT,  _______, _______, _______
 
-#define ______________HOLD_TAPS_L1____________ _______, _______, _______, _______, _______
-#define ______________HOLD_TAPS_L2____________ A_CTL,   R_OPT,   S_CMD,   T_SFT,   _______
-#define ______________HOLD_TAPS_L3____________ _______, _______, _______, _______, _______
+#define __FUN_R0 __BLANKS
+#define __FUN_R1   HRM_OFF, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______
+#define __FUN_R2   FN,      KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  FN
+#define __FUN_R3   HRM_ON,  UNDO,    CUT,     COPY,    PASTE,   PASTE,   _______, _______, DT_DOWN, DT_UP,   DT_PRNT, _______
+#define __FUN_R4   _______, _______, _______, GAM_LCK, _______, XXXXXXX, _______, _______, _______, _______, _______, _______
 
-#define ______________HOLD_TAPS_R1____________ _______, _______, _______, _______, _______
-#define ______________HOLD_TAPS_R2____________ _______, N_SFT,   E_CMD,   I_OPT,   O_CTL,   QOT_CTL
-#define ______________HOLD_TAPS_R3____________ _______, _______, _______, _______, _______
+#define __MED_R0 __BLANKS
+#define __MED_R1   _______, _______, _______, _______, _______, _______, _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, KC_MPLY
+#define __MED_R2   FN,      _______, _______, _______, _______, _______, _______, KC_LSFT, KC_RGUI, KC_RALT, KC_RCTL, FN
+#define __MED_R3   _______, _______, _______, _______, _______, _______, _______, DM_PLY1, DM_PLY2, DM_REC1, DM_REC2, DM_RSTP
+#define __MED_R4   _______, _______, _______, _______, _______, _______, _______, _______, XXXXXXX, _______, _______, _______
 
+#define __GAM_R0   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC
+#define __GAM_R1   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL
+#define __GAM_R2   KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT
+#define __GAM_R3   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT
+#define __GAM_R4   _______, KC_LCTL, KC_LALT, KC_LGUI, KC_SPC,  EXT_GAM, EXT_GAM, KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+
+#define __PTR_R0 __BLANKS
+#define __PTR_R1   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, EXT_PTR
+#define __PTR_R2   _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, KC_BTN2
+#define __PTR_R3   _______, UNDO,    CUT,     COPY,    PASTE,   PASTE,   XXXXXXX, KC_BTN1, KC_BTN2, KC_BTN3, XXXXXXX, _______
+#define __PTR_R4   _______, _______, _______, _______, KC_SPC,  _______, KC_BTN2, KC_BTN1, KC_BTN3, _______, _______, _______
+
+// clang-format on

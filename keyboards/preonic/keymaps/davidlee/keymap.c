@@ -3,71 +3,68 @@
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-[_CMK] = LAYOUT_preonic_grid(
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    BS_WORD, 
-  TAB_MEH, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCN_OPT, DEL_MEH,
-  ESC_CTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    QOT_CTL,
-  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    COM_CMD, DOT_OPT, SLS_CTL, ENT_SFT,
-  FN,      KC_LCTL, KC_LOPT, CMD_TAB, SPC_NUM, E_FUN,   NAV,     BS_SFT,  ENT_MED, _______, _______, _______
-),
+  [_CMK] = LAYOUT_preonic_wrapper(
+    __CMK_R0,
+    __CMK_R1,
+    __CMK_R2,
+    __CMK_R3,
+    __CMK_R4
+  ), 
 
-[_HRM] = LAYOUT_preonic_grid(
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, A_CTL,   R_OPT,   S_CMD,   T_SFT,   _______, _______, N_SFT,   E_CMD,   I_OPT,   O_CTL,   _______,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-),
+  [_HRM] = LAYOUT_preonic_wrapper(
+    __HRM_R0,
+    __HRM_R1,
+    __HRM_R2,
+    __HRM_R3,
+    __HRM_R4
+  ), 
 
-[_NAV] = LAYOUT_preonic_grid(
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  KC_TAB,  _______, _______, _______, _______, _______, XXXXXXX, CMD_LBRC,CMD_MINS,CMD_EQL, CMD_RBRC,KC_WH_U,
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _______, KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_DEL,
-  KC_CAPS, UNDO,    CUT,     COPY,    PASTE,   PASTE,   XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_WH_D,
-  _______, _______, _______, KC_TAB,  KC_SPC,  XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, _______
-),
+  [_NAV] = LAYOUT_preonic_wrapper(
+    __NAV_R0,
+    __NAV_R1,
+    __NAV_R2,
+    __NAV_R3,
+    __NAV_R4
+  ), 
 
-[_NUM] = LAYOUT_preonic_grid(
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  KC_GRV,  KC_EXLM, KC_AT,   KC_HASH, KC_UNDS, KC_LPRN, KC_RPRN, KC_7,    KC_8,    KC_9,    KC_ASTR, KC_AMPR, 
-  SIRI,    KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_LBRC, KC_RBRC, KC_4,    KC_5,    KC_6,    KC_0,    KC_PLUS,
-  _______, KC_BSLS, KC_LBRC, KC_RBRC, KC_MINS, KC_EQL,  KC_COLN, KC_1,    KC_2,    KC_3,    KC_SLSH, KC_ENT,
-  _______, _______, _______, EM_DASH, XXXXXXX, _______, KC_0,    _______, KC_DOT,  _______, _______, _______
-),
+  [_NUM] = LAYOUT_preonic_wrapper(
+    __NUM_R0,
+    __NUM_R1,
+    __NUM_R2,
+    __NUM_R3,
+    __NUM_R4
+  ), 
 
-[_FUN] = LAYOUT_preonic_grid(
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  HRM_OFF, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
-  FN,      KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  FN,
-  HRM_ON,  UNDO,    CUT,     COPY,    PASTE,   PASTE,   _______, _______, DT_DOWN, DT_UP,   DT_PRNT, _______,
-  _______, _______, _______, GAM_LCK, _______, XXXXXXX, _______, _______, _______, _______, _______, _______
-),
+  [_FUN] = LAYOUT_preonic_wrapper(
+    __FUN_R0,
+    __FUN_R1,
+    __FUN_R2,
+    __FUN_R3,
+    __FUN_R4
+  ), 
 
-[_MED] = LAYOUT_preonic_grid(
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, _______, _______, _______, _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, KC_MPLY,
-  FN,      _______, _______, _______, _______, _______, _______, KC_LSFT, KC_RGUI, KC_RALT, KC_RCTL, FN,
-  _______, _______, _______, _______, _______, _______, _______, DM_PLY1, DM_PLY2, DM_REC1, DM_REC2, DM_RSTP,
-  _______, _______, _______, _______, _______, _______, _______, _______, XXXXXXX, _______, _______, _______
-),
+  [_MED] = LAYOUT_preonic_wrapper(
+    __MED_R0,
+    __MED_R1,
+    __MED_R2,
+    __MED_R3,
+    __MED_R4
+  ), 
 
+  [_GAM] = LAYOUT_preonic_wrapper(
+    __GAM_R0,
+    __GAM_R1,
+    __GAM_R2,
+    __GAM_R3,
+    __GAM_R4
+  ), 
 
-[_GAM] = LAYOUT_preonic_grid(
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC, 
-  KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
-  KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-  _______, KC_LCTL, KC_LALT, KC_LGUI, KC_SPC,  EXT_GAM, EXT_GAM, KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
-),
-
-[_PTR] = LAYOUT_preonic_grid(
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, EXT_PTR,
-  _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, KC_BTN2,
-  _______, UNDO,    CUT,     COPY,    PASTE,   PASTE,   XXXXXXX, KC_BTN1, KC_BTN2, KC_BTN3, XXXXXXX, _______,
-  _______, _______, _______, _______, KC_SPC,  _______, KC_BTN2, KC_BTN1, KC_BTN3, _______, _______, _______
-),
+  [_PTR] = LAYOUT_preonic_wrapper(
+    __PTR_R0,
+    __PTR_R1,
+    __PTR_R2,
+    __PTR_R3,
+    __PTR_R4
+  ), 
 
 };
-
-
