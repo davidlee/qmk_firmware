@@ -19,6 +19,7 @@ enum custom_keycodes {
   EXT_PTR,
   EXT_GAM,
   BS_WORD,
+  DEL_WORD,
   HRM_ON,  // ALPHA TAP / HOLD
   HRM_OFF,
 };
@@ -119,6 +120,11 @@ const uint16_t PROGMEM combo_rbrc[]      = {KC_C, KC_D, COMBO_END};
 // N + S = backspace word
 const uint16_t PROGMEM combo_bs_word[]   = {N_SFT, E_CMD, COMBO_END};
 const uint16_t PROGMEM combo_bs_word2[]  = {KC_N,  KC_E,  COMBO_END};
+
+// I + O = delete word
+const uint16_t PROGMEM combo_del_word[]   = {I_OPT, O_CTL, COMBO_END};
+const uint16_t PROGMEM combo_del_word2[]  = {KC_I,  KC_O,  COMBO_END};
+
 // A + R = caps word
 const uint16_t PROGMEM combo_caps_word[] = {A_CTL, R_OPT, COMBO_END};
 const uint16_t PROGMEM combo_caps_word2[]= {KC_A, KC_R,   COMBO_END};
@@ -147,6 +153,9 @@ combo_t key_combos[COMBO_COUNT] = {
 
   COMBO(combo_bs_word,    BS_WORD),
   COMBO(combo_bs_word2,   BS_WORD),
+  COMBO(combo_del_word,   DEL_WORD),
+  COMBO(combo_del_word2,  DEL_WORD),
+
   COMBO(combo_caps_word,  CAP_WRD),
   COMBO(combo_caps_word2, CAP_WRD),
 
@@ -298,6 +307,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case BS_WORD:        
       if (record->event.pressed) {
         tap_code16(LOPT(KC_BSPC));
+      }
+      return false;
+
+    case DEL_WORD:        
+      if (record->event.pressed) {
+        tap_code16(LOPT(KC_DELETE));
       }
       return false;
 
