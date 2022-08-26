@@ -1,0 +1,1 @@
+- [ ] implement layer states for CAPS LED -- see keyboards/planck/keymaps/jweickm/keymap.c
