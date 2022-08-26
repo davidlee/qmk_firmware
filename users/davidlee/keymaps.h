@@ -1,8 +1,9 @@
+#pragma once 
+#include "davidlee.h"
+
 //
 // Define keymap chunks for sharing between keebs
 // 
-#define LAYOUT_preonic_wrapper(...)   LAYOUT_preonic_grid(__VA_ARGS__)
-#define LAYOUT_planck_wrapper(...)    LAYOUT_planck_grid(__VA_ARGS__)
 
 // clang-format off
 

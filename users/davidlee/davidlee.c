@@ -1,7 +1,7 @@
 #include "davidlee.h"
 #include "keycodes.h"
+#include "keymaps.h"
 #include "combos.h"
-#include "wrappers.h"
 
 #ifdef AUDIO_ENABLE
   float blip_song[][2] = SONG(BLIP);
