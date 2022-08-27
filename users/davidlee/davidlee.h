@@ -4,9 +4,9 @@
 enum userspace_layers {
   _CMK,   // Colemak-DH
   _HRM,   // Home Row Mods / alpha hold-taps
-  _NAV,   // Navigation
   _NUM,   // Numbers 
   _FUN,   // Function keys
+  _NAV,   // Navigation
   _MED,   // Media & right hand mods
   _GAM,   // Gaming / QWERTY
   _PTR,   // Pointer

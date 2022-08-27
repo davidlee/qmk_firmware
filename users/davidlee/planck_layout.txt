@@ -1,1 +1,0 @@
-../../keyboards/planck/keymaps/davidlee/layout.txt

@@ -34,6 +34,8 @@ enum userspace_keycodes {
 #define CMD_MINS LCMD(KC_MINS)
 #define CMD_EQL  LCMD(KC_EQL)
 
+#define MO_PTR MO(_PTR)
+
 // alpha hold-tap keys
 //
 // home row mods 
