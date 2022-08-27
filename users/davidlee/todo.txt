@@ -1,1 +1,3 @@
 - [ ] implement layer states for CAPS LED -- see keyboards/planck/keymaps/jweickm/keymap.c
+- [ ] wtf why MO_PTR no work
+- [ ] also why doesn't the combo for PTR lock work

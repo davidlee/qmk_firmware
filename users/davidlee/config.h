@@ -20,7 +20,7 @@
 
 #define COMBO_ALLOW_ACTION_KEYS
 #define COMBO_STRICT_TIMER
-#define COMBO_TERM 30               // time to get all combo keys down - keep it short!
+#define COMBO_TERM 20               // time to get all combo keys down - keep it short!
 #define COMBO_HOLD 30               // time to hold to trigger delayed combo
 
 #define CAPSWORD_USE_SHIFT 1

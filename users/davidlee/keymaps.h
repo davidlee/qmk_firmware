@@ -13,7 +13,7 @@
 #define __CMK_R1   TAB_MEH, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    SCN_OPT, DEL_MEH
 #define __CMK_R2   ESC_CTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    QOT_CTL
 #define __CMK_R3   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    COM_CMD, DOT_OPT, SLS_CTL, ENT_SFT
-#define __CMK_R4   FN,      KC_LCTL, KC_LOPT, CMD_TAB, SPC_NUM, E_FUN,   NAV,     BS_SFT,  ENT_MED, _______, _______, _______
+#define __CMK_R4   FN,      KC_LCTL, KC_LOPT, CMD_TAB, SPC_NUM, E_FUN,   NAV,     BS_SFT,  ENT_MED, _______, PTR_LCK, MO_PTR
 
 #define __HRM_R0 __BLANKS
 #define __HRM_R1 __BLANKS
@@ -22,10 +22,10 @@
 #define __HRM_R4 __BLANKS
 
 #define __NAV_R0 __BLANKS
-#define __NAV_R1   KC_TAB,  _______, _______, _______, _______, _______, XXXXXXX, CMD_LBRC,CMD_MINS,CMD_EQL, CMD_RBRC,KC_WH_U
+#define __NAV_R1   KC_TAB,  _______, _______, _______, _______, _______, XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_WH_D
 #define __NAV_R2   _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _______, KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_DEL
-#define __NAV_R3   KC_CAPS, UNDO,    CUT,     COPY,    PASTE,   PASTE,   XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_WH_D
-#define __NAV_R4   _______, _______, _______, KC_TAB,  KC_SPC,  XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, _______
+#define __NAV_R3   KC_CAPS, UNDO,    CUT,     COPY,    PASTE,   PASTE,   XXXXXXX, CMD_LBRC,CMD_MINS,CMD_EQL, CMD_RBRC,KC_WH_U
+#define __NAV_R4   _______, _______, _______, KC_TAB,  KC_SPC,  MO_PTR,  _______, _______, _______, _______, _______, _______
 
 #define __NUM_R0 __BLANKS
 #define __NUM_R1   KC_GRV,  KC_EXLM, KC_AT,   KC_HASH, KC_UNDS, KC_LPRN, KC_RPRN, KC_7,    KC_8,    KC_9,    KC_ASTR, KC_AMPR 
@@ -43,7 +43,7 @@
 #define __MED_R1   _______, _______, _______, _______, _______, _______, _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, KC_MPLY
 #define __MED_R2   FN,      _______, _______, _______, _______, _______, _______, KC_LSFT, KC_RGUI, KC_RALT, KC_RCTL, FN
 #define __MED_R3   _______, _______, _______, _______, _______, _______, _______, DM_PLY1, DM_PLY2, DM_REC1, DM_REC2, DM_RSTP
-#define __MED_R4   _______, _______, _______, _______, _______, _______, _______, _______, XXXXXXX, _______, _______, _______
+#define __MED_R4   _______, _______, _______, _______, MO_PTR,  _______, _______, _______, XXXXXXX, _______, _______, _______
 
 #define __GAM_R0   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC
 #define __GAM_R1   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL
