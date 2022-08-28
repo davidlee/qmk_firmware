@@ -19,17 +19,19 @@ Optimised for:
 Design principles:
 
 - Eschew complex customisation. Embrace constraints & strong opinions.
-- Nothing is further than one key from the home position. Avoid moving away from it at all where possible.
+- Nothing is further than one key from home position. Avoid moving from home at all where possible.
 - Use thumbs heavily.
-- Prefer same-thumb layer activation.
-- Home row mods are great, and carefully tuned, but can be disabled without making operation difficult.
-- Combos are awesome.
+- Having space, a numpad & symbol layer, Shift and Backspace all accessible from thumb home positions is just better than any credible alternative. Fight me.
+- Prefer same-thumb layer activation. Thumbs are strong. Single-hand chords feel easier to me than cross-hand coordination.
+- Home row mods are great, and carefully tuned, but can be disabled without making life difficult.
 - Follow conventions which live in muscle memory, where possible:
   - left thumb for spacebar, from mouse & keyboard games
   - right hand for numpad, from every number pad ever
   - ZXCV positions for undo/cut/copy/paste
   - vim style movement keys (left, down, up, right)
 - Sometimes adding flexibility is worth duplication in a layout.
+- Using subtle RGBlight / sound to indicate layer state doesn't hurt.
+- Combos are awesome. Keep adding them until there's no room for more.
 
 - Recommended with:
   - Raycast, for two-keypress application switching with Meh shortcuts
