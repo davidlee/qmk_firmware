@@ -50,7 +50,6 @@ enum userspace_keycodes {
 #define O_CTL  MT(MOD_RCTL, KC_O)
 //
 // right hand side mods 
-#define SCN_OPT MT(MOD_RALT, KC_SCOLON)
 #define SLS_CTL MT(MOD_RCTL, KC_SLASH)
 #define DOT_OPT MT(MOD_RALT, KC_DOT)
 #define COM_CMD MT(MOD_RGUI, KC_COMMA)
@@ -73,4 +72,4 @@ enum userspace_keycodes {
 //
 // rightmost column 
 #define DEL_MEH  MT(MOD_MEH,  KC_DEL)
-#define QOT_CTL  MT(MOD_RCTL, KC_QUOTE)
+#define QOT_OPT  MT(MOD_RALT, KC_QUOTE)
