@@ -41,7 +41,7 @@
 
 #define __MED_R0 __BLANKS
 #define __MED_R1   _______, _______, _______, _______, _______, _______, _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, KC_MPLY
-#define __MED_R2   FN,      _______, _______, _______, _______, _______, _______, KC_LSFT, KC_RGUI, KC_RALT, KC_RCTL, FN
+#define __MED_R2   FN,      KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, KC_MPLY, _______, KC_LSFT, KC_RGUI, KC_RALT, KC_RCTL, FN
 #define __MED_R3   _______, _______, _______, _______, _______, _______, _______, DM_PLY1, DM_PLY2, DM_REC1, DM_REC2, DM_RSTP
 #define __MED_R4   _______, _______, _______, _______, MO_PTR,  _______, _______, _______, XXXXXXX, _______, _______, _______
 

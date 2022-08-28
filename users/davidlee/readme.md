@@ -1,40 +1,38 @@
 # David's Planck / Preonic Layout
 
-inspiration taken from many sources (miryoku, callum, seniply, etc).
+This layout takes inspiration from many sources (miryoku, callum, seniply, etc). It has evolved over months of daily use, and fits my needs like a glove. If your preferences hew close to mine, it might just be perfect for you too – or a good starting point for your own customisations.
 
-features & design considerations:
+Optimised for:
 
-- optimised for: 
-  - Mac OS
-  - Colemak-DH 
-  - writing and programming in English (ANSI)
+- Mac OS
+- Colemak-DH
+- Writing and programming in English (ANSI)
+- My own preferences (e.g. left thumb spacebar; right thumb backspace & shift)
+- In order of precedence:
+  - Power (the needs of expert users)
+  - Comfort
+  - Learnability
+  - Implementation simplicity
+  - Design minimalism
 
-- consistent, minimal, powerful. Evolved over months of daily use.
-- careful utilisation of thumbs:
-  - home position covers space/numbers & symbols (left), and backspace/shift (right). 
-  - this is the way.
-  - tab, cmd, enter, and all layers available within a single key from home position.
-  - so is E, if you're into that.
-- home row mods:
-  - extensively tuned to avoid interference with regular typing. 
-    Caveat: home row shift is for combination with other mods, not letter capitalization.
-  - easily toggled off, if the slight additional latency is distracting in extended typing sessions.
-- more options for modifiers:
-  - dedicated mod keys in traditional positions
-  - simple home row mod keys on multiple layers
-  - placement is consistent with home row mods for muscle memory
-  - non-alphanumeric keys (,./;) provide alternate mod-taps for when HRMs are turned off
-  - home row combos provide further options
-- combos:
-  - plenty of them, they're great.
-  - caps word, backspace word, etc
-- mouse emulation is available as a transient layer, or can be toggled 
-- QWERTY layer for gaming
-- easily adapted to Corne form factor (although you lose dedicated mods). 
+design principles:
 
-- best with:
-  - Raycast (Alfred, etc) to manage custom `Meh+alpha` shortcuts, for launching applications
-  - Karabiner, for Fn key support and mapping F keys to functionality like dictation & mission control  
+- Eschew complex customisation. Embrace constraints & strong opinions.
+- Nothing is further than one key from home position. Minimise travel.
+- Use thumbs heavily.
+- Prefer same-thumb layer activation.
+- Home row mods are great, and carefully tuned, but can be disabled without making operation difficult.
+- Combos are awesome.
+- Prefer conventions which live in muscle memory:
+  - left thumb for spacebar, from mouse & keyboard games
+  - right hand for numpad, from every number pad ever
+  - ZXCV position for clipboard actions
+  - vim style movement keys
+- Sometimes adding flexibility is worth duplication in a layout.
+
+- Recommended with:
+  - Raycast, for two-keypress application switching with Meh shortcuts
+  - Karabiner, for Fn key support, and mapping functionality like dictation & mission control.
 
 
 
