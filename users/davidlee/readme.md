@@ -1,6 +1,6 @@
-# Haegur - a Planck / Preonic layout for power without exertion.
+# Vökvi - a Planck / Preonic layout for power without exertion.
 
-[This layout](layout.txt) takes inspiration  from many sources (miryoku,
+[This layout](layout.txt) takes inspiration from many sources (miryoku,
 callum, seniply, etc). It has evolved over months of daily use, and fits my
 needs like a glove. If your preferences hew close to mine, it might just be
 perfect for you too – or a good starting point for your own customisations.
