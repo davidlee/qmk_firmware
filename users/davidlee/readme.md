@@ -1,7 +1,9 @@
 # Haegur - a Planck / Preonic layout for power without exertion.
 
-[This layout](layout.txt) takes inspiration shamelessly from many sources (miryoku, callum, seniply, etc). It has evolved over months of daily use, and though it continues to evolve, fits my needs like a glove. If your preferences hew close to mine, it might just be perfect for you too – or a good starting point for your own customisations.
+[This layout](layout.txt) takes inspiration shamelessly from many sources (miryoku, callum, seniply, etc). It has evolved over months of daily use, and fits my needs like a glove. If your preferences hew close to mine, it might just be perfect for you too – or a good starting point for your own customisations.
 
+
+---
 Optimised for:
 
 - Mac OS
@@ -16,6 +18,8 @@ Optimised for:
   - Implementation simplicity
   - Design minimalism
 
+
+---
 Design principles:
 
 - Eschew complex customisation. Embrace constraints & strong opinions.
@@ -33,6 +37,9 @@ Design principles:
 - Using subtle RGBlight / sound to indicate layer state doesn't hurt.
 - Combos are awesome. Keep adding them until there's no room for more.
 
-- Recommended with:
-  - Raycast, for two-keypress application switching with Meh shortcuts
-  - Karabiner, for Fn key support, and mapping functionality like dictation & mission control.
+
+---
+Recommended with:
+
+- Raycast, for two-keypress application switching with Meh shortcuts
+- Karabiner, for Fn key support, and mapping functionality like dictation & mission control.
