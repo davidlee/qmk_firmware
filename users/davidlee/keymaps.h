@@ -40,9 +40,9 @@
 #define __FUN_R4   _______, _______, _______, GAM_LCK, _______, _______, MO_PTR,  _______, _______, _______, _______, _______
 
 #define __MED_R0 __BLANKS
-#define __MED_R1   _______, _______, _______, _______, _______, _______, _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, KC_MPLY
-#define __MED_R2   FN,      KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, KC_MPLY, _______, KC_LSFT, KC_RGUI, KC_RALT, KC_RCTL, FN
-#define __MED_R3   _______, _______, _______, _______, _______, _______, _______, DM_PLY1, DM_PLY2, DM_REC1, DM_REC2, DM_RSTP
+#define __MED_R1   _______, _______, _______, _______, KC_MPLY, _______, _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, _______
+#define __MED_R2   FN,      KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, _______, _______, KC_LSFT, KC_RGUI, KC_RALT, KC_RCTL, FN
+#define __MED_R3   _______, DM_REC1, DM_REC2, DM_PLY1, DM_PLY2, DM_RSTP, _______, KC_MPLY, _______, _______, _______, _______
 #define __MED_R4   _______, _______, _______, _______, MO_PTR,  _______, _______, _______, XXXXXXX, _______, _______, _______
 
 #define __GAM_R0   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC

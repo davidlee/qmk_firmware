@@ -13,13 +13,12 @@ Optimised for:
 - Writing and programming in English (ANSI)
 - My own preferences (e.g. left thumb spacebar; right thumb backspace & shift)
 - Sharing the same layout across different keyboards without fuss
-- In order of precedence:
-  - Power
+- From highest to lowest priority:
+  - Power (pragmatic efficiency in the hands of an expert user)
   - Comfort
   - Learnability
   - Implementation simplicity
-  - Design minimalism
-
+  - Minimalism
 
 ---
 Design principles:
