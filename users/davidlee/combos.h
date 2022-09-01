@@ -26,8 +26,8 @@ const uint16_t PROGMEM combo_bs_word[]   = {N_SFT, E_CMD, COMBO_END};
 const uint16_t PROGMEM combo_bs_word2[]  = {KC_N,  KC_E,  COMBO_END};
 
 // I + O = delete word
-const uint16_t PROGMEM combo_del_word[]   = {I_OPT, O_CTL, COMBO_END};
-const uint16_t PROGMEM combo_del_word2[]  = {KC_I,  KC_O,  COMBO_END};
+const uint16_t PROGMEM combo_del_word[]  = {I_OPT, O_CTL, COMBO_END};
+const uint16_t PROGMEM combo_del_word2[] = {KC_I,  KC_O,  COMBO_END};
 
 // A + R = caps word
 const uint16_t PROGMEM combo_caps_word[] = {A_CTL, R_OPT, COMBO_END};
