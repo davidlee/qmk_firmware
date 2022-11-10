@@ -12,7 +12,7 @@ Optimised for:
 - Colemak-DH
 - Writing and programming in English (ANSI)
 - My own preferences (e.g. left thumb spacebar; right thumb backspace & shift)
-- Sharing the same layout across different keyboards without fuss
+- Sharing the same layout across different keyboards without fuss (Lily58 soon)
 - From highest to lowest priority:
   - Power (pragmatic efficiency in the hands of an expert user)
   - Comfort
