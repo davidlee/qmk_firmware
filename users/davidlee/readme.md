@@ -49,3 +49,9 @@ Recommended with:
 - Raycast, for two-keypress application switching with Meh shortcuts
 - Karabiner, for Fn key support, and mapping functionality like dictation &
   mission control.
+
+---
+```
+qmk flash --keyboard planck/rev6_drop
+qmk compile --keyboard boardsource/lulu/rp2040
+```

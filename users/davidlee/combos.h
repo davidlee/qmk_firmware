@@ -69,5 +69,5 @@ combo_t key_combos[COMBO_COUNT] = {
   COMBO(combo_hrm_on,     HRM_ON),
   COMBO(combo_hrm_off,    HRM_OFF),
 
-  COMBO(combo_reset,      RESET),
+  COMBO(combo_reset,      XXXXXXX), // FIXME
 };

@@ -57,38 +57,38 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 }
 
 
-layer_state_t layer_state_set_user(layer_state_t state) {  
+layer_state_t layer_state_set_user(layer_state_t state) {
   rgblight_enable();
 
   switch (get_highest_layer(state)) {
     case _NUM:
-      rgblight_setrgb (0x55,  0x7A, 0xFF);
+      //rgblight_setrgb (0x55,  0x7A, 0xFF);
       break;
 
     case _NAV:
-      rgblight_setrgb (0x77,  0xFF, 0x00);
+      //rgblight_setrgb (0x77,  0xFF, 0x00);
       break;
 
     case _PTR:
-      rgblight_setrgb (0x33,  0xFF, 0xAA);
+      //rgblight_setrgb (0x33,  0xFF, 0xAA);
       break;
 
     case _FUN:
-      rgblight_setrgb (0x00,  0x00, 0xEE);
+      //rgblight_setrgb (0x00,  0x00, 0xEE);
       break;
-    
+
     case _MED:
-      rgblight_setrgb (0x00,  0xAA, 0xFF);
+      //rgblight_setrgb (0x00,  0xAA, 0xFF);
       break;
 
     case _GAM:
-      rgblight_setrgb (0xFF,  0x00, 0x00);
+      //rgblight_setrgb (0xFF,  0x00, 0x00);
       break;
 
     case _CMK:
-    default: 
-      rgblight_setrgb (0x00,  0x00, 0x00);      
-      break;      
+    default:
+      //rgblight_setrgb (0x00,  0x00, 0x00);
+      break;
     }
 
   return state;
