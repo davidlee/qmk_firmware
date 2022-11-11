@@ -41,8 +41,9 @@ const uint16_t PROGMEM combo_hrm_on[ ]   = {KC_U,  KC_Y,  COMBO_END};
 // , + . = Turn OFF Alpha Tap/Hold layer
 const uint16_t PROGMEM combo_hrm_off[]   = {COM_CMD, DOT_OPT, COMBO_END};
 
-// ESC + DEL = RESET
-const uint16_t PROGMEM combo_reset[]     = {ESC_CTL, DEL_MEH, COMBO_END};
+// BOOT MODE
+const uint16_t PROGMEM combo_boot_left[]  = {KC_1, KC_5, COMBO_END};
+const uint16_t PROGMEM combo_boot_right[] = {KC_6, KC_0, COMBO_END};
 
 
 combo_t key_combos[COMBO_COUNT] = {
@@ -69,5 +70,6 @@ combo_t key_combos[COMBO_COUNT] = {
   COMBO(combo_hrm_on,     HRM_ON),
   COMBO(combo_hrm_off,    HRM_OFF),
 
-  COMBO(combo_reset,      XXXXXXX), // FIXME
+  COMBO(combo_boot_left,  QK_BOOT),
+  COMBO(combo_boot_right, QK_BOOT),
 };
