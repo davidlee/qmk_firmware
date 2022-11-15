@@ -54,12 +54,22 @@ enum userspace_keycodes {
 #define DOT_OPT MT(MOD_RALT, KC_DOT)
 #define COM_CMD MT(MOD_RGUI, KC_COMMA)
 
+//
+// left hand side mods
+#define Z_CTL MT(MOD_RCTL, KC_Z)
+#define X_OPT MT(MOD_RALT, KC_X)
+#define C_CMD MT(MOD_RGUI, KC_C)
+
+
 // non-alpha / outer dual-function keys
 //
 // leftmost column 
-#define TAB_MEH  MT(MOD_MEH, KC_TAB)
-#define ESC_CTL  LCTL_T(KC_ESCAPE)
-#define ENT_SFT  KC_SFTENT
+#define TAB_MEH  MT(MOD_MEH, KC_TAB)  // deprecated
+#define ESC_CTL  LCTL_T(KC_ESCAPE)    // ^
+
+#define TAB_HYP  MT(MOD_HYPR,KC_TAB)
+#define ESC_MEH  MT(MOD_MEH, KC_ESC)
+
 //
 // bottom row 
 #define CMD_TAB  MT(MOD_LGUI, KC_TAB)
@@ -71,5 +81,9 @@ enum userspace_keycodes {
 #define ENT_MED  LT(_MED, KC_ENTER)
 //
 // rightmost column 
-#define DEL_MEH  MT(MOD_MEH,  KC_DEL)
-#define QOT_OPT  MT(MOD_RALT, KC_QUOTE)
+#define DEL_MEH  MT(MOD_MEH,  KC_DEL)   // deprecated
+#define QOT_OPT  MT(MOD_RALT, KC_QUOTE) // ^
+
+#define DEL_HYP  MT(MOD_HYPR,KC_DEL)
+#define QOT_MEH  MT(MOD_MEH,  KC_QUOTE)
+#define ENT_SFT  KC_SFTENT

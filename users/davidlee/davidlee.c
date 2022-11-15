@@ -19,8 +19,9 @@ const int home_row_mod_keys[] = { A_CTL, R_OPT, S_CMD, T_SFT, N_SFT, E_CMD, I_OP
 
 void keyboard_post_init_user(void) {
   default_layer_set(LAYER_MASK_DEFAULT); // COLEMAK & ALPHA TAP/HOLDs
-  rgblight_enable();
-  rgblight_setrgb (0x01,  0x00, 0x00);
+  // rgblight_enable();
+  // rgblight_setrgb (0x01,  0x00, 0x00);
+  rgb_matrix_mode(RGB_MATRIX_TYPING_HEATMAP);
 }
 
 // give precedence to tap rather than hold for home row mods, to avoid accidental mistypes
@@ -34,7 +35,7 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-
+      // home row mods
       case A_CTL:
       case O_CTL:
         return TAPPING_TERM + 40;
@@ -48,10 +49,16 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
       case N_SFT:
         return TAPPING_TERM + 30;
       
+      // bottom row mods - let's see if these ones cause more trouble than they're worth?
+      case Z_CTL:
+      case X_OPT:
+      case C_CMD:
+
       case SLS_CTL:
       case DOT_OPT:
       case COM_CMD:
-        return TAPPING_TERM + 40; // doesn't matter as much due to permissive_hold
+
+        return TAPPING_TERM + 20; // doesn't matter as much due to permissive_hold
 
       default:
         return TAPPING_TERM; 
@@ -63,32 +70,32 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
   switch (get_highest_layer(state)) {
     case _NUM:
-      rgblight_setrgb (0x55,  0x7A, 0xFF);
+      // rgblight_setrgb (0x55,  0x7A, 0xFF);
       break;
 
     case _NAV:
-      rgblight_setrgb (0x77,  0xFF, 0x00);
+      // rgblight_setrgb (0x77,  0xFF, 0x00);
       break;
 
     case _PTR:
-      rgblight_setrgb (0x33,  0xFF, 0xAA);
+      // rgblight_setrgb (0x33,  0xFF, 0xAA);
       break;
 
     case _FUN:
-      rgblight_setrgb (0x00,  0x00, 0xEE);
+      // rgblight_setrgb (0x00,  0x00, 0xEE);
       break;
 
     case _MED:
-      rgblight_setrgb (0x00,  0xAA, 0xFF);
+      // rgblight_setrgb (0x00,  0xAA, 0xFF);
       break;
 
     case _GAM:
-      rgblight_setrgb (0x99,  0x44, 0x33);
+      // rgblight_setrgb (0x99,  0x44, 0x33);
       break;
 
     case _CMK:
     default:
-      rgblight_setrgb (0x00,  0x02, 0x01);
+      // rgblight_setrgb (0x00,  0x02, 0x01);
       break;
     }
 
