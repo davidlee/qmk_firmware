@@ -65,42 +65,69 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
+// change RGB on layer change for visual indication
 
+#ifdef RGB_MATRIX_ENABLE
 layer_state_t layer_state_set_user(layer_state_t state) {
-
   switch (get_highest_layer(state)) {
     case _NUM:
-      // rgblight_setrgb (0x55,  0x7A, 0xFF);
+      rgb_matrix_mode(RGB_MATRIX_ALPHAS_MODS);
       break;
-
     case _NAV:
-      // rgblight_setrgb (0x77,  0xFF, 0x00);
+      rgb_matrix_mode(RGB_MATRIX_CYCLE_OUT_IN_DUAL);
       break;
-
     case _PTR:
-      // rgblight_setrgb (0x33,  0xFF, 0xAA);
+      rgb_matrix_mode(RGB_MATRIX_CYCLE_ALL);
       break;
-
     case _FUN:
-      // rgblight_setrgb (0x00,  0x00, 0xEE);
+      rgb_matrix_mode(RGB_MATRIX_RAINBOW_MOVING_CHEVRON);
       break;
-
     case _MED:
-      // rgblight_setrgb (0x00,  0xAA, 0xFF);
+      rgb_matrix_mode(RGB_MATRIX_CYCLE_OUT_IN_DUAL);
       break;
-
     case _GAM:
-      // rgblight_setrgb (0x99,  0x44, 0x33);
+      rgb_matrix_mode(RGB_MATRIX_BREATHING);
       break;
-
     case _CMK:
     default:
-      // rgblight_setrgb (0x00,  0x02, 0x01);
+      rgb_matrix_mode(RGB_MATRIX_TYPING_HEATMAP);
       break;
     }
-
   return state;
 }
+#endif
+
+#ifdef RGBLIGHT_ENABLE
+layer_state_t layer_state_set_user(layer_state_t state) {
+  switch (get_highest_layer(state)) {
+    case _NUM:
+      rgblight_setrgb (0x55,  0x7A, 0xFF);
+      break;
+    case _NAV:
+      rgblight_setrgb (0x77,  0xFF, 0x00);
+      break;
+    case _PTR:
+      rgblight_setrgb (0x33,  0xFF, 0xAA);
+      break;
+    case _FUN:
+      rgblight_setrgb (0x00,  0x00, 0xEE);
+      break;
+    case _MED:
+      rgblight_setrgb (0x00,  0xAA, 0xFF);
+      break;
+    case _GAM:
+      rgblight_setrgb (0x99,  0x44, 0x33);
+      break;
+    case _CMK:
+    default:
+      rgblight_setrgb (0x00,  0x02, 0x01);
+      break;
+    }
+  return state;
+}
+#endif
+
+
 
 __attribute__ ((weak))
 bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
