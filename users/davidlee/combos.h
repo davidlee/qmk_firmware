@@ -17,9 +17,9 @@ const uint16_t PROGMEM combo_lprn[]      = {KC_W, KC_F, COMBO_END};
 const uint16_t PROGMEM combo_rprn[]      = {KC_F, KC_P, COMBO_END};
 
 // X + C = [
-const uint16_t PROGMEM combo_lbrc[]      = {KC_X, KC_C, COMBO_END};
+const uint16_t PROGMEM combo_lbrc[]      = {X_OPT, C_CMD, COMBO_END};
 // C + D = ]
-const uint16_t PROGMEM combo_rbrc[]      = {KC_C, KC_D, COMBO_END};
+const uint16_t PROGMEM combo_rbrc[]      = {C_CMD, KC_D, COMBO_END};
 
 // N + S = backspace word
 const uint16_t PROGMEM combo_bs_word[]   = {N_SFT, E_CMD, COMBO_END};
