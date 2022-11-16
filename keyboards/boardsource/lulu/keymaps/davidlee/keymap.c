@@ -37,17 +37,17 @@ _______, KC_BSLS, KC_LBRC, KC_RBRC, KC_MINS, KC_EQL,  _______, _______, KC_COLN,
 
   [_FUN] = LAYOUT(
 _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                     KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
+_______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                     KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
 FN,      KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,                    _______, KC_LSFT, KC_RGUI, KC_RALT, KC_RCTL, FN,
-KC_CAPS, UNDO,    CUT,     COPY,    PASTE,   PASTE,                     KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  _______,
-_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+KC_CAPS, UNDO,    CUT,     COPY,    PASTE,   PASTE,   _______, _______, KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  _______,
                            GAM_LCK, _______, _______, _______, MO_PTR,  _______, _______, _______
   ),
 
   [_MED] = LAYOUT(
-_______, _______, _______, _______, _______, _______,                   _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, _______,
-KC_TAB,  _______, _______, KC_MSTP, KC_MPLY, _______,                   _______, KC_LSFT, KC_RGUI, KC_RALT, KC_RCTL, FN,
-FN,      KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, _______,                   _______, KC_MPLY, _______, _______, _______, _______,
-_______, DM_REC1, DM_REC2, DM_PLY2, DM_PLY1, DM_RSTP, _______, _______, _______, _______, _______, _______, _______, _______,
+_______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______,
+KC_TAB,  _______, _______, KC_MSTP, KC_MPLY, _______,                   _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, _______,
+FN,      KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, KC_MPLY,                   _______, KC_LSFT, KC_RGUI, KC_RALT, KC_RCTL, FN,
+_______, DM_REC1, DM_REC2, DM_PLY2, DM_PLY1, DM_RSTP, _______, _______, _______, KC_MPLY, _______, _______, _______, _______,
                            _______, MO_PTR,  _______, _______, _______, _______, _______, _______
   ),
 
@@ -61,10 +61,10 @@ KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    _______, _______, KC_N,   
 
   [_PTR] = LAYOUT(
 _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______,
-_______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   _______, _______, _______, _______, _______, _______,
+_______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   _______, KC_BTN1, KC_BTN2, KC_BTN3, _______, EXT_PTR,
 _______, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, XXXXXXX,                   KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, KC_BTN2,
 _______, UNDO,    CUT,     COPY,    PASTE,   PASTE,   PASTE,   XXXXXXX, XXXXXXX, KC_BTN1, KC_BTN2, KC_BTN3, XXXXXXX, _______,
-                           _______, KC_SPC,  _______, _______, KC_BTN2, KC_BTN1, KC_BTN3, _______
+                           _______, KC_SPC,  _______, _______, KC_BTN2, KC_BTN1, KC_BTN3, EXT_PTR
   ),
 
 };
