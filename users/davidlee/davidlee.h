@@ -4,12 +4,12 @@
 enum userspace_layers {
   _CMK,   // Colemak-DH
   _HRM,   // Home Row Mods / alpha hold-taps
-  _NUM,   // Numbers 
-  _FUN,   // Function keys
-  _NAV,   // Navigation
-  _MED,   // Media & right hand mods
   _GAM,   // Gaming / QWERTY
+  _NUM,   // Numbers
   _PTR,   // Pointer
+  _NAV,   // Navigation
+  _FUN,   // Function keys
+  _MED,   // Media & right hand mods
 };
 
 #ifdef AUDIO_ENABLE
