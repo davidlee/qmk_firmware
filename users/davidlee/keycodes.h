@@ -34,11 +34,12 @@ enum userspace_keycodes {
 #define CMD_MINS LCMD(KC_MINS)
 #define CMD_EQL  LCMD(KC_EQL)
 
-#define MO_PTR MO(_PTR)
+#define MO_PTR  MO(_PTR)
+#define OSL_FUN OSL(_FUN)
 
 // alpha hold-tap keys
 //
-// home row mods 
+// home row mods
 #define A_CTL  MT(MOD_LCTL, KC_A)
 #define R_OPT  MT(MOD_LALT, KC_R)
 #define S_CMD  MT(MOD_LGUI, KC_S)
@@ -49,7 +50,7 @@ enum userspace_keycodes {
 #define I_OPT  MT(MOD_LALT, KC_I)
 #define O_CTL  MT(MOD_RCTL, KC_O)
 //
-// right hand side mods 
+// right hand side mods
 #define SLS_CTL MT(MOD_RCTL, KC_SLASH)
 #define DOT_OPT MT(MOD_RALT, KC_DOT)
 #define COM_CMD MT(MOD_RGUI, KC_COMMA)
@@ -63,7 +64,7 @@ enum userspace_keycodes {
 
 // non-alpha / outer dual-function keys
 //
-// leftmost column 
+// leftmost column
 #define TAB_MEH  MT(MOD_MEH, KC_TAB)  // deprecated
 #define ESC_CTL  LCTL_T(KC_ESCAPE)    // ^
 
@@ -71,16 +72,17 @@ enum userspace_keycodes {
 #define ESC_MEH  MT(MOD_MEH, KC_ESC)
 
 //
-// bottom row 
+// bottom row
 #define CMD_TAB  MT(MOD_LGUI, KC_TAB)
 #define SPC_NUM  LT(_NUM, KC_SPC)
 #define E_FUN    LT(_FUN, KC_E) // not used to E on thumb yet ...
 
-#define NAV      MO(_NAV) 
+#define NAV      MO(_NAV)
 #define BS_SFT   MT(MOD_LSFT, KC_BSPC)
 #define ENT_MED  LT(_MED, KC_ENTER)
+
 //
-// rightmost column 
+// rightmost column
 #define DEL_MEH  MT(MOD_MEH,  KC_DEL)   // deprecated
 #define QOT_OPT  MT(MOD_RALT, KC_QUOTE) // ^
 

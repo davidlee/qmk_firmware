@@ -16,21 +16,28 @@ const int home_row_mod_keys[] = { A_CTL, R_OPT, S_CMD, T_SFT, N_SFT, E_CMD, I_OP
 // Function Overrides
 //
 
-
 void keyboard_post_init_user(void) {
   default_layer_set(LAYER_MASK_DEFAULT); // COLEMAK & ALPHA TAP/HOLDs
-  // rgblight_enable();
-  // rgblight_setrgb (0x01,  0x00, 0x00);
+#ifdef RGBLIGHT_ENABLE
+  rgblight_enable();
+  rgblight_setrgb (0x01,  0x00, 0x00);
+//   oneshot_enable();
+#endif
+
+#ifdef RGB_MATRIX_ENABLE
   rgb_matrix_mode(RGB_MATRIX_TYPING_HEATMAP);
+#endif
 }
 
 // give precedence to tap rather than hold for home row mods, to avoid accidental mistypes
-// note this gives hold precedence for eg SLS_CTL, DOT_OPT, COM_CMD
+// NOTE: this gives _hold_ precedence for bottom row mods Z_CTL, X_OPT, C_CMD and COM_CMD, DOT_OPT, SLS_CTL
+// as well as all hold/tap keys on the side and lower rows
+
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
   for(int i=0; i < sizeof(home_row_mod_keys) / sizeof(home_row_mod_keys[0]); i++) {
-    if(home_row_mod_keys[i] == keycode) return false; 
+    if(home_row_mod_keys[i] == keycode) return false;
   }
-  return true; 
+  return true;
 }
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
@@ -48,8 +55,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
       case T_SFT:
       case N_SFT:
         return TAPPING_TERM + 30;
-      
-      // bottom row mods - let's see if these ones cause more trouble than they're worth?
+
+      // bottom row mods - let's see if these cause more trouble than they're worth?
       case Z_CTL:
       case X_OPT:
       case C_CMD:
@@ -61,7 +68,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         return TAPPING_TERM + 20; // doesn't matter as much due to permissive_hold
 
       default:
-        return TAPPING_TERM; 
+        return TAPPING_TERM;
     }
 }
 
@@ -127,31 +134,33 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 #endif
 
-
-
 __attribute__ ((weak))
 bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
+// static uint16_t fun_ptr_timeout = 0;
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  // static uint8_t fun_ptr_state = 0; // 0 = MO, 1 = undef, 2 = 0SL
+
   switch (keycode) {
 
-    // LOCK LAYERS
+    // // LOCK LAYERS
 
     case GAM_LCK:
       layer_on(_GAM);
         #ifdef AUDIO_ENABLE
           PLAY_SONG(arp_song);
-        #endif       
+        #endif
       return false;
 
     case PTR_LCK:
       layer_on(_PTR);
         #ifdef AUDIO_ENABLE
           PLAY_SONG(arp_song);
-        #endif       
-      return false; 
+        #endif
+      return false;
 
     // EXIT LAYERS
 
@@ -159,54 +168,54 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       layer_off(_GAM);
         #ifdef AUDIO_ENABLE
           PLAY_SONG(arp_song);
-        #endif             
-      return false;    
+        #endif
+      return false;
 
     case EXT_PTR:
       layer_off(_PTR);
         #ifdef AUDIO_ENABLE
           PLAY_SONG(blip_song);
-        #endif             
+        #endif
       return false;
 
     // other functions
 
-    case CAP_WRD:        
+    case CAP_WRD:
       if (record->event.pressed) {
         caps_word_on();
         #ifdef AUDIO_ENABLE
           PLAY_SONG(blip_song);
         #endif
       }
-      return false;    
+      return false;
 
-    case BS_WORD:        
+    case BS_WORD:
       if (record->event.pressed) {
         tap_code16(LOPT(KC_BSPC));
       }
       return false;
 
-    case DEL_WORD:        
+    case DEL_WORD:
       if (record->event.pressed) {
         tap_code16(LOPT(KC_DELETE));
       }
       return false;
 
-    case HRM_ON:        
+    case HRM_ON:
       if (record->event.pressed) {
         #ifdef AUDIO_ENABLE
           PLAY_SONG(blip_song);
-        #endif        
+        #endif
         default_layer_set(LAYER_MASK_DEFAULT); // COLEMAK & HOME ROW MODS
       }
 
       return false;
-    case HRM_OFF:        
+    case HRM_OFF:
       if (record->event.pressed) {
         #ifdef AUDIO_ENABLE
           PLAY_SONG(blip_song);
-        #endif        
-        default_layer_set(_CMK); // COLEMAK without alpha tap-hold shenanigans 
+        #endif
+        default_layer_set(_CMK); // COLEMAK without alpha tap-hold shenanigans
       }
 
       return false;

@@ -36,9 +36,9 @@ const uint16_t PROGMEM combo_caps_word2[]= {KC_A, KC_R,   COMBO_END};
 // N + U = turn on PTR layer
 const uint16_t PROGMEM combo_ptr[]       = {N_SFT, KC_U, COMBO_END};
 const uint16_t PROGMEM combo_ptr2[]      = {KC_N,  KC_U, COMBO_END};
-// U + Y = Turn ON Alpha Tap/Hold layer
+// U + Y = Turn ON home row Tap/Hold layer
 const uint16_t PROGMEM combo_hrm_on[ ]   = {KC_U,  KC_Y,  COMBO_END};
-// , + . = Turn OFF Alpha Tap/Hold layer
+// , + . = Turn OFF home row Tap/Hold layer
 const uint16_t PROGMEM combo_hrm_off[]   = {COM_CMD, DOT_OPT, COMBO_END};
 
 // BOOT MODE
