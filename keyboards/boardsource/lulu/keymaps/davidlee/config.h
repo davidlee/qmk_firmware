@@ -4,8 +4,8 @@
 #define RGBLED_SPLIT { 35, 35 }
 #define ENCODER_RESOLUTION 2 // fix apparent default of 4
 #define LEADER_PER_KEY_TIMING
-#define LEADER_TIMEOUT 200
-#define ONESHOT_TIMEOUT 3000
+#define LEADER_TIMEOUT 300
+#define ONESHOT_TIMEOUT 1500
 
 #define MINIMAP
 #define BONGO_SPLIT

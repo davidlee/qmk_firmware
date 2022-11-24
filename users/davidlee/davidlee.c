@@ -142,40 +142,38 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
 // static uint16_t fun_ptr_timeout = 0;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  // static uint8_t fun_ptr_state = 0; // 0 = MO, 1 = undef, 2 = 0SL
-
   switch (keycode) {
-
-    // // LOCK LAYERS
-
     case GAM_LCK:
       layer_on(_GAM);
-        #ifdef AUDIO_ENABLE
-          PLAY_SONG(arp_song);
-        #endif
+      #ifdef AUDIO_ENABLE
+        PLAY_SONG(arp_song);
+      #endif
       return false;
 
     case PTR_LCK:
       layer_on(_PTR);
-        #ifdef AUDIO_ENABLE
-          PLAY_SONG(arp_song);
-        #endif
+      // #ifdef RGB_MATRIX_ENABLE
+      //   rgb_matrix_mode(RGB_MATRIX_ALPHAS_MODS);
+      // #endif
+      #ifdef AUDIO_ENABLE
+        PLAY_SONG(arp_song);
+      #endif
       return false;
 
     // EXIT LAYERS
 
     case EXT_GAM:
       layer_off(_GAM);
-        #ifdef AUDIO_ENABLE
-          PLAY_SONG(arp_song);
-        #endif
+      #ifdef AUDIO_ENABLE
+        PLAY_SONG(arp_song);
+      #endif
       return false;
 
     case EXT_PTR:
       layer_off(_PTR);
-        #ifdef AUDIO_ENABLE
-          PLAY_SONG(blip_song);
-        #endif
+      #ifdef AUDIO_ENABLE
+        PLAY_SONG(blip_song);
+      #endif
       return false;
 
     // other functions
@@ -200,27 +198,58 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         tap_code16(LOPT(KC_DELETE));
       }
       return false;
-
-    case HRM_ON:
-      if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
-          PLAY_SONG(blip_song);
-        #endif
-        default_layer_set(LAYER_MASK_DEFAULT); // COLEMAK & HOME ROW MODS
-      }
-
-      return false;
-    case HRM_OFF:
-      if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
-          PLAY_SONG(blip_song);
-        #endif
-        default_layer_set(_CMK); // COLEMAK without alpha tap-hold shenanigans
-      }
-
-      return false;
-
     default:
       return true; /* Process all other keycodes normally */
   }
 }
+
+void _reset(void) {
+  default_layer_set(LAYER_MASK_DEFAULT);
+  layer_state_set(LAYER_MASK_DEFAULT);
+}
+
+// #ifdef LEADER_ENABLE
+LEADER_EXTERNS();
+bool did_leader_succeed;
+void matrix_scan_user(void) {
+  LEADER_DICTIONARY() {
+    did_leader_succeed = leading = false;
+
+    SEQ_TWO_KEYS(KC_L, KC_L) { // Layer: default
+      _reset();
+      did_leader_succeed = true;
+    }
+
+    SEQ_TWO_KEYS(KC_H, KC_E) { // home row mods enable
+      _reset();
+      did_leader_succeed = true;
+    }
+
+    SEQ_TWO_KEYS(KC_H, KC_D) { // home row mods disable
+      default_layer_set(_CMK);
+      layer_state_set(_CMK);
+      did_leader_succeed = true;
+    }
+
+    leader_end();
+  }
+}
+
+void leader_start(void) {
+#ifdef RGB_MATRIX_ENABLE
+  rgb_matrix_mode(RGB_MATRIX_BAND_SPIRAL_VAL);
+#endif
+}
+
+void leader_end(void) {
+  if (did_leader_succeed) {
+#ifdef RGB_MATRIX_ENABLE
+    rgb_matrix_mode(RGB_MATRIX_ALPHAS_MODS);
+#endif
+  } else {
+#ifdef RGB_MATRIX_ENABLE
+    rgb_matrix_mode(RGB_MATRIX_BAND_PINWHEEL_SAT);
+#endif
+  }
+}
+// #endif

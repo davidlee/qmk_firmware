@@ -9,13 +9,13 @@
     #define MUSIC_MASK (keycode != KC_NO)
 #endif
 
-#define COMBO_COUNT 20
+#define COMBO_COUNT 18
 
 #define TAPPING_TERM 150
 #define TAPPING_TERM_PER_KEY 1
 #define IGNORE_MOD_TAP_INTERRUPT 1 // necessary for home row mods
-#define TAPPING_FORCE_HOLD 1       // allows mod tap to resolve to a mod after a tap                                
-#define TAP_CODE_DELAY 5      
+#define TAPPING_FORCE_HOLD 1       // allows mod tap to resolve to a mod after a tap
+#define TAP_CODE_DELAY 5
 #define PERMISSIVE_HOLD_PER_KEY 1  // we want permissive hold for all tap-hold keys except home row mods
 
 #define COMBO_ALLOW_ACTION_KEYS
@@ -39,7 +39,7 @@
 
 #undef MOUSEKEY_WHEEL_DELAY
 #define MOUSEKEY_WHEEL_DELAY    10
-#undef MOUSEKEY_WHEEL_INTERVAL                                 
+#undef MOUSEKEY_WHEEL_INTERVAL
 #define MOUSEKEY_WHEEL_INTERVAL 16
 #undef MOUSEKEY_WHEEL_MAX_SPEED
 #define MOUSEKEY_WHEEL_MAX_SPEED 3
