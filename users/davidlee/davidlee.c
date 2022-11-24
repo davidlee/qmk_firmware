@@ -17,11 +17,11 @@ const int home_row_mod_keys[] = { A_CTL, R_OPT, S_CMD, T_SFT, N_SFT, E_CMD, I_OP
 //
 
 void keyboard_post_init_user(void) {
-  default_layer_set(LAYER_MASK_DEFAULT); // COLEMAK & ALPHA TAP/HOLDs
+  default_layer_set(LAYER_MASK_DEFAULT); // COLEMAK & ALPHA TAP/HOLD layers
+  oneshot_enable(); // FIXME should not be necessary but ... weird bug
 #ifdef RGBLIGHT_ENABLE
   rgblight_enable();
   rgblight_setrgb (0x01,  0x00, 0x00);
-//   oneshot_enable();
 #endif
 
 #ifdef RGB_MATRIX_ENABLE
