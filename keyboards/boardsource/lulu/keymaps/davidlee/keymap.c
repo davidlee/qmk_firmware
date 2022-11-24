@@ -20,20 +20,36 @@ _______, _______, _______, _______, _______, _______, _______, _______, _______,
                            _______, _______, _______, _______, _______, _______, _______, _______
   ),
 
+  [_GAM] = LAYOUT(
+KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_LGUI,
+KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
+ESC_CTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    _______, _______, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
+                           OSL_FUN, KC_LALT, KC_SPC,  KC_LCTL, NAV,     KC_BSPC, KC_ENT,  EXT_GAM
+  ),
+
+  [_NUM] = LAYOUT(
+KC_TILD, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                     KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_PIPE,
+KC_GRV,  KC_EXLM, KC_AT,   KC_HASH, KC_UNDS, KC_LPRN,                   KC_RPRN, KC_7,    KC_8,    KC_9,    KC_ASTR, KC_AMPR,
+SIRI,    KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_LBRC,                   KC_RBRC, KC_4,    KC_5,    KC_6,    KC_0,    KC_PLUS,
+CAP_WRD, KC_BSLS, KC_LBRC, KC_RBRC, KC_MINS, KC_EQL,  _______, _______, KC_COLN, KC_1,    KC_2,    KC_3,    KC_SLSH, KC_ENT,
+                           _______, EM_DASH, _______, _______, KC_0,    _______, KC_DOT,  _______
+  ),
+
+  [_PTR] = LAYOUT(
+_______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______,
+KC_TAB,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   KC_WH_U, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, KC_WH_U,
+PTR_LCK, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, OSL_FUN,                   KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, KC_BTN2,
+KC_CAPS, UNDO,    CUT,     COPY,    PASTE,   PASTE,   XXXXXXX, XXXXXXX, KC_WH_D, KC_BTN1, KC_BTN2, KC_BTN3, KC_F15,  KC_WH_D, // f15 = center cursor w/ karabiner
+                           GAM_LCK, _______, KC_SPC,  _______, KC_BTN2, KC_BTN1, KC_BTN3, EXT_PTR
+  ),
+
   [_NAV] = LAYOUT(
 _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______,
 KC_TAB,  _______, _______, _______, _______, _______,                   KC_WH_U, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_WH_U,
 KC_ESC,  KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _______,                   KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_DEL,
 KC_CAPS, UNDO,    CUT,     COPY,    PASTE,   PASTE,   _______, _______, KC_WH_D, CMD_LBRC,CMD_MINS,CMD_EQL, CMD_RBRC,KC_WH_D,
                            _______, KC_TAB,  KC_SPC,  MO_PTR,  _______, _______, _______, _______
-  ),
-
-  [_NUM] = LAYOUT(
-_______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______,
-KC_GRV,  KC_EXLM, KC_AT,   KC_HASH, KC_UNDS, KC_LPRN,                   KC_RPRN, KC_7,    KC_8,    KC_9,    KC_ASTR, KC_AMPR,
-SIRI,    KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_LBRC,                   KC_RBRC, KC_4,    KC_5,    KC_6,    KC_0,    KC_PLUS,
-CAP_WRD, KC_BSLS, KC_LBRC, KC_RBRC, KC_MINS, KC_EQL,  _______, _______, KC_COLN, KC_1,    KC_2,    KC_3,    KC_SLSH, KC_ENT,
-                           KC_PLUS, EM_DASH, _______, _______, KC_0,    _______, KC_DOT,  _______
   ),
 
   [_FUN] = LAYOUT(
@@ -50,22 +66,6 @@ KC_TAB,  _______, _______, KC_MSTP, KC_MPLY, _______,                   _______,
 FN,      KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, _______,                   _______, KC_LSFT, KC_RGUI, KC_RALT, KC_RCTL, FN,
 _______, DM_REC1, DM_REC2, DM_PLY2, DM_PLY1, DM_RSTP, _______, _______, _______, KC_MPLY, _______, _______, _______, _______,
                            _______, _______, KC_MPLY, _______, _______, _______, _______, _______
-  ),
-
-  [_GAM] = LAYOUT(
-KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_LGUI,
-KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
-ESC_CTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    _______, _______, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-                           E_FUN,   KC_LALT, KC_SPC,  KC_LCTL, NAV,     KC_BSPC, KC_ENT,  EXT_GAM
-  ),
-
-  [_PTR] = LAYOUT(
-_______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______,
-KC_TAB,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   KC_WH_U, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, KC_WH_U,
-PTR_LCK, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, OSL_FUN,                   KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, KC_BTN2,
-KC_CAPS, UNDO,    CUT,     COPY,    PASTE,   PASTE,   XXXXXXX, XXXXXXX, KC_WH_D, KC_BTN1, KC_BTN2, KC_BTN3, KC_F15,  KC_WH_D, // f15 = center cursor w/ karabiner
-                           GAM_LCK, _______, KC_SPC,  _______, KC_BTN2, KC_BTN1, KC_BTN3, EXT_PTR
   ),
 
 };
