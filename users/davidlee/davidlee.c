@@ -21,7 +21,7 @@ void keyboard_post_init_user(void) {
   oneshot_enable(); // FIXME should not be necessary but ... weird bug
 #ifdef RGBLIGHT_ENABLE
   rgblight_enable();
-  rgblight_setrgb (0x01,  0x00, 0x00);
+  rgblight_setrgb_noeeprom (0x01,  0x00, 0x00);
 #endif
 
 #ifdef RGB_MATRIX_ENABLE
@@ -78,28 +78,31 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 layer_state_t layer_state_set_user(layer_state_t state) {
   switch (get_highest_layer(state)) {
     case _NUM:
-      rgb_matrix_mode(RGB_MATRIX_ALPHAS_MODS);
+      rgb_matrix_mode_noeeprom(RGB_MATRIX_ALPHAS_MODS);
       break;
     case _NAV:
-      rgb_matrix_mode(RGB_MATRIX_CYCLE_OUT_IN_DUAL);
+      rgb_matrix_mode_noeeprom(RGB_MATRIX_CYCLE_OUT_IN_DUAL);
       break;
     case _PTR:
-      rgb_matrix_mode(RGB_MATRIX_CYCLE_ALL);
+      rgb_matrix_mode_noeeprom(RGB_MATRIX_CYCLE_ALL);
       break;
     case _FUN:
-      rgb_matrix_mode(RGB_MATRIX_RAINBOW_MOVING_CHEVRON);
+      rgb_matrix_mode_noeeprom(RGB_MATRIX_RAINBOW_MOVING_CHEVRON);
       break;
     case _MED:
-      rgb_matrix_mode(RGB_MATRIX_CYCLE_OUT_IN_DUAL);
+      rgb_matrix_mode_noeeprom(RGB_MATRIX_CYCLE_OUT_IN_DUAL);
       break;
     case _GAM:
-      rgb_matrix_mode(RGB_MATRIX_BREATHING);
+      rgb_matrix_mode_noeeprom(RGB_MATRIX_BREATHING);
       break;
     case _CMK:
     default:
-      rgb_matrix_mode(RGB_MATRIX_TYPING_HEATMAP);
+      rgb_matrix_mode_noeeprom(RGB_MATRIX_TYPING_HEATMAP);
       break;
-    }
+  }
+  if (host_keyboard_leds() & (1<<USB_LED_CAPS_LOCK)) {
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_ALPHAS_MODS);
+  }
   return state;
 }
 #endif
@@ -108,28 +111,28 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 layer_state_t layer_state_set_user(layer_state_t state) {
   switch (get_highest_layer(state)) {
     case _NUM:
-      rgblight_setrgb (0x55,  0x7A, 0xFF);
+      rgblight_setrgb_noeeprom (0x55,  0x7A, 0xFF);
       break;
     case _NAV:
-      rgblight_setrgb (0x77,  0xFF, 0x00);
+      rgblight_setrgb_noeeprom (0x77,  0xFF, 0x00);
       break;
     case _PTR:
-      rgblight_setrgb (0x33,  0xFF, 0xAA);
+      rgblight_setrgb_noeeprom (0x33,  0xFF, 0xAA);
       break;
     case _FUN:
-      rgblight_setrgb (0x00,  0x00, 0xEE);
+      rgblight_setrgb_noeeprom (0x00,  0x00, 0xEE);
       break;
     case _MED:
-      rgblight_setrgb (0x00,  0xAA, 0xFF);
+      rgblight_setrgb_noeeprom (0x00,  0xAA, 0xFF);
       break;
     case _GAM:
-      rgblight_setrgb (0x99,  0x44, 0x33);
+      rgblight_setrgb_noeeprom (0x99,  0x44, 0x33);
       break;
     case _CMK:
     default:
-      rgblight_setrgb (0x00,  0x02, 0x01);
+      rgblight_setrgb_noeeprom (0x00,  0x02, 0x01);
       break;
-    }
+  }
   return state;
 }
 #endif
@@ -153,7 +156,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case PTR_LCK:
       layer_on(_PTR);
       // #ifdef RGB_MATRIX_ENABLE
-      //   rgb_matrix_mode(RGB_MATRIX_ALPHAS_MODS);
+      //   rgb_matrix_mode_noeeprom(RGB_MATRIX_ALPHAS_MODS);
       // #endif
       #ifdef AUDIO_ENABLE
         PLAY_SONG(arp_song);
@@ -237,18 +240,18 @@ void matrix_scan_user(void) {
 
 void leader_start(void) {
 #ifdef RGB_MATRIX_ENABLE
-  rgb_matrix_mode(RGB_MATRIX_BAND_SPIRAL_VAL);
+  rgb_matrix_mode_noeeprom(RGB_MATRIX_BAND_SPIRAL_VAL);
 #endif
 }
 
 void leader_end(void) {
   if (did_leader_succeed) {
 #ifdef RGB_MATRIX_ENABLE
-    rgb_matrix_mode(RGB_MATRIX_ALPHAS_MODS);
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_ALPHAS_MODS);
 #endif
   } else {
 #ifdef RGB_MATRIX_ENABLE
-    rgb_matrix_mode(RGB_MATRIX_BAND_PINWHEEL_SAT);
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_BAND_PINWHEEL_SAT);
 #endif
   }
 }

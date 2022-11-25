@@ -28,7 +28,8 @@
     "[json]": {
         "editor.formatOnSave": false
     },
-    "clangd.arguments": [
-        "--header-insertion=never"
-    ]
+    "C_Cpp.errorSquiggles": "Disabled",
+    "editor.tabSize": 2,
+    "editor.detectIndentation": false,
+    "C_Cpp.dimInactiveRegions": false
 }
