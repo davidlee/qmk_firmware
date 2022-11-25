@@ -72,12 +72,20 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-// change RGB on layer change for visual indication
+// helper method for caps lock layer indication
 bool _is_caps_lock_on(void) {
   return host_keyboard_leds() & (1<<USB_LED_CAPS_LOCK);
 }
 
 #ifdef RGB_MATRIX_ENABLE
+// TODO:
+//
+// 1. extract mapping of layer state => RGB MATRIX mode for use in layer_state_set_user
+// 2. consider using rgb_matrix_indicators_advanced_user in 
+//    place of caps_word_set_user / the first stanza of layer_state_set_user
+// 3. use global variable layer_state along with said mapping 
+//    for the "caps disabled" branch, to return to the appropriate layer indication
+
 void caps_word_set_user(bool active) {
   if (active) {
     rgb_matrix_mode_noeeprom(RGB_MATRIX_ALPHAS_MODS);      
@@ -92,7 +100,8 @@ void caps_word_set_user(bool active) {
 layer_state_t layer_state_set_user(layer_state_t state) {
   // CAPS LOCK / CAPS WORD indication
   // without this, activation via a momentary layer (vs say, a combo) 
-  // will have its indication cancelled when layer changes back
+  // will have its indication cancelled when layer changes back ...
+  // still, it feels a bit like a crude hack.
   if (_is_caps_lock_on() || is_caps_word_on()) {
     rgb_matrix_mode_noeeprom(RGB_MATRIX_ALPHAS_MODS);
     return state;
