@@ -18,3 +18,4 @@ enum userspace_layers {
 #endif
 
 void _reset(void);
+bool _is_caps_lock_on(void);
