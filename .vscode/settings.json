@@ -28,5 +28,7 @@
     "[json]": {
 	    "editor.formatOnSave": false
     },
-    "C_Cpp.errorSquiggles": "Disabled"
+    "C_Cpp.errorSquiggles": "Disabled",
+    "editor.tabSize": 2,
+    "editor.detectIndentation": false
 }
