@@ -28,18 +28,22 @@
 
 #define DYNAMIC_MACRO_NO_NESTING 1
 
-#define MK_KINETIC_SPEED
-#define MOUSEKEY_DELAY          0
-#define MOUSEKEY_INTERVAL       2
-#define MOUSEKEY_MOVE_DELTA     128
-#define MOUSEKEY_INITIAL_SPEED  1000
-#define MOUSEKEY_BASE_SPEED     10000
-#define MOUSEKEY_DECELERATED_SPEED 1000
-#define MOUSEKEY_ACCELARATED_SPEED 6000
-//#define MOUSEKEY_MAX_SPEED      7
-//#define MOUSEKEY_TIME_TO_MAX    30
-
-#define MOUSEKEY_WHEEL_DELAY    10
-#define MOUSEKEY_WHEEL_INTERVAL 16
-#define MOUSEKEY_WHEEL_MAX_SPEED 3
-
+// MOUSE KEYS
+#define MK_3_SPEED
+#define MK_MOMENTARY_ACCEL
+//
+#define MK_C_INTERVAL_UNMOD 16
+#define MK_C_INTERVAL_0 16
+#define MK_C_INTERVAL_1 16
+#define MK_C_INTERVAL_2 16
+//
+#define MK_C_OFFSET_0 6
+#define MK_C_OFFSET_1 12
+#define MK_C_OFFSET_UNMOD 24
+#define MK_C_OFFSET_2 36
+//
+#define MK_W_OFFSET_UNMOD   1         
+#define MK_W_INTERVAL_UNMOD 20           
+#define MK_W_INTERVAL_0     60       
+#define MK_W_INTERVAL_1     40       
+#define MK_W_INTERVAL_2     10       
