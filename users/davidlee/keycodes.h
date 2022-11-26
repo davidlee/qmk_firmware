@@ -20,6 +20,9 @@ enum userspace_keycodes {
 #define FN       KC_F24
 #define SIRI     KC_F21
 
+#define ENC_B1 PROGRAMMABLE_BUTTON_5
+#define ENC_B2 PROGRAMMABLE_BUTTON_6
+
 // clipboard
 #define UNDO   LCMD(KC_Z)
 #define CUT    LCMD(KC_X)
