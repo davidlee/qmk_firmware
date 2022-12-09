@@ -39,6 +39,7 @@ enum userspace_keycodes {
 
 #define MO_PTR  MO(_PTR)
 #define OSL_FUN OSL(_FUN)
+#define OSL_GRT OSL(_GRT)
 
 // alpha hold-tap keys
 //
