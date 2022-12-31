@@ -38,9 +38,9 @@ KC_ENT,  KC_SLSH, KC_DOT,  KC_COMM, KC_M,    KC_N,    _______, _______, _______,
 
   [_NUM] = LAYOUT(
 KC_TILD, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                     KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_PIPE,
-KC_GRV,  KC_EXLM, KC_AT,   KC_HASH, KC_UNDS, KC_LPRN,                   KC_RPRN, KC_7,    KC_8,    KC_9,    KC_ASTR, KC_AMPR,
+KC_GRV,  KC_EXLM, KC_AT,   KC_HASH, KC_UNDS, KC_LPRN,                   KC_RPRN, KC_7,    KC_8,    KC_9,    KC_COLN, KC_AMPR,
 SIRI,    KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_LBRC,                   KC_RBRC, KC_4,    KC_5,    KC_6,    KC_0,    KC_PLUS,
-CAP_WRD, KC_BSLS, KC_LBRC, KC_RBRC, KC_MINS, KC_EQL,  _______, _______, KC_COLN, KC_1,    KC_2,    KC_3,    KC_SLSH, KC_ENT,
+CAP_WRD, KC_BSLS, KC_LBRC, KC_RBRC, KC_MINS, KC_EQL,  _______, _______, KC_ASTR, KC_1,    KC_2,    KC_3,    KC_SLSH, KC_ENT,
                            _______, EM_DASH, _______, _______, KC_0,    _______, KC_DOT,  _______
   ),
 
