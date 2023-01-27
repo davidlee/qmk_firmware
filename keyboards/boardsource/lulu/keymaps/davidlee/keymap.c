@@ -47,9 +47,9 @@ CAP_WRD, KC_BSLS, KC_LBRC, KC_RBRC, KC_MINS, KC_EQL,  _______, _______, KC_ASTR,
   [_PTR] = LAYOUT(
 _______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,                    KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20, _______,
 KC_TAB,  XXXXXXX, KC_ACL2, KC_ACL1, KC_ACL0, KC_ACL2,                   KC_WH_U, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, KC_WH_U,
-PTR_LCK, KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, OSL_FUN,                   KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, KC_BTN2,
-KC_CAPS, UNDO,    CUT,     COPY,    PASTE,   PASTE,   XXXXXXX, XXXXXXX, KC_WH_D, KC_BTN1, KC_BTN2, KC_BTN3, KC_F15,  KC_WH_D, // f15 = center cursor w/ karabiner
-                           GAM_LCK, _______, KC_SPC,  _______, KC_ACL2, KC_ACL1, KC_ACL0, EXT_PTR
+KC_ESC,  KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, KC_BTN1,                   KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, KC_BTN2, // f11 = center cursor w/ karabiner
+KC_CAPS, UNDO,    CUT,     COPY,    PASTE,   PASTE,   XXXXXXX, XXXXXXX, KC_WH_D, KC_BTN1, KC_BTN2, KC_BTN3, KC_F11,  KC_WH_D, // f11 = center cursor w/ karabiner
+                           GAM_LCK, PTR_LCK, KC_SPC,  _______, KC_ACL2, KC_ACL0, KC_ACL1, EXT_PTR
   ),
 
   [_NAV] = LAYOUT(
@@ -57,9 +57,10 @@ _______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,                    KC_F16, 
 KC_TAB,  _______, _______, _______, _______, _______,                   KC_WH_U, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_WH_U,
 KC_ESC,  KC_LCTL, KC_LOPT, KC_LCMD, KC_LSFT, _______,                   KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_DEL,
 KC_CAPS, UNDO,    CUT,     COPY,    PASTE,   PASTE,   _______, _______, KC_WH_D, CMD_LBRC,CMD_MINS,CMD_EQL, CMD_RBRC,KC_WH_D,
-                           _______, KC_TAB,  KC_SPC,  MO_PTR,  _______, _______, _______, _______
+                           PTR_LCK, KC_TAB,  KC_SPC,  MO_PTR,  _______, _______, _______, _______
   ),
 
+// not in use 
   [_FUN] = LAYOUT(
 _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______,
 _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______,
