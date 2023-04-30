@@ -69,8 +69,9 @@ enum userspace_keycodes {
 // non-alpha / outer dual-function keys
 //
 // leftmost column
-#define TAB_MEH  MT(MOD_MEH, KC_TAB)  // deprecated
-#define ESC_CTL  LCTL_T(KC_ESCAPE)    // ^
+#define TAB_MEH  MT(MOD_MEH, KC_TAB)  // deprecated - use TAB_GRV
+#define ESC_CTL  LCTL_T(KC_ESCAPE)    // deprecated - use ESC_MEH
+#define ESC_MEH  MT(MOD_MEH, KC_ESC)  // 
 
 #define TAB_HYP  MT(MOD_HYPR,KC_TAB)
 #define ESC_MEH  MT(MOD_MEH, KC_ESC)
