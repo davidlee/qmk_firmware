@@ -240,7 +240,8 @@ void _reset(void) {
   layer_state_set(LAYER_MASK_DEFAULT);
 }
 
-// #ifdef LEADER_ENABLE
+// LEADER KEY stanzas
+#ifdef LEADER_ENABLE
 LEADER_EXTERNS();
 bool did_leader_succeed;
 void matrix_scan_user(void) {
@@ -284,4 +285,4 @@ void leader_end(void) {
 #endif
   }
 }
-// #endif
+#endif
