@@ -13,7 +13,6 @@
 
 #define TAPPING_TERM 150
 #define TAPPING_TERM_PER_KEY 1
-#define IGNORE_MOD_TAP_INTERRUPT 1 // necessary for home row mods
 #define TAPPING_FORCE_HOLD 1       // allows mod tap to resolve to a mod after a tap
 #define TAP_CODE_DELAY 5
 #define PERMISSIVE_HOLD_PER_KEY 1  // we want permissive hold for all tap-hold keys except home row mods

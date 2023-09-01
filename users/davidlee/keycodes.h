@@ -1,7 +1,7 @@
 #pragma once
 
 enum userspace_keycodes {
-  CAP_WRD = SAFE_RANGE, // NEW_SAFE_RANGE
+  CAP_WRD, // = SAFE_RANGE, // NEW_SAFE_RANGE
   PTR_LCK,
   GAM_LCK,
   EXT_PTR,
@@ -91,4 +91,4 @@ enum userspace_keycodes {
 
 #define DEL_HYP  MT(MOD_HYPR,KC_DEL)
 #define QOT_MEH  MT(MOD_MEH,  KC_QUOTE)
-#define ENT_SFT  KC_SFTENT
+#define ENT_SFT  MT(MOD_RSFT, KC_ENTER)
