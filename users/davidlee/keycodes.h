@@ -1,7 +1,8 @@
 #pragma once
+#include "quantum_keycodes.h"
 
 enum userspace_keycodes {
-  CAP_WRD, // = SAFE_RANGE, // NEW_SAFE_RANGE
+  CAP_WRD = QK_USER, //SAFE_RANGE, // NEW_SAFE_RANGE
   PTR_LCK,
   GAM_LCK,
   EXT_PTR,
@@ -69,7 +70,7 @@ enum userspace_keycodes {
 // non-alpha / outer dual-function keys
 //
 // leftmost column
-#define ESC_MEH  MT(MOD_MEH, KC_ESC)  
+#define ESC_MEH  MT(MOD_MEH, KC_ESC)
 
 #define GRV_HYP  MT(MOD_HYPR, KC_GRV) // better on planck
 #define TAB_HYP  MT(MOD_HYPR, KC_TAB)
