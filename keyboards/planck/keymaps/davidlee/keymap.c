@@ -6,7 +6,7 @@
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_CMK] = LAYOUT_planck_wrapper(
-    __CMK_R1,
+    __CMK_R1B,
     __CMK_R2,
     __CMK_R3,
     __CMK_R4
