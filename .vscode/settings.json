@@ -26,21 +26,9 @@
     },
     "python.formatting.provider": "yapf",
     "[json]": {
-<<<<<<< HEAD
-	    "editor.formatOnSave": false
-    },
-    "C_Cpp.errorSquiggles": "Disabled",
-    "editor.tabSize": 2,
-    "editor.detectIndentation": false,
-    "C_Cpp.dimInactiveRegions": false
-||||||| 558ab18611
-	    "editor.formatOnSave": false
-    }
-=======
         "editor.formatOnSave": false
     },
     "clangd.arguments": [
         "--header-insertion=never"
     ]
->>>>>>> 0.22.2
 }
