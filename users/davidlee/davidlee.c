@@ -72,10 +72,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-// helper method for caps lock layer indication
-bool _is_caps_lock_on(void) {
-  return host_keyboard_leds() & (1<<USB_LED_CAPS_LOCK);
-}
 
 #ifdef RGB_MATRIX_ENABLE
 // TODO:
@@ -97,15 +93,20 @@ void caps_word_set_user(bool active) {
   }
 }
 
+// helper method for caps lock layer indication
+// bool _is_caps_lock_on(void) {
+//   return host_keyboard_leds() & (1<<USB_LED_CAPS_LOCK);
+// }
+
 layer_state_t layer_state_set_user(layer_state_t state) {
   // CAPS LOCK / CAPS WORD indication
   // without this, activation via a momentary layer (vs say, a combo) 
   // will have its indication cancelled when layer changes back ...
   // still, it feels a bit like a crude hack.
-  if (_is_caps_lock_on() || is_caps_word_on()) {
-    rgb_matrix_mode_noeeprom(RGB_MATRIX_ALPHAS_MODS);
-    return state;
-  }
+  // if (_is_caps_lock_on() || is_caps_word_on()) {
+  //   rgb_matrix_mode_noeeprom(RGB_MATRIX_ALPHAS_MODS);
+  //   return state;
+  // }
 
   switch (get_highest_layer(state)) {
     case _NUM:
