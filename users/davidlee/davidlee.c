@@ -29,15 +29,43 @@ void keyboard_post_init_user(void) {
 #endif
 }
 
+uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case BS_SFT:
+            return QUICK_TAP_TERM - 20;
+        default:
+            return QUICK_TAP_TERM;
+    }
+}
 // give precedence to tap rather than hold for home row mods, to avoid accidental mistypes
 // NOTE: this gives _hold_ precedence for bottom row mods Z_CTL, X_OPT, C_CMD and COM_CMD, DOT_OPT, SLS_CTL
 // as well as all hold/tap keys on the side and lower rows
 
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
-  for(int i=0; i < sizeof(home_row_mod_keys) / sizeof(home_row_mod_keys[0]); i++) {
-    if(home_row_mod_keys[i] == keycode) return false;
+  switch (keycode) {
+    // case BS_SFT:
+
+    case A_CTL:
+    case R_OPT:
+    case S_CMD:
+    case T_SFT:
+  
+    case O_CTL:
+    case I_OPT:
+    case E_CMD:
+    case N_SFT:
+
+    // case Z_CTL:
+    // case X_OPT:
+    // case C_CMD:
+
+    // case SLS_CTL:
+    // case DOT_OPT:
+    // case COM_CMD:
+      return false;
+    default:
+      return true;
   }
-  return true;
 }
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
@@ -48,7 +76,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         return TAPPING_TERM + 40;
       case R_OPT:
       case I_OPT:
-        return TAPPING_TERM + 70; // lazy ring fingers are the biggest culprit for misfires
+        return TAPPING_TERM + 40; // lazy ring fingers are the biggest culprit for misfires
       case S_CMD:
       case E_CMD:
         return TAPPING_TERM + 40;
@@ -56,16 +84,14 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
       case N_SFT:
         return TAPPING_TERM + 30;
 
-      // bottom row mods - let's see if these cause more trouble than they're worth?
-      case Z_CTL:
-      case X_OPT:
-      case C_CMD:
-
-      case SLS_CTL:
-      case DOT_OPT:
-      case COM_CMD:
-
-        return TAPPING_TERM + 20; // doesn't matter as much due to permissive_hold
+      // bottom row mods 
+      // case Z_CTL:
+      // case X_OPT:
+      // case C_CMD:
+      // case SLS_CTL:
+      // case DOT_OPT:
+      // case COM_CMD:
+        // return TAPPING_TERM + 20; // doesn't matter as much due to permissive_hold
 
       default:
         return TAPPING_TERM;

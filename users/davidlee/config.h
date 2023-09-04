@@ -11,11 +11,13 @@
 
 #define COMBO_COUNT 18
 
-#define TAPPING_TERM 150
+#define TAPPING_TERM 170
 #define TAPPING_TERM_PER_KEY 1
 #define TAPPING_FORCE_HOLD 1       // allows mod tap to resolve to a mod after a tap
 #define TAP_CODE_DELAY 5
 #define PERMISSIVE_HOLD_PER_KEY 1  // we want permissive hold for all tap-hold keys except home row mods
+#define QUICK_TAP_TERM_PER_KEY 1
+#define QUICK_TAP_TERM 30
 
 #define COMBO_ALLOW_ACTION_KEYS
 #define COMBO_STRICT_TIMER
